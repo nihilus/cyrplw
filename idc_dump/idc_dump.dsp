@@ -53,7 +53,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /machine:I386
-# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ida.lib /nologo /dll /machine:I386 /out:"../../bin/w32/plugins/idc_dump.plw" /libpath:"..\..\libvc.w32" /libpath:"C:\Program Files\Microsoft SDK\Lib" /export:PLUGIN
+# ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib ida.lib /nologo /dll /machine:I386 /out:"../../../plugins/idc_dump.plw" /libpath:"..\..\libvc.w32" /libpath:"C:\Program Files\Microsoft SDK\Lib" /export:PLUGIN
 # SUBTRACT LINK32 /pdb:none
 
 !ELSEIF  "$(CFG)" == "idc_dump - Win32 Debug"
@@ -80,7 +80,7 @@ BSC32=bscmake.exe
 # ADD BSC32 /nologo
 LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /pdbtype:sept
-# ADD LINK32 ida.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"../../bin/w32/plugins/idc_dump.plw" /pdbtype:sept /libpath:"..\..\libvc.w32" /libpath:"C:\Program Files\Microsoft SDK\Lib" /export:PLUGIN
+# ADD LINK32 ida.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /dll /debug /machine:I386 /out:"../../../plugins/idc_dump.plw" /pdbtype:sept /libpath:"..\..\libvc.w32" /libpath:"C:\Program Files\Microsoft SDK\Lib" /export:PLUGIN
 # SUBTRACT LINK32 /pdb:none
 
 !ENDIF 
