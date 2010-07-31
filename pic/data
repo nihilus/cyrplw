@@ -1,0 +1,2282 @@
+# x86 instruction descriptions
+# Legend:
+# cflags	Changed flags
+# rflags	Rely from flags
+# uflags	Undefined flags
+# regs		Changed registers
+# op		Changed operands
+# type		Type of instruction
+
+[aaa]
+cflags: af cf
+uflags: of sf zf pf
+regs: eax
+
+[aad]
+regs: eax
+cflags: sf zf pf
+uflags: of af cf
+
+[aam]
+regs: eax
+cflags: sf zf pf
+uflags: of af cf
+
+[aas]
+cflags: af cf
+uflags: of sf zf pf
+regs: eax
+
+[adc]
+rflags: cf
+cflags: of sf zf af cf pf
+op: 1
+
+[add]
+op: 1
+cflags: of sf zf af cf pf
+
+[and]
+op: 1
+uflags: af
+cflags: of cf sf zf pf
+
+[arpl]
+op: 1
+cflags: zf
+
+[bound]
+
+[bsf]
+op: 1
+cflags: zf
+uflags: cf of sf af pf
+
+[bsr]
+op: 1
+cflags: zf
+uflags: cf of sf af pf
+
+[bt]
+cflags: cf
+uflags: zf of sf af pf
+
+[btc]
+op: 1
+cflags: cf
+uflags: zf of sf af pf
+
+[btr]
+op: 1
+cflags: cf
+uflags: zf of sf af pf
+
+[bts]
+op: 1
+cflags: cf
+uflags: zf of sf af pf
+
+[call]
+regs: esp
+
+[callfi]
+regs: esp
+
+[callni]
+regs: esp
+
+[cbw]
+regs: eax
+
+[cwde]
+regs: eax
+
+[cdqe]
+regs: eax
+
+[clc]
+cflags: cf
+
+[cld]
+cflags: df
+
+[cli]
+cflags: if
+
+[clts]
+
+[cmc]
+cflags: cf
+
+[cmp]
+cflags: cf of sf zf af pf
+
+[cmpsb]
+rflags: df
+regs: edi esi
+cflags: cf of sf zf af pf
+
+[cwd]
+regs: eax edx
+
+[cdq]
+regs: eax edx
+
+[cqo]
+
+[daa]
+regs: eax
+uflags: of
+cflags: cf af sf zf pf
+
+[das]
+regs: eax
+uflags: of
+cflags: cf af sf zf pf
+
+[dec]
+op: 1
+cflags: of sf zf af pf
+
+[div]
+regs: eax edx
+uflags: cf of sf zf af pf
+
+[enterw]
+regs: ebp esp
+
+[enter]
+regs: ebp esp
+
+[enterd]
+regs: ebp esp
+
+[enterq]
+regs: ebp esp
+
+[hlt]
+
+[idiv]
+regs: eax edx
+uflags: cf of sf zf af pf
+
+# one operand case of IMUL will be exception !
+[imul]
+cflags: cf of
+uflags: sf zf af pf
+op: 1
+
+[in]
+regs: eax
+
+[inc]
+op: 1
+cflags: of sf zf af pf
+
+[ins]
+regs: edi
+rflags: df
+
+[int]
+regs: esp
+
+[into]
+regs: esp
+
+[int3]
+regs: esp
+
+[iretw]
+regs: esp
+
+[iret]
+regs: esp
+
+[iretd]
+regs: esp
+
+[iretq]
+regs: esp
+
+[ja]
+rflags: cf zf
+
+[jae]
+rflags: cf
+
+[jb]
+rflags: cf
+
+[jbe]
+rflags: cf zf
+
+[jc]
+rflags: cf
+
+[jcxz]
+
+[jecxz]
+
+[jrcxz]
+
+[je]
+rflags: zf
+
+[jg]
+rflags: zf sf of
+
+[jge]
+rflags: sf of
+
+[jl]
+rflags: sf of
+
+[jle]
+rflags: zf sf of
+
+[jna]
+rflags: cf zf
+
+[jnae]
+rflags: cf
+
+[jnb]
+rflags: cf
+
+[jnbe]
+rflags: cf zf
+
+[jnc]
+rflags: cf
+
+[jne]
+rflags: zf
+
+[jng]
+rflags: zf sf of
+
+[jnge]
+rflags: sf of
+
+[jnl]
+rflags: sf of
+
+[jnle]
+rflags: zf sf of
+
+[jno]
+rflags: of
+
+[jnp]
+rflags: pf
+
+[jns]
+rflags: sf
+
+[jnz]
+rflags: zf
+
+[jo]
+rflags: of
+
+[jp]
+rflags: pf
+
+[jpe]
+rflags: pf
+
+[jpo]
+rflags: of
+
+[js]
+rflags: sf
+
+[jz]
+rflags: zf
+
+[jmp]
+
+[jmpfi]
+
+[jmpni]
+
+[jmpshort]
+
+[lahf]
+regs: eax
+
+[lar]
+cflags: zf
+op: 1
+
+[lea]
+op: 1
+
+[leavew]
+regs: esp ebp
+
+[leave]
+regs: esp ebp
+
+[leaved]
+regs: esp ebp
+
+[leaveq]
+regs: esp ebp
+
+[lgdt]
+
+[lidt]
+
+[lgs]
+regs: gs
+
+[lss]
+regs: ss
+
+[lds]
+regs: ds
+
+[les]
+regs: es
+
+[lfs]
+regs: fs
+
+[lldt]
+
+[lmsw]
+
+# [lock]
+
+[lods]
+rflags: df
+regs: eax esi
+
+[loopw]
+regs: ecx
+
+[loop]
+regs: ecx
+
+[loopd]
+regs: ecx
+
+[loopq]
+regs: ecx
+
+[loopwe]
+regs: ecx
+rflags: zf
+
+[loope]
+regs: ecx
+rflags: zf
+
+[loopde]
+regs: ecx
+rflags: zf
+
+[loopqe]
+regs: ecx
+rflags: zf
+
+[loopwne]
+regs: ecx
+rflags: zf
+
+[loopne]
+regs: ecx
+rflags: zf
+
+[loopdne]
+regs: ecx
+rflags: zf
+
+[loopqne]
+regs: ecx
+rflags: zf
+
+[lsl]
+cflags: zf
+
+[ltr]
+
+[mov]
+op: 1
+
+[movsp]
+op: 1
+
+[movs]
+rflags: df
+regs: esi edi
+
+[movsx]
+op: 1
+
+[movzx]
+op: 1
+
+# also may change EAX & EDX registers !
+[mul]
+regs: eax edx
+cflags: of cf
+uflags: sf zf af pf
+
+[neg]
+op: 1
+cflags: cf of sf zf af pf
+
+[nop]
+
+[not]
+op: 1
+
+[or]
+op: 1
+uflags: af
+cflags: of cf sf zf pf
+
+[out]
+
+[outs]
+rflags: df
+regs: esi
+
+[pop]
+regs: esp
+op: 1
+
+[popaw]
+regs: esp eax ecx edx ebx ebp esi edi
+
+[popa]
+regs: esp eax ecx edx ebx ebp esi edi
+
+[popad]
+regs: esp eax ecx edx ebx ebp esi edi
+
+[popaq]
+regs: esp
+
+[popfw]
+regs: esp
+cflags: af zf sf of pf cf if df
+
+[popf]
+regs: esp
+cflags: af zf sf of pf cf if df
+
+[popfd]
+regs: esp
+cflags: af zf sf of pf cf if df
+
+[popfq]
+regs: esp
+cflags: af zf sf of pf cf if df
+
+[push]
+regs: esp
+
+[pushaw]
+regs: esp
+
+[pusha]
+regs: esp
+
+[pushad]
+regs: esp
+
+[pushaq]
+regs: esp
+
+[pushfw]
+regs: esp
+
+[pushf]
+regs: esp
+
+[pushfd]
+regs: esp
+
+[pushfq]
+regs: esp
+
+[rcl]
+op: 1
+rflags: cf
+cflags: cf
+uflags: of
+
+[rcr]
+op: 1
+rflags: cf
+cflags: cf
+uflags: of
+
+[rol]
+op: 1
+cflags: cf
+uflags: of
+
+[ror]
+op: 1
+cflags: cf
+uflags: of
+
+[rep]
+
+[repe]
+
+[repne]
+
+[ret]
+regs: esp
+
+[retf]
+regs: esp
+
+[sahf]
+cflags: sf zf af pf cf
+
+[sal]
+op: 1
+cflags: cf of sf zf pf
+uflags: af
+
+[sar]
+op: 1
+cflags: cf of sf zf pf
+uflags: af
+
+[shl]
+op: 1
+cflags: cf of sf zf pf
+uflags: af
+
+[shr]
+op: 1
+cflags: cf of sf zf pf
+uflags: af
+
+[sbb]
+op: 1
+rflags: cf
+cflags: of sf zf af pf cf 
+
+[scas]
+rflags: df
+regs: edi
+cflags: of sf zf af pf cf 
+
+[seta]
+op: 1
+rflags: cf zf
+
+[setae]
+op: 1
+rflags: cf
+
+[setb]
+op: 1
+rflags: cf
+
+[setbe]
+op: 1
+rflags: cf zf
+
+[setc]
+op: 1
+rflags: cf
+
+[sete]
+op: 1
+rflags: zf
+
+[setg]
+op: 1
+rflags: zf sf of
+
+[setge]
+op: 1
+rflags: sf of
+
+[setl]
+op: 1
+rflags: sf of
+
+[setle]
+op: 1
+rflags: zf sf of
+
+[setna]
+op: 1
+rflags: cf zf
+
+[setnae]
+op: 1
+rflags: cf
+
+[setnb]
+rflags: cf
+op: 1
+
+[setnbe]
+op: 1
+rflags: cf zf
+
+[setnc]
+op: 1
+rflags: cf
+
+[setne]
+op: 1
+rflags: zf 
+
+[setng]
+op: 1
+rflags: zf sf of
+
+[setnge]
+op: 1
+rflags: sf of
+
+[setnl]
+op: 1
+rflags: sf of
+
+[setnle]
+op: 1
+rflags: zf sf of
+
+[setno]
+op: 1
+rflags: of
+
+[setnp]
+op: 1
+rflags: pf
+
+[setns]
+op: 1
+rflags: sf
+
+[setnz]
+op: 1
+rflags: zf
+
+[seto]
+op: 1
+rflags: of
+
+[setp]
+op: 1
+rflags: pf
+
+[setpe]
+op: 1
+rflags: pf
+
+[setpo]
+op: 1
+rflags: pf
+
+[sets]
+op: 1
+rflags: sf
+
+[setz]
+op: 1
+rflags: zf
+
+[sgdt]
+op: 1
+
+[sidt]
+op: 1
+
+[shld]
+op: 1
+cflags: cf sf zf pf
+uflags: af of
+
+[shrd]
+op: 1
+cflags: cf sf zf pf
+uflags: af of
+
+[sldt]
+op: 1
+
+[smsw]
+op: 1
+
+[stc]
+cflags: cf
+
+[std]
+cflags: df
+
+[sti]
+cflags: if
+
+[stos]
+rflags: df
+regs: edi
+
+[str]
+op: 1
+
+[sub]
+op: 1
+cflags: of sf zf af pf cf 
+
+[test]
+cflags: sf zf pf of cf
+uflags: af
+
+[verr]
+cflags: zf
+
+[verw]
+cflags: zf
+
+[wait]
+
+[xchg]
+op: 1 2
+
+[xlat]
+regs: eax
+
+[xor]
+op: 1
+cflags: cf of sf zf pf
+uflags: af
+
+[cmpxchg]
+from: 486
+op: 1
+regs: eax
+cflags: zf cf pf af sf of
+
+[bswap]
+op: 1
+from: 486
+
+[xadd]
+from: 486
+op: 1 2
+cflags: cf pf af sf zf of
+
+[invd]
+from: 486
+
+[wbinvd]
+from: 486
+
+[invlpg]
+from: 486
+
+[rdmsr]
+from: P
+regs: eax edx
+
+[wrmsr]
+from: P
+
+[cpuid]
+from: 486
+regs: eax ebx ecx edx
+
+[cmpxchg8b]
+from: P
+regs: edx eax
+cflags: zf
+
+[rdtsc]
+from: P
+regs: eax edx
+
+[rsm]
+from: 486
+cflags: of sf zf af cf df if
+
+#
+# PentiumPro instructions
+#
+[cmova]
+op: 1
+from: PPro
+rflags: cf zf
+
+[cmovb]
+op: 1
+from: PPro
+rflags: cf
+
+[cmovbe]
+op: 1
+from: PPro
+rflags: cf zf
+
+[cmovg]
+op: 1
+from: PPro
+rflags: zf sf of
+
+[cmovge]
+op: 1
+from: PPro
+rflags: sf of
+
+[cmovl]
+op: 1
+from: PPro
+rflags: sf of
+
+[cmovle]
+op: 1
+from: PPro
+rflags: sf of zf
+
+[cmovnb]
+op: 1
+from: PPro
+rflags: cf
+
+[cmovno]
+op: 1
+from: PPro
+rflags: of
+
+[cmovnp]
+op: 1
+from: PPro
+rflags: pf
+
+[cmovns]
+op: 1
+from: PPro
+rflags: sf
+
+[cmovnz]
+op: 1
+from: PPro
+rflags: zf
+
+[cmovo]
+op: 1
+from: PPro
+rflags: of
+
+[cmovp]
+op: 1
+from: PPro
+rflags: pf
+
+[cmovs]
+op: 1
+from: PPro
+rflags: sf
+
+[cmovz]
+op: 1
+from: PPro
+rflags: zf
+
+[fcmovb]
+type: FPU
+from: PPro
+op: 1
+rflags: cf
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fcmove]
+type: FPU
+from: PPro
+op: 1
+rflags: zf
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fcmovbe]
+type: FPU
+from: PPro
+op: 1
+rflags: zf cf
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fcmovu]
+type: FPU
+from: PPro
+op: 1
+rflags: pf
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fcmovnb]
+type: FPU
+from: PPro
+op: 1
+rflags: cf
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fcmovne]
+type: FPU
+from: PPro
+op: 1
+rflags: zf
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fcmovnbe]
+type: FPU
+from: PPro
+op: 1
+rflags: zf cf
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fcmovnu]
+type: FPU
+from: PPro
+op: 1
+rflags: pf
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fcomi]
+type: FPU
+from: PPro
+cflags: zf pf cf
+fcflags: c1
+
+[fucomi]
+type: FPU
+from: PPro
+cflags: zf pf cf
+fcflags: c1
+
+[fcomip]
+type: FPU
+from: PPro
+cflags: zf pf cf
+fcflags: c1
+
+[fucomip]
+type: FPU
+from: PPro
+cflags: zf pf cf
+fcflags: c1
+
+[rdpmc]
+from: PPro
+regs: eax edx
+
+[fld]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fst]
+type: FPU
+op: 2
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fstp]
+type: FPU
+op: 2
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fxch]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fild]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fist]
+type: FPU
+op: 2
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fistp]
+type: FPU
+op: 2
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fbld]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fbstp]
+type: FPU
+op: 2
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fadd]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[faddp]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fiadd]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fsub]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fsubp]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fisub]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fsubr]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fsubrp]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fisubr]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fmul]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fmulp]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fimul]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fdiv]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fdivp]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fidiv]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fdivr]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fdivrp]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fidivr]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fsqrt]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fscale]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fprem]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[frndint]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fxtract]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fabs]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fchs]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fcom]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[fcomp]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[fcompp]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[ficom]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[ficomp]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[ftst]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[fxam]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[fptan]
+type: FPU
+fcflags: c1 c2
+fuflags: c0 c3
+
+[fpatan]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[f2xm1]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fyl2x]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fyl2xp1]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fldz]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fld1]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fldpi]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fldl2t]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fldl2e]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fldlg2]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fldln2]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[finit]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[fninit]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[fsetpm]
+
+[fldcw]
+type: FPU
+fuflags: c0 c1 c2 c3
+
+[fstcw]
+type: FPU
+fuflags: c0 c1 c2 c3
+op: 2
+
+[fnstcw]
+type: FPU
+fuflags: c0 c1 c2 c3
+op: 2
+
+[fstsw]
+type: FPU
+fuflags: c0 c1 c2 c3
+op: 2
+
+[fnstsw]
+type: FPU
+fuflags: c0 c1 c2 c3
+op: 2
+
+[fclex]
+type: FPU
+fuflags: c0 c1 c2 c3
+
+[fnclex]
+type: FPU
+fuflags: c0 c1 c2 c3
+
+[fstenv]
+type: FPU
+fuflags: c0 c1 c2 c3
+op: 2
+
+[fnstenv]
+type: FPU
+fuflags: c0 c1 c2 c3
+op: 2
+
+[fldenv]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[fsave]
+type: FPU
+fcflags: c0 c1 c2 c3
+op: 2
+
+[fnsave]
+type: FPU
+fcflags: c0 c1 c2 c3
+op: 2
+
+[frstor]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[fincstp]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[fdecstp]
+type: FPU
+fcflags: c1
+fuflags: c0 c2 c3
+
+[ffree]
+type: FPU
+fuflags: c0 c1 c2 c3
+
+[fnop]
+type: FPU
+fuflags: c0 c1 c2 c3
+
+[feni]
+type: FPU
+
+[fneni]
+type: FPU
+
+[fdisi]
+type: FPU
+
+[fndisi]
+type: FPU
+
+#
+# 387 fpu instructions
+#
+[fprem1]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[fsincos]
+type: FPU
+fcflags: c1 c2
+fuflags: c0 c3
+
+[fsin]
+type: FPU
+fcflags: c1 c2
+fuflags: c0 c3
+
+[fcos]
+type: FPU
+fcflags: c1 c2
+fuflags: c0 c3
+
+[fucom]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[fucomp]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[fucompp]
+type: FPU
+fcflags: c0 c1 c2 c3
+
+[setalc]
+type: U
+regs: eax
+rflags: cf
+
+[svdc]
+type: U
+from: 486
+op: 1
+
+[rsdc]
+type: U
+from: 486
+op: 1
+
+[svldt]
+type: U
+from: 486
+op: 1
+
+[rsldt]
+type: U
+from: 486
+op: 1
+
+[svts]
+type: U
+from: 486
+op: 1
+
+[rsts]
+type: U
+from: 486
+op: 1
+
+[icebp]
+type: U
+
+[loadall]
+type: U
+
+[emms]
+type: MMX
+
+[movd]
+type: MMX
+op: 1
+
+[movq]
+type: MMX
+op: 1
+
+[packsswb]
+type: MMX
+op: 1
+
+[packssdw]
+type: MMX
+op: 1
+
+[packuswb]
+type: MMX
+op: 1
+
+[paddb]
+type: MMX
+op: 1
+
+[paddw]
+type: MMX
+op: 1
+
+[paddd]
+type: MMX
+op: 1
+
+[paddsb]
+type: MMX
+op: 1
+
+[paddsw]
+type: MMX
+op: 1
+
+[paddusb]
+type: MMX
+op: 1
+
+[paddusw]
+type: MMX
+op: 1
+
+[pand]
+type: MMX
+op: 1
+
+[pandn]
+type: MMX
+op: 1
+
+[pcmpeqb]
+type: MMX
+op: 1
+
+[pcmpeqw]
+type: MMX
+op: 1
+
+[pcmpeqd]
+type: MMX
+op: 1
+
+[pcmpgtb]
+type: MMX
+op: 1
+
+[pcmpgtw]
+type: MMX
+op: 1
+
+[pcmpgtd]
+type: MMX
+op: 1
+
+[pmaddwd]
+type: MMX
+op: 1
+
+[pmulhw]
+type: MMX
+op: 1
+
+[pmullw]
+type: MMX
+op: 1
+
+[por]
+type: MMX
+op: 1
+
+[psllw]
+type: MMX
+op: 1
+
+[pslld]
+type: MMX
+op: 1
+
+[psllq]
+type: MMX
+op: 1
+
+[psraw]
+type: MMX
+op: 1
+
+[psrad]
+type: MMX
+op: 1
+
+[psrlw]
+type: MMX
+op: 1
+
+[psrld]
+type: MMX
+op: 1
+
+[psrlq]
+type: MMX
+op: 1
+
+[psubb]
+type: MMX
+op: 1
+
+[psubw]
+type: MMX
+op: 1
+
+[psubd]
+type: MMX
+op: 1
+
+[psubsb]
+type: MMX
+op: 1
+
+[psubsw]
+type: MMX
+op: 1
+
+[psubusb]
+type: MMX
+op: 1
+
+[psubusw]
+type: MMX
+op: 1
+
+[punpckhbw]
+type: MMX
+op: 1
+
+[punpckhwd]
+type: MMX
+op: 1
+
+[punpckhdq]
+type: MMX
+op: 1
+
+[punpcklbw]
+type: MMX
+op: 1
+
+[punpcklwd]
+type: MMX
+op: 1
+
+[punpckldq]
+type: MMX
+op: 1
+
+[pxor]
+type: MMX
+op: 1
+
+[fxsave]
+type: SSE
+op: 1
+
+[fxrstor]
+type: SSE
+
+[sysenter]
+from: PII
+regs: ss cs esp
+
+[sysexit]
+from: PII
+regs: ss cs esp
+
+[pavgusb]
+type: 3D
+op: 1
+
+[pfadd]
+type: 3D
+op: 1
+
+[pfsub]
+type: 3D
+op: 1
+
+[pfsubr]
+type: 3D
+op: 1
+
+[pfacc]
+type: 3D
+op: 1
+
+[pfcmpge]
+type: 3D
+op: 1
+
+[pfcmpgt]
+type: 3D
+op: 1
+
+[pfcmpeq]
+type: 3D
+op: 1
+
+[pfmin]
+type: 3D
+op: 1
+
+[pfmax]
+type: 3D
+op: 1
+
+[pi2fd]
+type: 3D
+op: 1
+
+[pf2id]
+type: 3D
+op: 1
+
+[pfrcp]
+type: 3D
+op: 1
+
+[pfrsqrt]
+type: 3D
+op: 1
+
+[pfmul]
+type: 3D
+op: 1
+
+[pfrcpit1]
+type: 3D
+op: 1
+
+[pfrsqit1]
+type: 3D
+op: 1
+
+[pfrcpit2]
+type: 3D
+op: 1
+
+[pmulhrw]
+type: 3D
+op: 1
+
+[femms]
+type: 3D
+
+[prefetch]
+type: 3D
+
+[prefetchw]
+type: 3D
+
+[addps]
+type: SSE
+op: 1
+
+[addss]
+type: SSE
+op: 1
+
+[andnps]
+type: SSE
+op: 1
+
+[andps]
+type: SSE
+op: 1
+
+[cmpps]
+type: SSE
+op: 1
+
+[cmpss]
+type: SSE
+op: 1
+
+[comiss]
+type: SSE
+cflags: of sf af zf pf cf
+
+[cvtpi2ps]
+type: SSE
+op: 1
+
+[cvtps2pi]
+type: SSE
+op: 1
+
+[cvtsi2ss]
+type: SSE
+op: 1
+
+[cvtss2si]
+type: SSE
+op: 1
+
+[cvttps2pi]
+type: SSE
+op: 1
+
+[cvttss2si]
+type: SSE
+op: 1
+
+[divps]
+type: SSE
+op: 1
+
+[divss]
+type: SSE
+op: 1
+
+[ldmxcsr]
+type: SSE
+
+[maxps]
+type: SSE
+op: 1
+
+[maxss]
+type: SSE
+op: 1
+
+[minps]
+type: SSE
+op: 1
+
+[minss]
+type: SSE
+op: 1
+
+[movaps]
+type: SSE
+op: 1
+
+[movhlps]
+type: SSE
+op: 1
+
+[movhps]
+type: SSE
+op: 1
+
+[movlhps]
+type: SSE
+op: 1
+
+[movlps]
+type: SSE
+op: 1
+
+[movmskps]
+type: SSE
+op: 1
+
+[movss]
+type: SSE
+op: 1
+
+[movups]
+type: SSE
+op: 1
+
+[mulps]
+type: SSE
+op: 1
+
+[mulss]
+type: SSE
+op: 1
+
+[orps]
+type: SSE
+op: 1
+
+[rcpps]
+type: SSE
+op: 1
+
+[rcpss]
+type: SSE
+op: 1
+
+[rsqrtps]
+type: SSE
+op: 1
+
+[rsqrtss]
+type: SSE
+op: 1
+
+[shufps]
+type: SSE
+op: 1
+
+[sqrtps]
+type: SSE
+op: 1
+
+[sqrtss]
+type: SSE
+op: 1
+
+[stmxcsr]
+type: SSE
+op: 1
+
+[subps]
+type: SSE
+op: 1
+
+[subss]
+type: SSE
+op: 1
+
+[ucomiss]
+type: SSE
+cflags: of sf af zf pf cf
+
+[unpckhps]
+type: SSE
+op: 1
+
+[unpcklps]
+type: SSE
+op: 1
+
+[xorps]
+type: SSE
+op: 1
+
+[pavgb]
+type: MMX
+op: 1
+
+[pavgw]
+type: MMX
+op: 1
+
+[pextrw]
+type: MMX
+op: 1
+
+[pinsrw]
+type: MMX
+op: 1
+
+[pmaxsw]
+type: MMX
+op: 1
+
+[pmaxub]
+type: MMX
+op: 1
+
+[pminsw]
+type: MMX
+op: 1
+
+[pminub]
+type: MMX
+op: 1
+
+[pmovmskb]
+type: MMX
+op: 1
+
+[pmulhuw]
+type: MMX
+op: 1
+
+[psadbw]
+type: MMX
+op: 1
+
+[pshufw]
+type: MMX
+op: 1
+
+[maskmovq]
+type: MMX
+
+[movntps]
+type: SSE
+op: 1
+
+[movntq]
+type: SSE
+op: 1
+
+[prefetcht0]
+type: SSE
+
+[prefetcht1]
+type: SSE
+
+[prefetcht2]
+type: SSE
+
+[prefetchnta]
+type: SSE
+
+[sfence]
+type: SSE
+
+[cmpeqps]
+type: SSE
+op: 1
+
+[cmpltps]
+type: SSE
+op: 1
+
+[cmpleps]
+type: SSE
+op: 1
+
+[cmpunordps]
+type: SSE
+op: 1
+
+[cmpneqps]
+type: SSE
+op: 1
+
+[cmpnltps]
+type: SSE
+op: 1
+
+[cmpnleps]
+type: SSE
+op: 1
+
+[cmpordps]
+type: SSE
+op: 1
+
+[cmpeqss]
+type: SSE
+op: 1
+
+[cmpltss]
+type: SSE
+op: 1
+
+[cmpless]
+type: SSE
+op: 1
+
+[cmpunordss]
+type: SSE
+op: 1
+
+[cmpneqss]
+type: SSE
+op: 1
+
+[cmpnltss]
+type: SSE
+op: 1
+
+[cmpnless]
+type: SSE
+op: 1
+
+[cmpordss]
+type: SSE
+op: 1
+
+# 14 oct 2009 - amd k7
+[pf2iw]
+
+[pfnacc]
+
+[pfpnacc]
+
+[pi2fw]
+
+[pswapd]
+
+[fstp1]
+type: FPU
+
+[fcom2]
+type: FPU
+
+[fcomp3]
+type: FPU
+
+[fxch4]
+type: FPU
+
+[fcomp5]
+type: FPU
+
+[ffreep]
+type: FPU
+
+[fxch7]
+type: FPU
+
+[fstp8]
+type: FPU
+
+[fstp9]
+type: FPU
+
+# Pentium 4 instructions
+[addpd]
+From: P4
+
+[addsd]
+From: P4
+
+[andnpd]
+From: P4
+
+[andpd]
+From: P4
+
+[clflush]
+From: P4
+
+[cmppd]
+From: P4
+
+[cmpsd]
+From: P4
+
+[comisd]
+From: P4
+
+[cvtdq2pd]
+From: P4
+
+[cvtdq2ps]
+From: P4
+
+[cvtpd2dq]
+From: P4
+
+[cvtpd2pi]
+From: P4
+
+[cvtpd2ps]
+From: P4
+
+[cvtpi2pd]
+From: P4
+
+[cvtps2dq]
+From: P4
+
+[cvtps2pd]
+From: P4
+
+[cvtsd2si]
+From: P4
+
+[cvtsd2ss]
+From: P4
+
+[cvtsi2sd]
+From: P4
+
+[cvtss2sd]
+From: P4
+
+[cvttpd2dq]
+From: P4
+
+[cvttpd2pi]
+From: P4
+
+[cvttps2dq]
+From: P4
+
+[cvttsd2si]
+From: P4
+
+[divpd]
+From: P4
+
+[divsd]
+From: P4
+
+[lfence]
+From: P4
+
+[maskmovdqu]
+From: P4
+
+[maxpd]
+From: P4
+
+[maxsd]
+From: P4
+
+[mfence]
+From: P4
+
+[minpd]
+From: P4
+
+[minsd]
+From: P4
+
+[movapd]
+From: P4
+
+[movdq2q]
+From: P4
+
+[movdqa]
+From: P4
+
+[movdqu]
+From: P4
+
+[movhpd]
+From: P4
+
+[movlpd]
+From: P4
+
+[movmskpd]
+From: P4
+
+[movntdq]
+From: P4
+
+[movnti]
+From: P4
+
+[movntpd]
+From: P4
+
+[movq2dq]
+From: P4
+
+[movsd]
+From: P4
+
+[movupd]
+From: P4
+
+[mulpd]
+From: P4
+
+[mulsd]
+From: P4
+
+[orpd]
+From: P4
+
+[paddq]
+From: P4
+
+[pause]
+From: P4
+
+[pmuludq]
+From: P4
+
+[pshufd]
+From: P4
+
+[pshufhw]
+From: P4
+
+[pshuflw]
+From: P4
+
+[pslldq]
+From: P4
+
+[psrldq]
+From: P4
+
+[psubq]
+From: P4
+
+[punpckhqdq]
+From: P4
+
+[punpcklqdq]
+From: P4
+
+[shufpd]
+From: P4
+
+[sqrtpd]
+From: P4
+
+[sqrtsd]
+From: P4
+
+[subpd]
+From: P4
+
+[subsd]
+From: P4
+
+[ucomisd]
+From: P4
+
+[unpckhpd]
+From: P4
+
+[unpcklpd]
+From: P4
+
+[xorpd]
+From: P4
+
+[syscall]
+
+[sysret]
+
+[swapgs]
+
+# SSE3
+[movddup]
+type: SSE3
+
+[movshdup]
+type: SSE
+
+[movsldup]
+type: SSE
