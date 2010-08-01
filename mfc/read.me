@@ -1,0 +1,28 @@
+Lame plugin for old MFC structs recognizing
+Can also apply RPD files (vtbls description files generated from .pdb),
+mapping OLE interfaces to vtbl, processing MFC message maps and most
+usefull feature - GUID recognizing
+
+It was written in 2000 when I had only MFC from Visual C++ 6.0, so plugin
+support only very old versions of MFC - 3.0, 4.x, and may be 7.0 & 7.1
+(but I even add some ordinals from mfc8.0 - see file mfc_ord.c)
+Also in works only with 32bit PE files.
+So if you need more modern versions of MFC - just add it yourself
+
+Installation:
+You need to make in ida/plugins directory mfc.cfg file with content like:
+
+# where located TLB dir
+TLB_DIR=c:\work\tlb 
+
+# where located common RPD data dir (without final rpd sub-dir !!!!)
+RPD_DIR=C:\ida470\
+
+Also add following lines in your ida/plugins/plugins.cfg file:
+	MFC_message_map			mfc	     0		0
+	IID_recognizing			mfc	     Alt-I	1
+	MFC_VTBL_class			mfc	     0		4
+	Load_PRD_file			mfc	     0		5
+	Manual_VTBL_processing		mfc	     0		6
+
+Author: RedPlait (redplait@gmail.com)
