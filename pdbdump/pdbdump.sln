@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "pdbdump", "pdbdump.vcproj", "{CF6E50EC-F539-4B72-83F6-7F4C13C3E642}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rpdump", "rpdump\rpdump.vcproj", "{320A0F54-4ECA-41FD-9530-31BFA5321309}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF6E50EC-F539-4B72-83F6-7F4C13C3E642}.Debug|Win32.ActiveCfg = Release|Win32
+		{CF6E50EC-F539-4B72-83F6-7F4C13C3E642}.Debug|Win32.Build.0 = Release|Win32
+		{CF6E50EC-F539-4B72-83F6-7F4C13C3E642}.Release|Win32.ActiveCfg = Release|Win32
+		{CF6E50EC-F539-4B72-83F6-7F4C13C3E642}.Release|Win32.Build.0 = Release|Win32
+		{320A0F54-4ECA-41FD-9530-31BFA5321309}.Debug|Win32.ActiveCfg = Debug|Win32
+		{320A0F54-4ECA-41FD-9530-31BFA5321309}.Release|Win32.ActiveCfg = Release|Win32
+		{320A0F54-4ECA-41FD-9530-31BFA5321309}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
