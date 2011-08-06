@@ -1,0 +1,515 @@
+SegByName 7
+MK_FP 2 2
+MakeCode 2
+MakeNameEx 2 7 2
+MakeComm 2 7
+MakeArray 2 2
+get_field_ea 2 7
+MakeData 2 2 2 2
+GetRegValue 7
+SetRegValue 4 7
+Byte 2
+Word 2
+Dword 2
+LocByName 7
+ScreenEA
+OpOff 2 2 2
+Appcall 2 4
+GetTinfo 2
+sizeof 4
+CleanupAppcall
+OpChr 2 2
+OpSeg 2 2
+OpNumber 2 2
+OpDecimal 2 2
+OpOctal 2 2
+OpBinary 2 2
+OpHex 2 2
+OpAlt 2 2 7
+OpSign 2 2
+OpNot 2 2
+OpEnumEx 2 2 2 2
+OpStroffEx 2 2 2 2
+OpStkvar 2 2
+OpOffEx 2 2 2 2 2 2
+OpFloat 2 2
+MakeRptCmt 2 7
+MakeStructEx 2 2 7
+MakeVar 2
+MakeUnkn 2 2
+MakeUnknown 2 2 2
+MakeStr 2 2
+ExtLinA 2 2 7
+ExtLinB 2 2 7
+DelExtLnA 2 2
+DelExtLnB 2 2
+Jump 2
+GenerateFile 2 2 2 2 2
+GenFuncGdl 7 7 2 2 2
+GenCallGdl 7 7 2
+IdbByte 2
+DbgByte 2
+DbgWord 2
+DbgDword 2
+DbgQword 2
+DbgRead 2 2
+DbgWrite 2 7
+GetManyBytes 2 2 2
+PatchDbgByte 2 2
+PatchByte 2 2
+PatchWord 2 2
+PatchDword 2 2
+SetProcessorType 7 2
+SetTargetAssembler 2
+Batch 2
+GetFlags 2
+SetFlags 2 2
+SetSegDefReg 2 7 2
+GetReg 2 7
+SetRegEx 2 7 2 2
+AskStr 7 7
+AskFile 2 7 7
+AskAddr 2 7
+AskLong 2 7
+AskSeg 2 7
+AskIdent 7 7
+AskYN 2 7
+Message 7 4
+print 4
+Warning 7 4
+Fatal 7 4
+DeleteAll
+AddSeg 2 2 2 2 2 2
+DelSeg 2 2
+SetSegBounds 2 2 2 2
+RenameSeg 2 7
+SetSegClass 2 7
+SetSegAddressing 2 2
+SetSegmentAttr 2 2 2
+GetSegmentAttr 2 2
+SetStorageType 2 2 2
+MoveSegm 2 2 2
+RebaseProgram 2 2
+_lpoke 2 2
+_poke 2 2
+_peek 2
+_call 2
+_time
+get_nsec_stamp
+sprintf 7 4
+substr 7 2 2
+strstr 7 7
+strlen 7
+strfill 2 2
+trim 7
+atol 7
+xtol 7
+atoa 2
+ltoa 2 2
+ord 7
+rotate_left 2 2 2 2
+LocByNameEx 2 7
+SegByBase 2
+GetCurrentLine
+SelStart
+SelEnd
+FirstSeg
+NextSeg 2
+SegName 2
+Name 2
+NameEx 2 2
+GetTrueNameEx 2 2
+LineA 2 2
+LineB 2 2
+CommentEx 2 2
+AltOp 2 2
+GetDisasm 2
+GetOpnd 2 2
+GetMnem 2
+GetOpType 2 2
+GetOperandValue 2 2
+DecodeInstruction 2
+NextAddr 2
+PrevAddr 2
+NextHead 2 2
+PrevHead 2 2
+NextNotTail 2
+PrevNotTail 2
+ItemHead 2
+ItemEnd 2
+ItemSize 2
+AnalyzeArea 2 2
+Wait
+CompileEx 7 2
+ExecIDC 7
+Eval 7
+Exit 2
+SaveBase 7 2
+Checkpoint 2
+GetTestId
+____
+fopen 7 7
+fclose 2
+filelength 2
+fseek 2 2 2
+ftell 2
+loadfile 4 2 2 2
+savefile 2 2 2 2
+fgetc 2
+fputc 2 2
+fprintf 2 7 4
+readshort 2 2
+readlong 2 2
+writeshort 2 2 2
+writelong 2 2 2
+readstr 2
+writestr 2 7
+unlink 7
+rename 7 7
+mkdir 7 2
+FindVoid 2 2
+FindCode 2 2
+FindData 2 2
+FindUnexplored 2 2
+FindExplored 2 2
+FindImmediate 2 2 2
+FindText 2 2 2 2 7
+FindBinary 2 2 7
+AddCodeXref 2 2 2
+DelCodeXref 2 2 2
+Rfirst 2
+RfirstB 2
+Rnext 2 2
+RnextB 2 2
+Rfirst0 2
+RfirstB0 2
+Rnext0 2 2
+RnextB0 2 2
+add_dref 2 2 2
+del_dref 2 2
+Dfirst 2
+Dnext 2 2
+DfirstB 2
+DnextB 2 2
+XrefType
+AutoUnmark 2 2 2
+AutoMark2 2 2 2
+SetSelector 2 2
+AskSelector 2
+FindSelector 2
+DelSelector 2
+MakeFunction 2 2
+DelFunction 2
+SetFunctionEnd 2 2
+NextFunction 2
+PrevFunction 2
+GetFunctionAttr 2 2
+SetFunctionAttr 2 2 2
+GetFunctionName 2
+GetFunctionCmt 2 2
+SetFunctionCmt 2 7 2
+ChooseFunction 7
+GetFuncOffset 2
+MakeLocal 2 2 7 7
+FindFuncEnd 2
+GetFrameSize 2
+MakeFrame 2 2 2 2
+GetSpd 2
+GetSpDiff 2
+SetSpDiff 2 2
+AddUserStkPnt 2 2
+DelStkPnt 2 2
+AddAutoStkPnt2 2 2 2
+RecalcSpd 2
+GetMinSpd 2
+GetFchunkAttr 2 2
+SetFchunkAttr 2 2 2
+GetFchunkReferer 2 2
+NextFchunk 2
+PrevFchunk 2
+AppendFchunk 2 2 2
+RemoveFchunk 2 2
+SetFchunkOwner 2 2
+FirstFuncFchunk 2
+NextFuncFchunk 2 2
+GetEntryPointQty
+AddEntryPoint 2 2 7 2
+GetEntryName 2
+GetEntryOrdinal 2
+GetEntryPoint 2
+RenameEntryPoint 2 7
+GetNextFixupEA 2
+GetPrevFixupEA 2
+GetFixupTgtType 2
+GetFixupTgtSel 2
+GetFixupTgtOff 2
+GetFixupTgtDispl 2
+SetFixup 2 2 2 2 2
+DelFixup 2
+MarkPosition 2 2 2 2 2 7
+GetMarkedPos 2
+GetMarkComment 2
+GetStrucQty
+GetFirstStrucIdx
+GetLastStrucIdx
+GetNextStrucIdx 2
+GetPrevStrucIdx 2
+GetStrucIdx 2
+GetStrucId 2
+GetStrucIdByName 7
+GetStrucName 2
+GetStrucComment 2 2
+GetStrucSize 2
+GetMemberQty 2
+GetStrucPrevOff 2 2
+GetStrucNextOff 2 2
+GetFirstMember 2
+GetLastMember 2
+GetMemberOffset 2 7
+GetMemberName 2 2
+GetMemberComment 2 2 2
+GetMemberSize 2 2
+GetMemberFlag 2 2
+GetMemberStrId 2 2
+AddStrucEx 2 7 2
+IsUnion 2
+DelStruc 2
+SetStrucIdx 2 2
+SetStrucName 2 7
+SetStrucComment 2 7 2
+AddStrucMember 2 7 2 2 2 2 4
+DelStrucMember 2 2
+SetMemberName 2 2 7
+SetMemberType 2 2 2 2 2 4
+SetMemberComment 2 2 7 2
+GetVxdFuncName 2 2
+SetLineNumber 2 2
+GetLineNumber 2
+DelLineNumber 2
+AddSourceFile 2 2 7
+GetSourceFile 2
+DelSourceFile 2
+CreateArray 7
+GetArrayId 7
+RenameArray 2 7
+DeleteArray 2
+SetArrayLong 2 2 2
+SetArrayString 2 2 7
+GetArrayElement 2 2 2
+DelArrayElement 2 2 2
+GetFirstIndex 2 2
+GetNextIndex 2 2 2
+GetLastIndex 2 2
+GetPrevIndex 2 2 2
+SetHashLong 2 7 2
+SetHashString 2 7 7
+GetHashLong 2 7
+GetHashString 2 7
+DelHashElement 2 7
+GetFirstHashKey 2
+GetNextHashKey 2 7
+GetLastHashKey 2
+GetPrevHashKey 2 7
+GetEnumQty
+GetnEnum 2
+GetEnumIdx 2
+GetEnum 7
+GetEnumName 2
+GetEnumCmt 2 2
+GetEnumSize 2
+GetEnumWidth 2
+GetEnumFlag 2
+GetConstByName 7
+GetConstValue 2
+GetConstBmask 2
+GetConstEnum 2
+GetConstEx 2 2 2 2
+GetFirstBmask 2
+GetLastBmask 2
+GetNextBmask 2 2
+GetPrevBmask 2 2
+GetFirstConst 2 2
+GetLastConst 2 2
+GetNextConst 2 2 2
+GetPrevConst 2 2 2
+GetConstName 2
+GetConstCmt 2 2
+AddEnum 2 7 2
+DelEnum 2
+SetEnumIdx 2 2
+SetEnumName 2 7
+SetEnumCmt 2 7 2
+SetEnumFlag 2 2
+SetEnumWidth 2 2
+SetEnumBf 2 2
+AddConstEx 2 7 2 2
+DelConstEx 2 2 2 2
+SetConstName 2 7
+SetConstCmt 2 7 2
+IsBitfield 2
+SetBmaskName 2 2 7
+GetBmaskName 2 2
+SetBmaskCmt 2 2 7 2
+GetBmaskCmt 2 2 2
+GetLongPrm 2
+GetShortPrm 2
+GetCharPrm 2
+SetLongPrm 2 2
+SetShortPrm 2 2
+SetCharPrm 2 2
+ChangeConfig 7
+AddHotkey 7 7
+DelHotkey 7
+GetInputFile
+GetInputFilePath
+SetInputFilePath 7
+Exec 7
+ProcessUiAction 7 2
+Sleep 2
+GetIdaDirectory
+GetIdbPath
+GetInputMD5
+OpHigh 2 2 2
+MakeAlign 2 2 2
+Demangle 7 2
+SetManualInsn 2 7
+GetManualInsn 2
+SetArrayFormat 2 2 2 2
+LoadTil 7
+Til2Idb 2 7
+GetMaxLocalType
+SetLocalType 2 7 2
+GetLocalType 2 2
+GetLocalTypeName 2
+SetStatus 2
+Refresh
+RefreshLists
+RunPlugin 7 2
+ApplySig 7
+GetStringType 2
+GetString 2 2 2
+GetOriginalByte 2
+GetFpNum 2 2
+HideArea 2 2 7 7 7 2
+SetHiddenArea 2 2
+DelHiddenArea 2
+GetType 2
+GuessType 2
+SetType 2 7
+ParseTypes 7 2
+ParseType 7 2
+GetColor 2 2
+SetColor 2 2 2
+SetXML 7 7 7
+GetXML 7
+DelXML 7
+PushXML 7
+PopXML
+GetBptQty
+GetBptEA 2
+GetBptAttr 2 2
+SetBptAttr 2 2 2
+SetBptCndEx 2 7 2
+AddBptEx 2 2 2
+DelBpt 2
+EnableBpt 2 2
+CheckBpt 2
+LoadDebugger 7 2
+StartDebugger 7 7 7
+StopDebugger
+PauseProcess
+GetProcessQty
+GetProcessPid 2
+GetProcessName 2
+AttachProcess 2 2
+DetachProcess
+GetThreadQty
+GetThreadId 2
+GetCurrentThreadId
+SelectThread 2
+SuspendThread 2
+ResumeThread 2
+GetFirstModule
+GetNextModule 2
+GetModuleName 2
+GetModuleSize 2
+StepInto
+StepOver
+RunTo 2
+StepUntilRet
+GetDebuggerEvent 2 2
+GetProcessState
+SetDebuggerOptions 2
+SetRemoteDebugger 7 7 2
+GetEventId
+GetEventPid
+GetEventTid
+GetEventEa
+IsEventHandled
+GetEventModuleName
+GetEventModuleBase
+GetEventModuleSize
+GetEventExitCode
+GetEventInfo
+GetEventBptHardwareEa
+GetEventExceptionCode
+GetEventExceptionEa
+GetEventExceptionInfo
+CanExceptionContinue
+RefreshDebuggerMemory
+TakeMemorySnapshot 2
+EnableTracing 2 2
+GetExceptionQty
+GetExceptionCode 2
+GetExceptionName 2
+GetExceptionFlags 2
+DefineException 2 7 7 2
+SetExceptionFlags 2 2
+ForgetException 2
+IsString 4
+IsLong 4
+IsFloat 4
+IsObject 4
+hasattr 5 7
+getattr 5 7
+setattr 5 7 4
+delattr 5 7
+firstattr 5
+lastattr 5
+nextattr 5 7
+prevattr 5 7
+object.retrieve 5 4 4 2
+object.store 5 4 4 4
+typeinfo.field 5 4
+Qword 2
+GetCustomDataType 7
+GetCustomDataFormat 7
+BeginTypeUpdating 2
+EndTypeUpdating 2
+operand_to_idc 8
+insn_to_idc 8
+loader_input_t.loader_input_t 5 8
+loader_input_t.dtor_ 5
+loader_input_t.read 5 10 2
+loader_input_t.size 5
+loader_input_t.seek 5 2 2
+loader_input_t.tell 5
+loader_input_t.gets 5 2
+loader_input_t.getc 5
+loader_input_t.getz 5 2 2
+loader_input_t.readbytes 5 10 2 2
+loader_input_t.close 5
+open_loader_input 7 2
+Breakpoint.Breakpoint 5 4
+Breakpoint.__dtor__ 5
+Breakpoint.__getattr__ 5 7
+Breakpoint.__setattr__ 5 7 4
+Breakpoint._update 5
+Breakpoint._add 5 4
+Breakpoint._delete 5
+Breakpoint.print 5
+Breakpoint.set_abs_bpt 5 2
+Breakpoint.set_src_bpt 5 7 2
+Breakpoint.set_sym_bpt 5 7 2
+Breakpoint.set_rel_bpt 5 7 2
+SetGDBExtConfig 7 7
