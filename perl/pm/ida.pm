@@ -41,6 +41,8 @@ use constant FF_0ENUM => 0x00800000;            # Enumeration?
 use constant FF_0FOP  => 0x00900000;            # Forced operand?
 use constant FF_0STRO => 0x00A00000;            # Struct offset?
 use constant FF_0STK  => 0x00B00000;            # Stack variable?
+use constant FF_0FLT  => 0x00C00000;		# Floating point number?
+use constant FF_0CUST => 0x00D00000;            # Custom format type?
 
 use constant MS_1TYPE => 0x0F000000;            # Mask for 2nd arg typing
 use constant FF_1VOID => 0x00000000;            # Void (unknown)?
@@ -55,6 +57,8 @@ use constant FF_1ENUM => 0x08000000;            # Enumeration?
 use constant FF_1FOP  => 0x09000000;            # Forced operand?
 use constant FF_1STRO => 0x0A000000;            # Struct offset?
 use constant FF_1STK  => 0x0B000000;            # Stack variable?
+use constant FF_1FLT  => 0x0C000000;            # Floating point number?
+use constant FF_1CUST => 0x0D000000;            # Custom format type?
 
 use constant DT_TYPE => 0xF0000000;             # Mask for DATA typing
 
@@ -70,6 +74,8 @@ use constant FF_FLOAT => 0x80000000;            # float
 use constant FF_DOUBLE => 0x90000000;           # double
 use constant FF_PACKREAL => 0xA0000000;         # packed decimal real
 use constant FF_ALIGN    => 0xB0000000;         # alignment directive
+use constant FF_3BYTE  =>  0xC0000000;          # 3-byte data
+use constant FF_CUSTOM =>  0xD0000000;          # custom data type
 
 use constant MS_CODE => 0xF0000000;
 use constant FF_FUNC => 0x10000000;             # function start?
@@ -86,8 +92,8 @@ use constant FUNCATTR_FRAME   => 10;    # function frame id
 use constant FUNCATTR_FRSIZE  => 14;    # size of local variables
 use constant FUNCATTR_FRREGS  => 18;    # size of saved registers area
 use constant FUNCATTR_ARGSIZE => 20;    # number of bytes purged from the stack
-use constant FUNCATTR_COLOR   => 54;    # function color code
-
+use constant FUNCATTR_FPD     => 24;    # frame pointer delta
+use constant FUNCATTR_COLOR   => 28;    # function color code
 
 #
 # for AddHotKey
@@ -111,10 +117,14 @@ use constant SEG_UNDF => 8;
 use constant SEG_BSS => 9;
 use constant SEG_ABSSYM => 10;
 use constant SEG_COMM => 11;
+use constant SEG_IMEM => 12;       # internal processor memory & sfr (8051)
 
 #
 # for GetSegmentAttr
 #
+use constant SEGATTR_START  =>  0;      # starting address
+use constant SEGATTR_END    =>  4;      # ending address
+use constant SEGATTR_ORGBASE => 16;
 use constant SEGATTR_ALIGN  => 20;      # alignment
 use constant SEGATTR_COMB   => 21;      # combination
 use constant SEGATTR_PERM   => 22;      # permissions
@@ -158,6 +168,7 @@ use constant GENFLG_MAPDMNG => 0x0004; # map: demangle names
 use constant GENFLG_IDCTYPE => 0x0008; # idc: gen only information about types
 use constant GENFLG_ASMTYPE => 0x0010; # asm&lst: gen information about types too
 use constant GENFLG_GENHTML => 0x0020; # asm&lst: generate html (gui version only)
+use constant GENFLG_ASMINC  => 0x0040; # asm&lst: gen information only about types
 
 #
 # for AddConstEx
@@ -945,6 +956,11 @@ sub OpChar
   return OpChr(shift, -1);
 }
 
+sub OpDec
+{
+  return OpDecimal(shift, -1);
+}
+
 sub OpSegment
 {
   return OpSeg(shift, -1);
@@ -1043,6 +1059,8 @@ FF_0ENUM
 FF_0FOP
 FF_0STRO
 FF_0STK
+FF_0FLT
+FF_0CUST
 MS_1TYPE
 FF_1VOID
 FF_1NUMH
@@ -1056,6 +1074,8 @@ FF_1ENUM
 FF_1FOP
 FF_1STRO
 FF_1STK
+FF_1FLT
+FF_1CUST
 DT_TYPE
 FF_BYTE
 FF_WORD
@@ -1069,6 +1089,8 @@ FF_FLOAT
 FF_DOUBLE
 FF_PACKREAL
 FF_ALIGN
+FF_3BYTE
+FF_CUSTOM
 MS_CODE
 FF_FUNC
 FF_IMMD
@@ -1088,6 +1110,10 @@ SEG_UNDF
 SEG_BSS
 SEG_ABSSYM
 SEG_COMM
+SEG_IMEM
+SEGATTR_START
+SEGATTR_END
+SEGATTR_ORGBASE
 SEGATTR_ALIGN
 SEGATTR_COMB
 SEGATTR_PERM
@@ -1111,8 +1137,11 @@ OFILE_DIF
 GENFLG_MAPSEGS
 GENFLG_MAPNAME
 GENFLG_MAPDMNG
+GENFLG_MAPLOC
 GENFLG_IDCTYPE
 GENFLG_ASMTYPE
+GENFLG_GENHTML
+GENFLG_ASMINC
 ASCSTR_C
 ASCSTR_PASCAL
 ASCSTR_LEN2
@@ -1156,6 +1185,7 @@ FUNCATTR_FRAME
 FUNCATTR_FRSIZE
 FUNCATTR_FRREGS
 FUNCATTR_ARGSIZE
+FUNCATTR_FPD
 FUNCATTR_COLOR
 FUNC_NORET
 FUNC_FAR
@@ -2228,6 +2258,7 @@ here
 OpOffset
 OpNum
 OpChar
+OpDec
 OpSegment
 );
 

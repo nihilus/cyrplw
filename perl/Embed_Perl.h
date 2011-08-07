@@ -12,6 +12,7 @@
 #include <win32iop.h>
 
 void my_init_sys_perl();
+void my_term_sys_perl();
 
 class Embed_Perl: public Embed_Language
 {

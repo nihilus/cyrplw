@@ -29,6 +29,18 @@
 use Getopt::Std;
 use vars qw/$opt_i $opt_m $opt_p $opt_t/;
 
+# globals
+$IDC_IDC = '../../../../idc/idc.idc';
+$MY_FILE = 'idc.out';
+# outpit files names
+$XS_FILE = 'IDA.xs';
+$PM_FILE = 'ida.pm';
+$I_SWIG  = 'ida.i';
+$C_FILE	 = 'ida.cpp';
+$H_FILE  = 'ida.h';
+# big mama array name
+$ARRAY   = 'RP_Funcs';
+
 sub usage
 {
   printf <<EOF;
@@ -41,18 +53,6 @@ sub usage
 EOF
   exit 8;
 }
-
-# globals
-$IDC_IDC = 'idc.idc';
-$MY_FILE = 'idc.out';
-# outpit files names
-$XS_FILE = 'IDA.xs';
-$PM_FILE = 'ida.pm';
-$I_SWIG  = 'ida.i';
-$C_FILE	 = 'ida.cpp';
-$H_FILE  = 'ida.h';
-# big mama array name
-$ARRAY   = 'RP_Funcs';
 
 #list of recognized IDC functions return values
 %results = (
@@ -563,14 +563,13 @@ sub form_XS
 }
 
 ##
-## SWIG related functions
+## SWIG related functions. Warning - all use global filehandle OUT
 ##
 sub produce_SWIG_header
 {
   printf OUT <<'EoH';
 %module IDA
 %{
-%}
 
 EoH
 }
@@ -593,14 +592,10 @@ sub do_addition
   printf(OUT "extern char *IdpName(void);\n");
 }
 
-sub produce_SWIG
+sub make_flist
 {
   my $hash = shift;
   my($name, $href, $arg_ref, $arg, $arg_count, $res);
-
-  open (OUT, ">" . $I_SWIG)
-    or die("Cannot create output file '" . $I_SWIG . "', ($!)");
-  produce_SWIG_header;
   while ( ($name, $href) = each %$hash )
   {
     next if ( exists $href->{'e'} );
@@ -620,6 +615,19 @@ sub produce_SWIG
     printf(OUT ");\n");
   }
   do_addition;
+}
+
+sub produce_SWIG
+{
+  my $hash = shift;
+  open (OUT, ">" . $I_SWIG)
+    or die("Cannot create output file '" . $I_SWIG . "', ($!)");
+  produce_SWIG_header;
+  # make extern functions declarations to make compiler happy
+  make_flist($hash);
+  printf(OUT "%%}\n\n");
+  # make real list
+  make_flist($hash);
   close OUT; 
 }
 

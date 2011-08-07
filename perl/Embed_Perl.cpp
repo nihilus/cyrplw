@@ -161,6 +161,10 @@ void my_init_sys_perl()
   PERL_SYS_INIT(&argc, &argv);
 }
 
+void my_term_sys_perl()
+{
+  PERL_SYS_TERM();
+}
 // return code or exception from constructor IMHO is bad practice so all
 // important code for initialization located in Init method
 Embed_Perl::Embed_Perl()

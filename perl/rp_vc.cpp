@@ -16,6 +16,11 @@ void idaapi run(int arg)
   perl.RunScript(res);
 }
 
+void idaapi my_term()
+{
+  my_term_sys_perl();
+}
+
 int idaapi init(void)
 {
   my_init_sys_perl();
@@ -37,11 +42,8 @@ extern "C" plugin_t PLUGIN = {
   IDP_INTERFACE_VERSION,
   0,                    // plugin flags
   init,                 // initialize
-
-  NULL,                 // terminate. this pointer may be NULL.
-
+  my_term,              // terminate. this pointer may be NULL.
   run,                  // invoke plugin
-
   comment,              // long comment about the plugin
                         // it could appear in the status line
                         // or as a hint
