@@ -197,13 +197,13 @@ int Embed_Perl::Init()
   perl_construct(m_perl);
   /* redirect of input/output */
   init_idamsg_io(m_perl);
-  IPerlStdIO *io = m_perl->IStdIO;
+/*  IPerlStdIO *io = m_perl->IStdIO;
   if ( io != NULL )
   {
     io->pWrite   = my_write;
     io->pPrintf  = my_printf;
     io->pVprintf = my_vprintf;
-  }
+  } */
   return 1;
 }
 
