@@ -28,6 +28,7 @@ use constant FF_LABL => 0x00008000;             # Has dummy name?
 use constant FF_FLOW => 0x00010000;             # Exec flow from prev instruction?
 use constant FF_VAR  => 0x00080000;             # Is byte variable ?
 
+use constant FF_IVL   => 0x00000100;
 use constant MS_0TYPE => 0x00F00000;            # Mask for 1st arg typing
 use constant FF_0VOID => 0x00000000;            # Void (unknown)?
 use constant FF_0NUMH => 0x00100000;            # Hexadecimal number?
@@ -977,6 +978,12 @@ use constant Ix86_swapgs => 590;
 # F U N C T I O N S
 #
 ###
+sub isLoaded
+{
+  my $flag = GetFlags(shift);
+  return $flag & FF_IVL; 
+}
+
 sub AutoMark
 {
   my($ea, $qtype) = @_;
@@ -2161,6 +2168,7 @@ IDA_version
 IdpName
 IsBitfield
 is_debugged
+isLoaded
 IsPublicName
 IsUnion
 ItemEnd
