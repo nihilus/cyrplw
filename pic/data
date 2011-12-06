@@ -123,6 +123,7 @@ regs: eax edx
 regs: eax edx
 
 [cqo]
+regs: rax rdx
 
 [daa]
 regs: eax
@@ -793,6 +794,10 @@ regs: eax ebx ecx edx
 [cmpxchg8b]
 from: P
 regs: edx eax
+cflags: zf
+
+[cmpxchg16b]
+regs: rdx rax
 cflags: zf
 
 [rdtsc]
@@ -2280,3 +2285,84 @@ type: SSE
 
 [movsldup]
 type: SSE
+
+[addsubpd]
+type: SSE3
+
+[addsubps]
+type: SSE3
+
+[haddpd]
+type: SSE3
+
+[haddps]
+type: SSE3
+
+[hsubpd]
+type: SSE3
+
+[hsubps]
+type: SSE3
+
+[monitor]
+type: SSE3
+
+[mwait]
+type: SSE3
+
+[fisttp]
+type: SSE3
+
+[lddqu]
+type: SSE3
+
+[movsxd]
+op: 1
+
+[psignb]
+type: SSSE3
+
+[psignw]
+type: SSSE3
+
+[psignd]
+type: SSSE3
+
+[pshufb]
+type: SSSE3
+
+[pmulhrsw]
+type: SSSE3
+
+[pmaddubsw]
+type: SSSE3
+
+[phsubsw]
+type: SSSE3
+
+[phaddsw]
+type: SSSE3
+
+[phaddw]
+type: SSSE3
+
+[phaddd]
+type: SSSE3
+
+[phsubw]
+type: SSSE3
+
+[phsubd]
+type: SSSE3
+
+[palignr]
+type: SSSE3
+
+[pabsb]
+type: SSSE3
+
+[pabsw]
+type: SSSE3
+
+[pabsd]
+type: SSSE3

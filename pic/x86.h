@@ -106,7 +106,7 @@
 #define Ix86_lfs	103	/* */
 #define Ix86_lldt	104	/* */
 #define Ix86_lmsw	105	/* */
-/* 106 is absent */
+#define Ix86_lock	106
 #define Ix86_lods	107
 #define Ix86_loopw	108	/* */
 #define Ix86_loop	109	/* */
@@ -525,6 +525,7 @@
 #define Ix86_fxch7 	516
 #define Ix86_fstp8 	517
 #define Ix86_fstp9 	518
+/* P4 instructions */
 #define Ix86_addpd 	519
 #define Ix86_addsd 	520
 #define Ix86_andnpd 	521
@@ -600,7 +601,155 @@
 #define Ix86_movddup	591
 #define Ix86_movshdup	592
 #define Ix86_movsldup	593
-
+/* amd64 */
+#define Ix86_movsxd	594
+#define Ix86_cmpxchg16b	595
+/* sse3 */
+#define Ix86_addsubpd	596
+#define Ix86_addsubps   597
+#define Ix86_haddpd	598
+#define Ix86_haddps	599
+#define Ix86_hsubpd	600
+#define Ix86_hsubps	601
+#define Ix86_monitor	602
+#define Ix86_mwait	603
+#define Ix86_fisttp	604
+#define Ix86_lddqu	605
+/* SSSE3 */
+#define Ix86_psignb	606
+#define Ix86_psignw	607
+#define Ix86_psignd	608
+#define Ix86_pshufb	609
+#define Ix86_pmulhrsw	610
+#define Ix86_pmaddubsw	611
+#define Ix86_phsubsw	612
+#define Ix86_phaddsw	613
+#define Ix86_phaddw	614
+#define Ix86_phaddd	615
+#define Ix86_phsubw	616
+#define Ix86_phsubd	617
+#define Ix86_palignr	618
+#define Ix86_pabsb	619
+#define Ix86_pabsw	620
+#define Ix86_pabsd	621
+/* VMX */
+#define Ix86_vmcall	622
+#define Ix86_vmclear	623
+#define Ix86_vmlaunch	624
+#define Ix86_vmresume	625
+#define Ix86_vmptrld	626
+#define Ix86_vmptrst	627
+#define Ix86_vmread	628
+#define Ix86_vmwrite	629
+#define Ix86_vmxoff	630
+#define Ix86_vmxon	631
+#define Ix86_ud2	632
+#define Ix86_rdtscp	633
+#define Ix86_pfrcpv	634
+#define Ix86_pfrsqrtv	635
+/* sse2 pseudo */
+#define Ix86_cmpeqpd	636
+#define Ix86_cmpltpd	637
+#define Ix86_cmplepd	638
+#define Ix86_cmpunordpd	639
+#define Ix86_cmpneqpd	640
+#define Ix86_cmpnltpd	641
+#define Ix86_cmpnlepd	642
+#define Ix86_cmpordpd	643
+#define Ix86_cmpeqsd	644
+#define Ix86_cmpltsd	645
+#define Ix86_cmplesd	646
+#define Ix86_cmpunordsd	647
+#define Ix86_cmpneqsd	648
+#define Ix86_cmpnltsd	649
+#define Ix86_cmpnlesd	650
+#define Ix86_cmpordsd	651
+/* SSSE4.1 */
+#define Ix86_blendpd	652
+#define Ix86_blendps	653
+#define Ix86_blendvpd	654
+#define Ix86_blendvps	655
+#define Ix86_dppd	656
+#define Ix86_dpps	657
+#define Ix86_extractps	658
+#define Ix86_insertps	659
+#define Ix86_movntdqa	660
+#define Ix86_mpsadbw	661
+#define Ix86_packusdw	662
+#define Ix86_pblendvb	663
+#define Ix86_pblendw	664
+#define Ix86_pcmpeqq	665
+#define Ix86_pextrb	666
+#define Ix86_pextrd	667
+#define Ix86_pextrq	668
+#define Ix86_phminposuw	669
+#define Ix86_pinsrb	670
+#define Ix86_pinsrd	671
+#define Ix86_pinsrq	672
+#define Ix86_pmaxsb	673
+#define Ix86_pmaxsd	674
+#define Ix86_pmaxud	675
+#define Ix86_pmaxuw	676
+#define Ix86_pminsb	677
+#define Ix86_pminsd	678
+#define Ix86_pminud	679
+#define Ix86_pminuw	680
+#define Ix86_pmovsxbw	681
+#define Ix86_pmovsxbd	682
+#define Ix86_pmovsxbq	683
+#define Ix86_pmovsxwd	684
+#define Ix86_pmovsxwq	685
+#define Ix86_pmovsxdq	686
+#define Ix86_pmovzxbw	687
+#define Ix86_pmovzxbd	688
+#define Ix86_pmovzxbq	689
+#define Ix86_pmovzxwd	690
+#define Ix86_pmovzxwq	691
+#define Ix86_pmovzxdq	692
+#define Ix86_pmuldq	693
+#define Ix86_pmulld	694
+#define Ix86_ptest	695
+#define Ix86_roundpd	696
+#define Ix86_roundps	697
+#define Ix86_roundsd	698
+#define Ix86_roundss	699
+/* SSSE4.2 */
+#define Ix86_crc32	700
+#define Ix86_pcmpestri	701
+#define Ix86_pcmpestrm	702
+#define Ix86_pcmpistri	703
+#define Ix86_pcmpistrm	704
+#define Ix86_pcmpgtq	705
+#define Ix86_popcnt	706
+#define Ix86_extrq	707
+#define Ix86_insertq	708
+#define Ix86_movntsd	709
+#define Ix86_movntss	710
+#define Ix86_lzcnt	711
+#define Ix86_xgetbv	712
+#define Ix86_xrstor	713
+#define Ix86_xsave	714
+#define Ix86_xsetbv	715
+#define Ix86_getsec	716
+#define Ix86_clgi	717
+#define Ix86_invlpga	718
+#define Ix86_skinit	719
+#define Ix86_stgi	720
+#define Ix86_vmexit	721
+#define Ix86_vmload	722
+#define Ix86_vmmcall	723
+#define Ix86_vmrun	724
+#define Ix86_vmsave	725
+#define Ix86_invept	726
+#define Ix86_invvpid	727
+#define Ix86_movbe	728
+#define Ix86_aesenc	729
+#define Ix86_aesenclast	730
+#define Ix86_aesdec	731
+#define Ix86_aesdeclast	732
+#define Ix86_aesimc	733
+#define Ix86_aeskeygenassist	734
+#define Ix86_pclmulqdq	735
 /* x86 registers for 32bit mode */
 #define r_EAX	0
 #define r_ECX	1
@@ -610,6 +759,15 @@
 #define r_EBP	5
 #define r_ESI	6
 #define r_EDI	7
+
+#define r_RAX	0
+#define r_RCX	1
+#define r_RDX	2
+#define r_RBX	3
+#define r_RSP	4
+#define r_RBP	5
+#define r_RSI	6
+#define r_RDI	7
 
 /* from IDA 4.70 */
 #define r_R8	8
@@ -653,7 +811,8 @@
 #define AMD_3D		3
 #define SSE		4
 #define SSE3		5
-#define UNKNOWN_IT	6
+#define SSSE3		6
+#define UNKNOWN_IT	7
 
 /* for processor from which instruction may be recognized */
 #define FROM_486	1

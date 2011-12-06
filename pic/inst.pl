@@ -29,12 +29,29 @@ $UFLAGS='UFLAGS';
  'EBP' => 5,
  'ESI' => 6,
  'EDI' => 7,
- 'ES'  => 16,
- 'CS'  => 17,
- 'SS'  => 18,
- 'DS'  => 19,
- 'FS'  => 20,
- 'GS'  => 21
+ 'RAX' => 0,
+ 'RCX' => 1,
+ 'RDX' => 2,
+ 'RBX' => 3,
+ 'RSP' => 4,
+ 'RBP' => 5,
+ 'RSI' => 6,
+ 'RDI' => 7,
+ 'R8'  => 8,
+ 'R9'  => 9,
+ 'R10'  => 10,
+ 'R11'  => 11,
+ 'R12'  => 12,
+ 'R13'  => 13,
+ 'R14'  => 14,
+ 'R15'  => 15,
+ 'RIP'  => 28,
+ 'ES'  => 29,
+ 'CS'  => 30,
+ 'SS'  => 31,
+ 'DS'  => 32,
+ 'FS'  => 33,
+ 'GS'  => 34
 );
 
 ######## INCLUDES ########
@@ -208,12 +225,13 @@ sub process_line
   if ( $section eq $TYPE )
   {
     # types: 3D FPU U MMX SIMD
-    if ( $data ne '3D' and
-         $data ne 'U' and
-         $data ne 'FPU' and
-         $data ne 'MMX' and
-         $data ne 'SSE' and
-         $data ne 'SSE3'
+    if ( $data ne '3D'   and
+         $data ne 'U'    and
+         $data ne 'FPU'  and
+         $data ne 'MMX'  and
+         $data ne 'SSE'  and
+         $data ne 'SSE3' and
+         $data ne 'SSSE3'
        )
     {
       printf("Error: line %d, unknown $TYPE \"%s\"\n", $N, $data);
@@ -514,9 +532,14 @@ for ( $name = 1; $name <= $max_opcode; $name++ )
  {
    printf(OUT "/* %d */\tNULL", $name);
  } else {
-   printf(OUT "/* %d eq %s */\t\&opcode_%s", 
-     $name, $opcodez{$name}, $datas{$opcodez{$name}}->{$STRUCT} 
-   );
+   if ( exists $datas{$opcodez{$name}}->{$STRUCT} )
+   {
+     printf(OUT "/* %d eq %s */\t\&opcode_%s", 
+       $name, $opcodez{$name}, $datas{$opcodez{$name}}->{$STRUCT} 
+     );
+   } else {
+     printf(OUT "/* %d eq %s */\tNULL", $name, $opcodez{$name});
+   }
  }
  printf(OUT ",\n") if ( $name != $max_opcode );
 }
