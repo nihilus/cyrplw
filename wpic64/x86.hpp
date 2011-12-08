@@ -61,7 +61,7 @@ get_SIB_SS(char c)
 dref_t idaapi get_dreftype_op1(const insn_t *);
 dref_t idaapi get_dreftype_op2(const insn_t *);
 
-void idaapi pic_add_dref(ea_t, ea_t, dref_t, char);
+void idaapi pic_add_dref(ea_t, ea_t, dref_t, char, bool make_dtype = false);
 bool idaapi is_change_stack(const insn_t *);
 
 #endif /* RP_X86_HPP */

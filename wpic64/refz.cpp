@@ -3,13 +3,16 @@
 #include <idp.hpp>
 
 void idaapi
-pic_add_dref(ea_t from, ea_t to, dref_t dtype, char dtyp)
+pic_add_dref(ea_t from, ea_t to, dref_t dtype, char dtyp, bool make_type)
 {
   add_dref(from, to, dtype);
   char cmt[24];
   btoa(cmt, sizeof(cmt), to, 0x10);
   rp_set_comment(from, cmt, false );
+  if ( !make_type )
+    return;
   if ( dtype == dr_R || dr_W )
+  {
    switch(dtyp)
    {
      case dt_byte: doByte(to,1);	break;
@@ -32,4 +35,5 @@ pic_add_dref(ea_t from, ea_t to, dref_t dtype, char dtyp)
       break;
      case dt_tbyte: doTbyt(to, ph.tbyte_size);
    }
+  }
 }

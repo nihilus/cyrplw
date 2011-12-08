@@ -276,6 +276,16 @@ const struct RP_opcode opcode_cpuid = {
 	0
 };
 
+const struct RP_opcode opcode_cqo = {
+	0,
+	0,
+	(1 << r_RAX) | (1 << r_RDX),
+	0,
+	0,
+	0,
+	0
+};
+
 const struct RP_opcode opcode_das = {
 	0,
 	0,
@@ -606,6 +616,16 @@ const struct RP_opcode opcode_monitor = {
 	0
 };
 
+const struct RP_opcode opcode_movddup = {
+	SSE3,
+	0,
+	0,
+	0,
+	0,
+	0,
+	1
+};
+
 const struct RP_opcode opcode_movs = {
 	0,
 	0,
@@ -673,7 +693,7 @@ const struct RP_opcode opcode_phaddsw = {
 	0,
 	0,
 	0,
-	0
+	1
 };
 
 const struct RP_opcode opcode_pop = {
@@ -1036,6 +1056,16 @@ const struct RP_opcode opcode_xchg = {
 	3
 };
 
+const struct RP_opcode opcode_xorpd = {
+	0,
+	FROM_P4,
+	0,
+	0,
+	0,
+	0,
+	1
+};
+
 const struct RP_opcode *const RP_data[] = {
 /* 1 eq aaa */	&opcode_aaa,
 /* 2 eq aad */	&opcode_aad,
@@ -1067,7 +1097,7 @@ const struct RP_opcode *const RP_data[] = {
 /* 28 eq cmpsb */	&opcode_cmpsb,
 /* 29 eq cwd */	&opcode_cdq,
 /* 30 eq cdq */	&opcode_cdq,
-/* 31 eq cqo */	&opcode_pfpnacc,
+/* 31 eq cqo */	&opcode_cqo,
 /* 32 eq daa */	&opcode_das,
 /* 33 eq das */	&opcode_das,
 /* 34 eq dec */	&opcode_dec,
@@ -1555,10 +1585,10 @@ const struct RP_opcode *const RP_data[] = {
 /* 516 eq fxch7 */	&opcode_fimul,
 /* 517 eq fstp8 */	&opcode_fimul,
 /* 518 eq fstp9 */	&opcode_fimul,
-/* 519 eq addpd */	&opcode_lfence,
-/* 520 eq addsd */	&opcode_lfence,
-/* 521 eq andnpd */	&opcode_lfence,
-/* 522 eq andpd */	&opcode_lfence,
+/* 519 eq addpd */	&opcode_xorpd,
+/* 520 eq addsd */	&opcode_xorpd,
+/* 521 eq andnpd */	&opcode_xorpd,
+/* 522 eq andpd */	&opcode_xorpd,
 /* 523 eq clflush */	&opcode_lfence,
 /* 524 eq cmppd */	&opcode_lfence,
 /* 525 eq cmpsd */	&opcode_lfence,
@@ -1623,25 +1653,25 @@ const struct RP_opcode *const RP_data[] = {
 /* 584 eq ucomisd */	&opcode_lfence,
 /* 585 eq unpckhpd */	&opcode_lfence,
 /* 586 eq unpcklpd */	&opcode_lfence,
-/* 587 eq xorpd */	&opcode_lfence,
+/* 587 eq xorpd */	&opcode_xorpd,
 /* 588 eq syscall */	&opcode_pfpnacc,
 /* 589 eq sysret */	&opcode_pfpnacc,
 /* 590 eq swapgs */	&opcode_pfpnacc,
-/* 591 eq movddup */	&opcode_monitor,
-/* 592 eq movshdup */	&opcode_ldmxcsr,
-/* 593 eq movsldup */	&opcode_ldmxcsr,
+/* 591 eq movddup */	&opcode_movddup,
+/* 592 eq movshdup */	&opcode_cmpunordps,
+/* 593 eq movsldup */	&opcode_cmpunordps,
 /* 594 eq movsxd */	&opcode_str,
 /* 595 eq cmpxchg16b */	&opcode_cmpxchg16b,
-/* 596 eq addsubpd */	&opcode_monitor,
-/* 597 eq addsubps */	&opcode_monitor,
-/* 598 eq haddpd */	&opcode_monitor,
-/* 599 eq haddps */	&opcode_monitor,
-/* 600 eq hsubpd */	&opcode_monitor,
-/* 601 eq hsubps */	&opcode_monitor,
+/* 596 eq addsubpd */	&opcode_movddup,
+/* 597 eq addsubps */	&opcode_movddup,
+/* 598 eq haddpd */	&opcode_movddup,
+/* 599 eq haddps */	&opcode_movddup,
+/* 600 eq hsubpd */	&opcode_movddup,
+/* 601 eq hsubps */	&opcode_movddup,
 /* 602 eq monitor */	&opcode_monitor,
 /* 603 eq mwait */	&opcode_monitor,
-/* 604 eq fisttp */	&opcode_monitor,
-/* 605 eq lddqu */	&opcode_monitor,
+/* 604 eq fisttp */	&opcode_movddup,
+/* 605 eq lddqu */	&opcode_movddup,
 /* 606 eq psignb */	&opcode_phaddsw,
 /* 607 eq psignw */	&opcode_phaddsw,
 /* 608 eq psignd */	&opcode_phaddsw,
@@ -1736,7 +1766,7 @@ const struct RP_opcode *const RP_data[] = {
 /* 697 eq roundps */	NULL,
 /* 698 eq roundsd */	NULL,
 /* 699 eq roundss */	NULL,
-/* 700 eq crc32 */	NULL,
+/* 700 eq crc32 */	&opcode_str,
 /* 701 eq pcmpestri */	NULL,
 /* 702 eq pcmpestrm */	NULL,
 /* 703 eq pcmpistri */	NULL,

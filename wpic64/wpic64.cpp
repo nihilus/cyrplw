@@ -92,7 +92,7 @@ get_next_code(ea_t start)
   if ( NULL == cs )
    return NULL;
 
-  for ( ; start < cs->endEA; start = get_item_end(start) )
+  for ( start = get_item_end(start); start < cs->endEA; start = get_item_end(start) )
    if ( isCode(getFlags(start)) )
     return start;
   return cs->endEA;
@@ -102,21 +102,23 @@ int cmp_base_and_zero_index(const op_t &op, uint16 base_reg)
 {
   if ( x86_base(op) == base_reg )
     return 1;
-  if ( !sib_scale(op) && sib_index(op) == base_reg )
+  if ( op.hasSIB && !sib_scale(op) && sib_index(op) == base_reg )
     return 1;
   return 0;
 }
 
-int is_our_base_reg(uint16 base_reg, uval_t &value)
+int is_our_base_reg(uint16 base_reg, uval_t &value, char &dtyp)
 {
   if ( exists_phrase(&cmd.Op1) && exists_addr(&cmd.Op1) && cmp_base_and_zero_index(cmd.Op1, base_reg) )
   {
     value = cmd.Op1.addr;
+    dtyp  = cmd.Op1.dtyp;
     return 1;
   }
   if ( exists_phrase(&cmd.Op2) && exists_addr(&cmd.Op2) && cmp_base_and_zero_index(cmd.Op2, base_reg) )
   {
     value = cmd.Op2.addr;
+    dtyp  = cmd.Op2.dtyp;
     return 1;
   }
   return 0;
@@ -149,6 +151,7 @@ int is_end_cf()
 void analyze_wpic(ea_t &curr_addr, ea_t seg_end, ea_t base)
 {
   uval_t val;
+  char dtyp;
   uint16 base_reg = cmd.Op1.reg;
   curr_addr = get_item_end(curr_addr);
   while(curr_addr < seg_end)
@@ -166,10 +169,10 @@ void analyze_wpic(ea_t &curr_addr, ea_t seg_end, ea_t base)
     report_instr(curr_addr);
 #endif /* WPIC64_SHOW */
     // check for base reg and offset
-    if ( is_our_base_reg(base_reg, val) )
+    if ( is_our_base_reg(base_reg, val, dtyp) )
     {
       ea_t ref_addr = base + val;
-      pic_add_dref(curr_addr, ref_addr, dr_O, dt_byte);
+      pic_add_dref(curr_addr, ref_addr, dr_O, dtyp, true);
       g_reffed++;
     }
     curr_addr += len;
@@ -178,8 +181,10 @@ void analyze_wpic(ea_t &curr_addr, ea_t seg_end, ea_t base)
 
 void process_all(std::list<segment_t *> *list, ea_t base)
 {
-  char pattern[24];
-  qsnprintf(pattern, sizeof(pattern), "%I64xh", base);
+  char pattern[256];
+  // check if base already have some name
+  if ( NULL == get_name(BADADDR, base, pattern, sizeof(pattern)) )
+    qsnprintf(pattern, sizeof(pattern), "%I64xh", base);
   std::list<segment_t *>::const_iterator citer;
   for ( citer = list->begin(); citer != list->end(); ++citer )
   {
