@@ -17,7 +17,7 @@
 #  26 jul 2011 (C) RedPlait
 #
 # Move debugger interface to different files
-#   3 Aug 2011 (C) RedPlai
+#   3 Aug 2011 (C) RedPlait
 
 # Storage format for each function:
 #  hash, where key is name and value is ref to hash
@@ -107,7 +107,10 @@ EOF
 # list of ignored IDC functions (those names conflicted with C RunTime library 
 # or can be implemented in Perl much better)
 my @ignored_IDC = qw(
+ sprintf
+ fprintf
  ftell
+ xtol
  atol
  fputc
  filelength
@@ -130,6 +133,13 @@ my @ignored_IDC = qw(
 
 # Debugger interface functions
 my %dbg_idc = (
+ 'DbgByte' => 1,
+ 'DbgDword' => 1,
+ 'DbgQword' => 1,
+ 'DbgRead' => 1,
+ 'DbgWord' => 1,
+ 'DbgWrite' => 1,
+ 'PatchDbgByte' => 1,
  'LoadDebugger' => 1,
  'StartDebugger' => 1,
  'StopDebugger' => 1,
