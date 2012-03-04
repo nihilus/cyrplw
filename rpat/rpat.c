@@ -10,6 +10,8 @@
  *      Also added option -i for names of ignored sections
  * 17-Jul-2010  RedPlait
  *      Rebuild with minGW & binutils-2.20
+ *  4-Mar-2012  RedPlait
+ *      Rebuild with minGW gcc 4.6.1 & binutils-2.22
  */
 #include <stdio.h>
 #include <stdarg.h>
@@ -142,7 +144,7 @@ static int do_demangle = 0;		/* Demangle names */
 static int skip_z = 0;			/* Skip zeroes */
 
 const char *noname = "(NULL)";
-const char *version = "1.2";
+const char *version = "1.3";
 
 /* FLAIR imposed restriction on max function size */
 #define FLAIR_MAXLEN	0x8000
