@@ -575,12 +575,19 @@ int PDB_pool::parse_found_string(char *str)
       else
        return 0;
   } 
+  else if ( str[0] == '1' )
+  {
+    if ( str[1] == '1' )
+      version = 110;
+    else
+      version = 100;
+  }
   else if ( str[0] == '8' )
   {
     version = 80;
   } else
     return 0;
-  for ( str += 2; *str; str++ )
+  for ( str += 3; *str; str++ )
   {
     switch(*str)
     {
@@ -599,7 +606,7 @@ int PDB_pool::parse_found_string(char *str)
     return 0;
   if ( debug && unicode )
     return 0;
-  char *added = (char *)qalloc(11);
+  char *added = (char *)qalloc(12);
   sprintf(added, "%2.2d\\", version);
   if ( !debug && !unicode )
    strcat(added, "nafxcw");
