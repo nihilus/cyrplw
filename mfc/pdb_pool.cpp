@@ -582,6 +582,10 @@ int PDB_pool::parse_found_string(char *str)
     else
       version = 100;
   }
+  else if ( str[0] == '9' )
+  {
+    version = 90;
+  }
   else if ( str[0] == '8' )
   {
     version = 80;
