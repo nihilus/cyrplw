@@ -103,6 +103,12 @@ char *OLECMDID_name(ulong id)
 /* 57 */ "OLECMDID_FOCUSVIEWCONTROLS",
 /* 58 */ "OLECMDID_FOCUSVIEWCONTROLSQUERY",
 /* 59 */ "OLECMDID_SHOWPAGEACTIONMENU",
+/* 60 */ "OLECMDID_ADDTRAVELENTRY",
+/* 61 */ "OLECMDID_UPDATETRAVELENTRY",
+/* 62 */ "OLECMDID_UPDATEBACKFORWARDSTATE",
+/* 63 */ "OLECMDID_OPTICAL_ZOOM",
+/* 64 */ "OLECMDID_OPTICAL_GETZOOMRANGE",
+/* 64 */ "OLECMDID_WINDOWSTATECHANGED",
  };
  if ( id < sizeof(cmdid_names) / sizeof(cmdid_names[0]) )
   return cmdid_names[id];
@@ -309,6 +315,16 @@ process_WM(ea_t adr)
      break;
     case 0xA9: name = "WM_NCMBUTTONDBLCLK";
      break;
+    case 0xAB: name = "WM_NCXBUTTONDOWN";
+     break;
+    case 0xAC: name = "WM_NCXBUTTONUP";
+     break;
+    case 0xAD: name = "WM_NCXBUTTONDBLCLK";
+     break;
+    case 0xFE: name = "WM_INPUT_DEVICE_CHANGE";
+     break;
+    case 0xFF: name = "WM_INPUT";
+     break;
     case 0x100: name = "WM_KEYDOWN";
      break;
     case 0x101: name = "WM_KEYUP";
@@ -324,6 +340,8 @@ process_WM(ea_t adr)
     case 0x106: name = "WM_SYSCHAR";
      break;
     case 0x107: name = "WM_SYSDEADCHAR";
+     break;
+    case 0x109: name = "WM_UNICHAR";
      break;
     case 0x10D: name = "WM_IME_STARTCOMPOSITION";
      break;
@@ -353,6 +371,10 @@ process_WM(ea_t adr)
      break;
     case 0x117: name = "WM_INITMENUPOPUP";
      break;
+    case 0x119: name = "WM_GESTURE";
+     break;
+    case 0x11A: name = "WM_GESTURENOTIFY";
+     break;
     case 0x11F: name = "WM_MENUSELECT";
      break;
     case 0x120: name = "WM_MENUCHAR";
@@ -370,6 +392,12 @@ process_WM(ea_t adr)
      break;
     case 0x126: name = "WM_MENUCOMMAND";
      break;
+    case 0x127: name = "WM_CHANGEUISTATE";
+     break;
+    case 0x128: name = "WM_UPDATEUISTATE";
+     break;
+    case 0x129: name = "WM_QUERYUISTATE";
+     break;
 /* End WINVER >= 0x0500 */    
     case 0x132: name = "WM_CTLCOLORMSGBOX";
      break;
@@ -384,6 +412,8 @@ process_WM(ea_t adr)
     case 0x137: name = "WM_CTLCOLORSCROLLBAR";
      break;
     case 0x138: name = "WM_CTLCOLORSTATIC";
+     break;
+    case 0x1E1: name = "MN_GETHMENU";
      break;
     case 0x200: name = "WM_MOUSEMOVE";
      break;
@@ -406,6 +436,14 @@ process_WM(ea_t adr)
     case 0x209: name = "WM_MBUTTONDBLCLK";
      break;
     case 0x20A: name = "WM_MOUSEWHEEL";
+     break;
+    case 0x20B: name = "WM_XBUTTONDOWN";
+     break;
+    case 0x20C: name = "WM_XBUTTONUP";
+     break;
+    case 0x20D: name = "WM_XBUTTONDBLCLK";
+     break;
+    case 0x20E: name = "WM_MOUSEHWHEEL";
      break;
     case 0x210: name = "WM_PARENTNOTIFY";
      break;
@@ -457,6 +495,8 @@ process_WM(ea_t adr)
      break;
     case 0x234: name = "WM_MDIREFRESHMENU";
      break;
+    case 0x240: name = "WM_TOUCH";
+     break;
     case 0x281: name = "WM_IME_SETCONTEXT";
      break;
     case 0x282: name = "WM_IME_NOTIFY";
@@ -475,9 +515,15 @@ process_WM(ea_t adr)
      break;
     case 0x291: name = "WM_IME_KEYUP";
      break;
+    case 0x2A0: name = "WM_NCMOUSEHOVER";
+     break;
     case 0x2A1: name = "WM_MOUSEHOVER";
      break;
+    case 0x2A2: name = "WM_NCMOUSELEAVE";
+     break;
     case 0x2A3: name = "WM_MOUSELEAVE";
+     break;
+    case 0x2B1: name = "WM_WTSSESSION_CHANGE";
      break;
     case 0x300: name = "WM_CUT";
      break;
@@ -525,6 +571,22 @@ process_WM(ea_t adr)
     case 0x319: name = "WM_APPCOMMAND";
      break;
     case 0x31A: name = "WM_THEMECHANGED";
+     break;
+    case 0x31D: name = "WM_CLIPBOARDUPDATE";
+     break;
+    case 0x31E: name = "WM_DWMCOMPOSITIONCHANGED";
+     break;
+    case 0x31F: name = "WM_DWMNCRENDERINGCHANGED";
+     break;
+    case 0x320: name = "WM_DWMCOLORIZATIONCOLORCHANGED";
+     break;
+    case 0x321: name = "WM_DWMWINDOWMAXIMIZEDCHANGE";
+     break;
+    case 0x323: name = "WM_DWMSENDICONICTHUMBNAIL";
+     break;
+    case 0x326: name = "WM_DWMSENDICONICLIVEPREVIEWBITMAP";
+     break;
+    case 0x33F: name = "WM_GETTITLEBARINFOEX";
      break;
     // 22 Apr 2003 - ripped from AfxPriv.h (Internal AFX Windows messages)
     case 0x360: name = "WM_QUERYAFXWNDPROC";
