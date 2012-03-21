@@ -6,16 +6,7 @@
 void idaapi
 copy_fromIDA(uchar *membuf, ea_t src_a, ulong len)
 {
-  ulong i;
-  for ( i = 0; i < (len & ~4); i+=4 )
-  {
-    *((int *)(membuf + i)) = get_long(src_a + i);
-  }
-  if ( i != len )
-   for ( ulong i1 = (len & 4); i1; i1-- )
-   {
-    *(membuf + len - i1 ) = get_byte(src_a + len - i1);
-   }
+  get_many_bytes(src_a, membuf, len);
 }
 
 /* read zero-ended string from IDA. Warning - you responsible for freeing

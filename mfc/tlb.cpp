@@ -58,7 +58,7 @@ static DWORD unhex_dword(char *str)
       res = (res << 4) + i;
       break;
      }
-    if ( i >= 15 )
+    if ( i > 15 )
      return 0;
   }
   return res;
@@ -78,7 +78,7 @@ static WORD unhex_word(char *str)
       res = (res << 4) + i;
       break;
      }
-    if ( i >= 15 )
+    if ( i > 15 )
      return 0;    
   }
   return res;
@@ -304,7 +304,12 @@ void tinterface::fix_tables()
    {
      /* My not humble opinion - if we have all zero indexes - lets enum it by myself from 0 */
      for ( i = 0; i < m_indexz; i++ )
-       m_index[i].id = i * 4;
+       m_index[i].id = i * 
+#ifdef __EA64__
+        8;
+#else
+        4;
+#endif /* __EA64__ */
    } else
     sort(m_index, m_indexz);
   }

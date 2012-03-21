@@ -1019,7 +1019,7 @@ MFC_init(void)
  /* for x86 PE files only */
  if ( ph.id != PLFM_386 )
    return PLUGIN_SKIP;
- if ( inf.filetype != f_PE && inf.filetype != f_ELF ) // we also can apply ELF signatures !
+ if ( inf.filetype != f_PE )
   return PLUGIN_SKIP;
  return PLUGIN_OK;
 }

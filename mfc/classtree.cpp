@@ -80,23 +80,30 @@ void make_vtbl_entry(ea_t ea)
 }
 
 // recursive processing of olecmd mapz
+#ifdef __EA64__
+# define CMDMAP_ENTRY_SIZE	0x10
+#else
+# define CMDMAP_ENTRY_SIZE	12
+#endif /* __EA64__ */
+
 void process_command_map(ea_t ptr)
 {
-  do_unknown_range(ptr, 8, true);
+  do_unknown_range(ptr, 2 * sizeof(ea_t), true);
   ea_t prev = get_long(ptr);
-  ea_t my = get_long(ptr+4);
+  ea_t my = get_long(ptr + sizeof(ea_t));
   if ( get_long(my) )
   {
     do_dref(ptr+4, my);
     char *cmd_name;
     ea_t iid_ea;
-    /* AFX_OLECMDMAP_ENTRY: offset 0 - ptr to GUID
-     *                             4 - cmd ID
-     *                             8 - WM_COMMAND message ID
+    /*                            32 64
+     * AFX_OLECMDMAP_ENTRY: offset 0 0 - ptr to GUID
+     *                             4 8 - cmd ID
+     *                             8 C - WM_COMMAND message ID
      */
     while( get_long(my) )
     {
-      do_unknown_range(my, 12, true);
+      do_unknown_range(my, CMDMAP_ENTRY_SIZE, true);
       iid_ea = get_long(my);
       if ( iid_ea ) // ptr to IID
       {
@@ -110,7 +117,7 @@ void process_command_map(ea_t ptr)
       cmd_name = OLECMDID_name( get_long(my+4) );
       if ( cmd_name )
        rp_set_comment(my + 4, cmd_name, false);
-      my += 12;
+      my += CMDMAP_ENTRY_SIZE;
     }
   } else {
     doDwrd(ptr+4,4);
@@ -175,7 +182,7 @@ int fill_vtbl(char *name, ea_t vtbl, pdb_class *pc = NULL)
   ea_t mm = NULL; // message map
   ea_t cm = NULL; // command map
   // do_unknown_range(vtbl, max, false); - because first entry in VTBL is death
-  for ( int i = 0; i <= max; i += 4, vtbl += 4)
+  for ( int i = 0; i <= max; i += sizeof(ea_t), vtbl += sizeof(ea_t))
   {
     make_vtbl_entry(vtbl);
     vm = pc->by_offset(i);
@@ -529,7 +536,7 @@ find_root(ea_t start, bool silent)
   /* check what we get */
   size_t len = check_for_RTStruct(start);
   if ( !len ) /* hm, lets try to find in -20..+20 range */
-   for ( ea_t cptr = start - 20; cptr < cptr + 24; cptr += 4 )
+   for ( ea_t cptr = start - 20; cptr < cptr + 24; cptr += sizeof(ea_t) )
    {
      if ( start == cptr )
       continue;

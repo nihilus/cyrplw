@@ -117,7 +117,11 @@ static ea_t extract_long(ea_t vtbl_func)
 {
   if ( !is_contain_ptr(vtbl_func) )
    return NULL;
+#ifdef __EA64__
+  ea_t func = get_qword(vtbl_func);
+#else
   ea_t func = get_long(vtbl_func);
+#endif /* __EA64__ */
   return check_for_cruntimeclass(func);
 }
 

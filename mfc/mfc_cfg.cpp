@@ -20,7 +20,11 @@ MFC_Cfg::~MFC_Cfg()
 
 void MFC_Cfg::parse(char *key, char *value)
 {
+#ifdef __EA64__
+  if ( !stricmp(key, "RPD64_DIR") )
+#else
   if ( !stricmp(key, "RPD_DIR") )
+#endif /* __EA64__ */
   {
     if ( m_rpd_dir )
     {
@@ -56,7 +60,11 @@ char *MFC_Cfg::rpd_data_dir()
   if ( m_rpd_dir )
    return m_rpd_dir;
   /* default value */
+#ifdef __EA64__
+  return "c:\\work\\rpd64";
+#else
   return "c:\\work\\rpd";
+#endif /* __EA64__ */
 }
 
 /* some interface functions */
