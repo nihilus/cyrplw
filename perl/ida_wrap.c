@@ -1904,6 +1904,8 @@ extern void MakeNameNonPublic(long);
 extern void HideName(long);
 extern void ShowName(long);
 extern char *IdpName(void);
+extern int func_qty(void);
+extern int func_n(int);
 
 
 SWIGINTERN int
@@ -15421,6 +15423,52 @@ XS(_wrap_IdpName) {
 }
 
 
+XS(_wrap_func_qty) {
+  {
+    int argvi = 0;
+    int result;
+    dXSARGS;
+    
+    if ((items < 0) || (items > 0)) {
+      SWIG_croak("Usage: func_qty();");
+    }
+    result = (int)func_qty();
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    XSRETURN(argvi);
+  fail:
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_func_n) {
+  {
+    int arg1 ;
+    int val1 ;
+    int ecode1 = 0 ;
+    int argvi = 0;
+    int result;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: func_n(int);");
+    }
+    ecode1 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    if (!SWIG_IsOK(ecode1)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "func_n" "', argument " "1"" of type '" "int""'");
+    } 
+    arg1 = (int)(val1);
+    result = (int)func_n(arg1);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
@@ -15817,6 +15865,8 @@ static swig_command_info swig_commands[] = {
 {"IDA::HideName", _wrap_HideName},
 {"IDA::ShowName", _wrap_ShowName},
 {"IDA::IdpName", _wrap_IdpName},
+{"IDA::func_qty", _wrap_func_qty},
+{"IDA::func_n", _wrap_func_n},
 {0,0}
 };
 /* -----------------------------------------------------------------------------

@@ -379,6 +379,8 @@ extern void MakeNameNonPublic(long);
 extern void HideName(long);
 extern void ShowName(long);
 extern char *IdpName(void);
+extern int func_qty(void);
+extern int func_n(int);
 
 #if __cplusplus
  };

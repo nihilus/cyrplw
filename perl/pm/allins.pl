@@ -1,5 +1,5 @@
 #!perl -w
-# Script to convert allins.hpp from IDA SDK to IDAIns perl module
+# Script to convert allins.hpp from IDA SDK to IDAOps perl module
 # 11 Dec 2011 (C) RedPlait
 use strict;
 use warnings;

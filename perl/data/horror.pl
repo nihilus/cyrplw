@@ -600,6 +600,8 @@ sub do_addition
   printf(OUT "extern void HideName(long);\n");
   printf(OUT "extern void ShowName(long);\n");
   printf(OUT "extern char *IdpName(void);\n");
+  printf(OUT "extern int func_qty(void);\n");
+  printf(OUT "extern int func_n(int);\n");
 }
 
 sub make_flist

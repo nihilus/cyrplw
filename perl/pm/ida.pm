@@ -859,6 +859,8 @@ FindUnexplored
 FindVoid
 FirstFuncFchunk
 FirstSeg
+func_n
+func_qty
 get_ascii_str
 GenerateFile
 GetArrayId

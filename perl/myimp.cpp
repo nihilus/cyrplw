@@ -311,3 +311,16 @@ char *IdpName()
   buffer[0] = 0;
   return get_idp_name(buffer, 16);
 }
+
+int func_qty()
+{
+  return get_func_qty();
+}
+
+int func_n(int n)
+{
+  func_t *res = getn_func(n);
+  if ( res == NULL )
+    return -1;
+  return (int)res->startEA;
+}
