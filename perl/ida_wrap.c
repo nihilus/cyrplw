@@ -1542,7 +1542,6 @@ extern unsigned long GetOperandValue(long ,long );
 extern unsigned long SegByName(char * );
 extern void Del_dref(long ,long );
 extern void SetSelector(long ,long );
-extern unsigned long DbgByte(long );
 extern unsigned long PrevFunction(long );
 extern char * GetStrucComment(long ,long );
 extern unsigned long SetSegmentAttr(long ,long ,long );
@@ -1638,7 +1637,6 @@ extern unsigned long GetColor(long ,long );
 extern unsigned long GetCustomDataType(char * );
 extern unsigned long PrevHead(long ,long );
 extern char * CommentEx(long ,long );
-extern unsigned long DbgDword(long );
 extern int SaveBase(char * ,long );
 extern int OpFloat(long ,long );
 extern int MakeAlign(long ,long ,long );
@@ -1719,9 +1717,7 @@ extern int SetConstCmt(long ,char * ,long );
 extern void DeleteArray(long );
 extern char * GetMnem(long );
 extern unsigned long FindCode(long ,long );
-extern unsigned long xtol(char * );
 extern int EndTypeUpdating(long );
-extern unsigned long DbgWord(long );
 extern unsigned long GetStrucIdx(long );
 extern int DelStruc(long );
 extern unsigned long GetBmaskCmt(long ,long ,long );
@@ -1752,7 +1748,6 @@ extern unsigned long ScreenEA();
 extern int DelHashElement(long ,char * );
 extern char * GetEnumName(long );
 extern char * GetDisasm(long );
-extern unsigned long DbgQword(long );
 extern unsigned long RfirstB0(long );
 extern unsigned long GetOpType(long ,long );
 extern unsigned long GetFixupTgtType(long );
@@ -1773,7 +1768,6 @@ extern void SetFunctionCmt(long ,char * ,long );
 extern char * GetMarkComment(long );
 extern unsigned long FindExplored(long ,long );
 extern unsigned long MakeFrame(long ,long ,long ,long );
-extern char * DbgRead(long ,long );
 extern int OpBinary(long ,long );
 extern char * GetInputFile();
 extern unsigned long LocByNameEx(long ,char * );
@@ -1817,7 +1811,6 @@ extern unsigned long ItemSize(long );
 extern unsigned long GetReg(long ,char * );
 extern int SetSegClass(long ,char * );
 extern char * SegName(long );
-extern int PatchDbgByte(long ,long );
 extern unsigned long GetNextIndex(long ,long ,long );
 extern unsigned long GetFchunkAttr(long ,long );
 extern int OpHigh(long ,long ,long );
@@ -1889,23 +1882,28 @@ extern unsigned long FindData(long ,long );
 extern int SetEnumIdx(long ,long );
 extern unsigned long GetEntryOrdinal(long );
 extern unsigned long GetEntryPointQty();
-extern unsigned long DbgWrite(long ,char * );
 extern int IDA_version(void);
 extern char *loader_name(void);
 extern int load_ids(char *);
 extern void save_idb(void);
 extern int is_debugged(void);
-extern long GetOriginalWord(long);
-extern long GetOriginalDword(long);
-extern void MakeUnknRange(long, long, int);
-extern int IsPublicName(long);
-extern void MakeNamePublic(long);
-extern void MakeNameNonPublic(long);
-extern void HideName(long);
-extern void ShowName(long);
+extern long GetOriginalWord(unsigned long);
+extern long GetOriginalDword(unsigned long);
+extern void MakeUnknRange(unsigned long, unsigned long, int);
+extern int IsPublicName(unsigned long);
+extern void MakeNamePublic(unsigned long);
+extern void MakeNameNonPublic(unsigned long);
+extern void HideName(unsigned long);
+extern void ShowName(unsigned long);
 extern char *IdpName(void);
 extern int func_qty(void);
-extern int func_n(int);
+extern unsigned long func_n(int);
+extern unsigned long NextUnknown(unsigned long,unsigned long);
+extern unsigned long PrevUnknown(unsigned long,unsigned long);
+extern unsigned long NextVisEA(unsigned long);
+extern unsigned long PrevVisEA(unsigned long);
+extern int ToggleSign(unsigned long,int);
+extern int ToggleBnot(unsigned long,int);
 
 
 SWIGINTERN int
@@ -2110,6 +2108,51 @@ SWIGINTERNINLINE SV *
 SWIG_From_int  SWIG_PERL_DECL_ARGS_1(int value)
 {    
   return SWIG_From_long  SWIG_PERL_CALL_ARGS_1(value);
+}
+
+
+SWIGINTERN int
+SWIG_AsVal_unsigned_SS_long SWIG_PERL_DECL_ARGS_2(SV *obj, unsigned long *val) 
+{
+  if (SvUOK(obj)) {
+    if (val) *val = SvUV(obj);
+    return SWIG_OK;
+  } else  if (SvIOK(obj)) {
+    long v = SvIV(obj);
+    if (v >= 0) {
+      if (val) *val = v;
+      return SWIG_OK;
+    } else {
+      return SWIG_OverflowError;
+    }
+  } else {
+    int dispatch = 0;
+    const char *nptr = SvPV_nolen(obj);
+    if (nptr) {
+      char *endptr;
+      unsigned long v;
+      errno = 0;
+      v = strtoul(nptr, &endptr,0);
+      if (errno == ERANGE) {
+	errno = 0;
+	return SWIG_OverflowError;
+      } else {
+	if (*endptr == '\0') {
+	  if (val) *val = v;
+	  return SWIG_Str2NumCast(SWIG_OK);
+	}
+      }
+    }
+    if (!dispatch) {
+      double d;
+      int res = SWIG_AddCast(SWIG_AsVal_double SWIG_PERL_CALL_ARGS_2(obj,&d));
+      if (SWIG_IsOK(res) && SWIG_CanCastAsInteger(&d, 0, ULONG_MAX)) {
+	if (val) *val = (unsigned long)(d);
+	return res;
+      }
+    }
+  }
+  return SWIG_TypeError;
 }
 
 
@@ -2358,34 +2401,6 @@ XS(_wrap_SetSelector) {
     XSRETURN(argvi);
   fail:
     
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_DbgByte) {
-  {
-    long arg1 ;
-    long val1 ;
-    int ecode1 = 0 ;
-    int argvi = 0;
-    unsigned long result;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: DbgByte(long);");
-    }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
-    if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DbgByte" "', argument " "1"" of type '" "long""'");
-    } 
-    arg1 = (long)(val1);
-    result = (unsigned long)DbgByte(arg1);
-    ST(argvi) = SWIG_From_unsigned_SS_long  SWIG_PERL_CALL_ARGS_1((unsigned long)(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
     
     SWIG_croak_null();
   }
@@ -6008,34 +6023,6 @@ XS(_wrap_CommentEx) {
 }
 
 
-XS(_wrap_DbgDword) {
-  {
-    long arg1 ;
-    long val1 ;
-    int ecode1 = 0 ;
-    int argvi = 0;
-    unsigned long result;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: DbgDword(long);");
-    }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
-    if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DbgDword" "', argument " "1"" of type '" "long""'");
-    } 
-    arg1 = (long)(val1);
-    result = (unsigned long)DbgDword(arg1);
-    ST(argvi) = SWIG_From_unsigned_SS_long  SWIG_PERL_CALL_ARGS_1((unsigned long)(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_SaveBase) {
   {
     char *arg1 = (char *) 0 ;
@@ -9010,35 +8997,6 @@ XS(_wrap_FindCode) {
 }
 
 
-XS(_wrap_xtol) {
-  {
-    char *arg1 = (char *) 0 ;
-    int res1 ;
-    char *buf1 = 0 ;
-    int alloc1 = 0 ;
-    int argvi = 0;
-    unsigned long result;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: xtol(char *);");
-    }
-    res1 = SWIG_AsCharPtrAndSize(ST(0), &buf1, NULL, &alloc1);
-    if (!SWIG_IsOK(res1)) {
-      SWIG_exception_fail(SWIG_ArgError(res1), "in method '" "xtol" "', argument " "1"" of type '" "char *""'");
-    }
-    arg1 = (char *)(buf1);
-    result = (unsigned long)xtol(arg1);
-    ST(argvi) = SWIG_From_unsigned_SS_long  SWIG_PERL_CALL_ARGS_1((unsigned long)(result)); argvi++ ;
-    if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
-    XSRETURN(argvi);
-  fail:
-    if (alloc1 == SWIG_NEWOBJ) free((char*)buf1);
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_EndTypeUpdating) {
   {
     long arg1 ;
@@ -9058,34 +9016,6 @@ XS(_wrap_EndTypeUpdating) {
     arg1 = (long)(val1);
     result = (int)EndTypeUpdating(arg1);
     ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_DbgWord) {
-  {
-    long arg1 ;
-    long val1 ;
-    int ecode1 = 0 ;
-    int argvi = 0;
-    unsigned long result;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: DbgWord(long);");
-    }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
-    if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DbgWord" "', argument " "1"" of type '" "long""'");
-    } 
-    arg1 = (long)(val1);
-    result = (unsigned long)DbgWord(arg1);
-    ST(argvi) = SWIG_From_unsigned_SS_long  SWIG_PERL_CALL_ARGS_1((unsigned long)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
@@ -10087,34 +10017,6 @@ XS(_wrap_GetDisasm) {
 }
 
 
-XS(_wrap_DbgQword) {
-  {
-    long arg1 ;
-    long val1 ;
-    int ecode1 = 0 ;
-    int argvi = 0;
-    unsigned long result;
-    dXSARGS;
-    
-    if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: DbgQword(long);");
-    }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
-    if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DbgQword" "', argument " "1"" of type '" "long""'");
-    } 
-    arg1 = (long)(val1);
-    result = (unsigned long)DbgQword(arg1);
-    ST(argvi) = SWIG_From_unsigned_SS_long  SWIG_PERL_CALL_ARGS_1((unsigned long)(result)); argvi++ ;
-    
-    XSRETURN(argvi);
-  fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_RfirstB0) {
   {
     long arg1 ;
@@ -10836,44 +10738,6 @@ XS(_wrap_MakeFrame) {
   fail:
     
     
-    
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_DbgRead) {
-  {
-    long arg1 ;
-    long arg2 ;
-    long val1 ;
-    int ecode1 = 0 ;
-    long val2 ;
-    int ecode2 = 0 ;
-    int argvi = 0;
-    char *result = 0 ;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: DbgRead(long,long);");
-    }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
-    if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DbgRead" "', argument " "1"" of type '" "long""'");
-    } 
-    arg1 = (long)(val1);
-    ecode2 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
-    if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "DbgRead" "', argument " "2"" of type '" "long""'");
-    } 
-    arg2 = (long)(val2);
-    result = (char *)DbgRead(arg1,arg2);
-    ST(argvi) = SWIG_FromCharPtr((const char *)result); argvi++ ;
-    
-    
-    XSRETURN(argvi);
-  fail:
     
     
     SWIG_croak_null();
@@ -12333,44 +12197,6 @@ XS(_wrap_SegName) {
     
     XSRETURN(argvi);
   fail:
-    
-    SWIG_croak_null();
-  }
-}
-
-
-XS(_wrap_PatchDbgByte) {
-  {
-    long arg1 ;
-    long arg2 ;
-    long val1 ;
-    int ecode1 = 0 ;
-    long val2 ;
-    int ecode2 = 0 ;
-    int argvi = 0;
-    int result;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: PatchDbgByte(long,long);");
-    }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
-    if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "PatchDbgByte" "', argument " "1"" of type '" "long""'");
-    } 
-    arg1 = (long)(val1);
-    ecode2 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
-    if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PatchDbgByte" "', argument " "2"" of type '" "long""'");
-    } 
-    arg2 = (long)(val2);
-    result = (int)PatchDbgByte(arg1,arg2);
-    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
-    
-    
-    XSRETURN(argvi);
-  fail:
-    
     
     SWIG_croak_null();
   }
@@ -15027,45 +14853,6 @@ XS(_wrap_GetEntryPointQty) {
 }
 
 
-XS(_wrap_DbgWrite) {
-  {
-    long arg1 ;
-    char *arg2 = (char *) 0 ;
-    long val1 ;
-    int ecode1 = 0 ;
-    int res2 ;
-    char *buf2 = 0 ;
-    int alloc2 = 0 ;
-    int argvi = 0;
-    unsigned long result;
-    dXSARGS;
-    
-    if ((items < 2) || (items > 2)) {
-      SWIG_croak("Usage: DbgWrite(long,char *);");
-    }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
-    if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "DbgWrite" "', argument " "1"" of type '" "long""'");
-    } 
-    arg1 = (long)(val1);
-    res2 = SWIG_AsCharPtrAndSize(ST(1), &buf2, NULL, &alloc2);
-    if (!SWIG_IsOK(res2)) {
-      SWIG_exception_fail(SWIG_ArgError(res2), "in method '" "DbgWrite" "', argument " "2"" of type '" "char *""'");
-    }
-    arg2 = (char *)(buf2);
-    result = (unsigned long)DbgWrite(arg1,arg2);
-    ST(argvi) = SWIG_From_unsigned_SS_long  SWIG_PERL_CALL_ARGS_1((unsigned long)(result)); argvi++ ;
-    
-    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
-    XSRETURN(argvi);
-  fail:
-    
-    if (alloc2 == SWIG_NEWOBJ) free((char*)buf2);
-    SWIG_croak_null();
-  }
-}
-
-
 XS(_wrap_IDA_version) {
   {
     int argvi = 0;
@@ -15168,21 +14955,21 @@ XS(_wrap_is_debugged) {
 
 XS(_wrap_GetOriginalWord) {
   {
-    long arg1 ;
-    long val1 ;
+    unsigned long arg1 ;
+    unsigned long val1 ;
     int ecode1 = 0 ;
     int argvi = 0;
     long result;
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: GetOriginalWord(long);");
+      SWIG_croak("Usage: GetOriginalWord(unsigned long);");
     }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
     if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetOriginalWord" "', argument " "1"" of type '" "long""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetOriginalWord" "', argument " "1"" of type '" "unsigned long""'");
     } 
-    arg1 = (long)(val1);
+    arg1 = (unsigned long)(val1);
     result = (long)GetOriginalWord(arg1);
     ST(argvi) = SWIG_From_long  SWIG_PERL_CALL_ARGS_1((long)(result)); argvi++ ;
     
@@ -15196,21 +14983,21 @@ XS(_wrap_GetOriginalWord) {
 
 XS(_wrap_GetOriginalDword) {
   {
-    long arg1 ;
-    long val1 ;
+    unsigned long arg1 ;
+    unsigned long val1 ;
     int ecode1 = 0 ;
     int argvi = 0;
     long result;
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: GetOriginalDword(long);");
+      SWIG_croak("Usage: GetOriginalDword(unsigned long);");
     }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
     if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetOriginalDword" "', argument " "1"" of type '" "long""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "GetOriginalDword" "', argument " "1"" of type '" "unsigned long""'");
     } 
-    arg1 = (long)(val1);
+    arg1 = (unsigned long)(val1);
     result = (long)GetOriginalDword(arg1);
     ST(argvi) = SWIG_From_long  SWIG_PERL_CALL_ARGS_1((long)(result)); argvi++ ;
     
@@ -15224,12 +15011,12 @@ XS(_wrap_GetOriginalDword) {
 
 XS(_wrap_MakeUnknRange) {
   {
-    long arg1 ;
-    long arg2 ;
+    unsigned long arg1 ;
+    unsigned long arg2 ;
     int arg3 ;
-    long val1 ;
+    unsigned long val1 ;
     int ecode1 = 0 ;
-    long val2 ;
+    unsigned long val2 ;
     int ecode2 = 0 ;
     int val3 ;
     int ecode3 = 0 ;
@@ -15237,18 +15024,18 @@ XS(_wrap_MakeUnknRange) {
     dXSARGS;
     
     if ((items < 3) || (items > 3)) {
-      SWIG_croak("Usage: MakeUnknRange(long,long,int);");
+      SWIG_croak("Usage: MakeUnknRange(unsigned long,unsigned long,int);");
     }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
     if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "MakeUnknRange" "', argument " "1"" of type '" "long""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "MakeUnknRange" "', argument " "1"" of type '" "unsigned long""'");
     } 
-    arg1 = (long)(val1);
-    ecode2 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    arg1 = (unsigned long)(val1);
+    ecode2 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
     if (!SWIG_IsOK(ecode2)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "MakeUnknRange" "', argument " "2"" of type '" "long""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "MakeUnknRange" "', argument " "2"" of type '" "unsigned long""'");
     } 
-    arg2 = (long)(val2);
+    arg2 = (unsigned long)(val2);
     ecode3 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(2), &val3);
     if (!SWIG_IsOK(ecode3)) {
       SWIG_exception_fail(SWIG_ArgError(ecode3), "in method '" "MakeUnknRange" "', argument " "3"" of type '" "int""'");
@@ -15271,21 +15058,21 @@ XS(_wrap_MakeUnknRange) {
 
 XS(_wrap_IsPublicName) {
   {
-    long arg1 ;
-    long val1 ;
+    unsigned long arg1 ;
+    unsigned long val1 ;
     int ecode1 = 0 ;
     int argvi = 0;
     int result;
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: IsPublicName(long);");
+      SWIG_croak("Usage: IsPublicName(unsigned long);");
     }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
     if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "IsPublicName" "', argument " "1"" of type '" "long""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "IsPublicName" "', argument " "1"" of type '" "unsigned long""'");
     } 
-    arg1 = (long)(val1);
+    arg1 = (unsigned long)(val1);
     result = (int)IsPublicName(arg1);
     ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
     
@@ -15299,20 +15086,20 @@ XS(_wrap_IsPublicName) {
 
 XS(_wrap_MakeNamePublic) {
   {
-    long arg1 ;
-    long val1 ;
+    unsigned long arg1 ;
+    unsigned long val1 ;
     int ecode1 = 0 ;
     int argvi = 0;
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: MakeNamePublic(long);");
+      SWIG_croak("Usage: MakeNamePublic(unsigned long);");
     }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
     if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "MakeNamePublic" "', argument " "1"" of type '" "long""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "MakeNamePublic" "', argument " "1"" of type '" "unsigned long""'");
     } 
-    arg1 = (long)(val1);
+    arg1 = (unsigned long)(val1);
     MakeNamePublic(arg1);
     ST(argvi) = sv_newmortal();
     
@@ -15326,20 +15113,20 @@ XS(_wrap_MakeNamePublic) {
 
 XS(_wrap_MakeNameNonPublic) {
   {
-    long arg1 ;
-    long val1 ;
+    unsigned long arg1 ;
+    unsigned long val1 ;
     int ecode1 = 0 ;
     int argvi = 0;
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: MakeNameNonPublic(long);");
+      SWIG_croak("Usage: MakeNameNonPublic(unsigned long);");
     }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
     if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "MakeNameNonPublic" "', argument " "1"" of type '" "long""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "MakeNameNonPublic" "', argument " "1"" of type '" "unsigned long""'");
     } 
-    arg1 = (long)(val1);
+    arg1 = (unsigned long)(val1);
     MakeNameNonPublic(arg1);
     ST(argvi) = sv_newmortal();
     
@@ -15353,20 +15140,20 @@ XS(_wrap_MakeNameNonPublic) {
 
 XS(_wrap_HideName) {
   {
-    long arg1 ;
-    long val1 ;
+    unsigned long arg1 ;
+    unsigned long val1 ;
     int ecode1 = 0 ;
     int argvi = 0;
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: HideName(long);");
+      SWIG_croak("Usage: HideName(unsigned long);");
     }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
     if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "HideName" "', argument " "1"" of type '" "long""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "HideName" "', argument " "1"" of type '" "unsigned long""'");
     } 
-    arg1 = (long)(val1);
+    arg1 = (unsigned long)(val1);
     HideName(arg1);
     ST(argvi) = sv_newmortal();
     
@@ -15380,20 +15167,20 @@ XS(_wrap_HideName) {
 
 XS(_wrap_ShowName) {
   {
-    long arg1 ;
-    long val1 ;
+    unsigned long arg1 ;
+    unsigned long val1 ;
     int ecode1 = 0 ;
     int argvi = 0;
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
-      SWIG_croak("Usage: ShowName(long);");
+      SWIG_croak("Usage: ShowName(unsigned long);");
     }
-    ecode1 = SWIG_AsVal_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
     if (!SWIG_IsOK(ecode1)) {
-      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "ShowName" "', argument " "1"" of type '" "long""'");
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "ShowName" "', argument " "1"" of type '" "unsigned long""'");
     } 
-    arg1 = (long)(val1);
+    arg1 = (unsigned long)(val1);
     ShowName(arg1);
     ST(argvi) = sv_newmortal();
     
@@ -15447,7 +15234,7 @@ XS(_wrap_func_n) {
     int val1 ;
     int ecode1 = 0 ;
     int argvi = 0;
-    int result;
+    unsigned long result;
     dXSARGS;
     
     if ((items < 1) || (items > 1)) {
@@ -15458,11 +15245,219 @@ XS(_wrap_func_n) {
       SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "func_n" "', argument " "1"" of type '" "int""'");
     } 
     arg1 = (int)(val1);
-    result = (int)func_n(arg1);
-    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    result = (unsigned long)func_n(arg1);
+    ST(argvi) = SWIG_From_unsigned_SS_long  SWIG_PERL_CALL_ARGS_1((unsigned long)(result)); argvi++ ;
     
     XSRETURN(argvi);
   fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_NextUnknown) {
+  {
+    unsigned long arg1 ;
+    unsigned long arg2 ;
+    unsigned long val1 ;
+    int ecode1 = 0 ;
+    unsigned long val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    unsigned long result;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: NextUnknown(unsigned long,unsigned long);");
+    }
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    if (!SWIG_IsOK(ecode1)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "NextUnknown" "', argument " "1"" of type '" "unsigned long""'");
+    } 
+    arg1 = (unsigned long)(val1);
+    ecode2 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "NextUnknown" "', argument " "2"" of type '" "unsigned long""'");
+    } 
+    arg2 = (unsigned long)(val2);
+    result = (unsigned long)NextUnknown(arg1,arg2);
+    ST(argvi) = SWIG_From_unsigned_SS_long  SWIG_PERL_CALL_ARGS_1((unsigned long)(result)); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_PrevUnknown) {
+  {
+    unsigned long arg1 ;
+    unsigned long arg2 ;
+    unsigned long val1 ;
+    int ecode1 = 0 ;
+    unsigned long val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    unsigned long result;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: PrevUnknown(unsigned long,unsigned long);");
+    }
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    if (!SWIG_IsOK(ecode1)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "PrevUnknown" "', argument " "1"" of type '" "unsigned long""'");
+    } 
+    arg1 = (unsigned long)(val1);
+    ecode2 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "PrevUnknown" "', argument " "2"" of type '" "unsigned long""'");
+    } 
+    arg2 = (unsigned long)(val2);
+    result = (unsigned long)PrevUnknown(arg1,arg2);
+    ST(argvi) = SWIG_From_unsigned_SS_long  SWIG_PERL_CALL_ARGS_1((unsigned long)(result)); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_NextVisEA) {
+  {
+    unsigned long arg1 ;
+    unsigned long val1 ;
+    int ecode1 = 0 ;
+    int argvi = 0;
+    unsigned long result;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: NextVisEA(unsigned long);");
+    }
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    if (!SWIG_IsOK(ecode1)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "NextVisEA" "', argument " "1"" of type '" "unsigned long""'");
+    } 
+    arg1 = (unsigned long)(val1);
+    result = (unsigned long)NextVisEA(arg1);
+    ST(argvi) = SWIG_From_unsigned_SS_long  SWIG_PERL_CALL_ARGS_1((unsigned long)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_PrevVisEA) {
+  {
+    unsigned long arg1 ;
+    unsigned long val1 ;
+    int ecode1 = 0 ;
+    int argvi = 0;
+    unsigned long result;
+    dXSARGS;
+    
+    if ((items < 1) || (items > 1)) {
+      SWIG_croak("Usage: PrevVisEA(unsigned long);");
+    }
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    if (!SWIG_IsOK(ecode1)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "PrevVisEA" "', argument " "1"" of type '" "unsigned long""'");
+    } 
+    arg1 = (unsigned long)(val1);
+    result = (unsigned long)PrevVisEA(arg1);
+    ST(argvi) = SWIG_From_unsigned_SS_long  SWIG_PERL_CALL_ARGS_1((unsigned long)(result)); argvi++ ;
+    
+    XSRETURN(argvi);
+  fail:
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_ToggleSign) {
+  {
+    unsigned long arg1 ;
+    int arg2 ;
+    unsigned long val1 ;
+    int ecode1 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    int result;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: ToggleSign(unsigned long,int);");
+    }
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    if (!SWIG_IsOK(ecode1)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "ToggleSign" "', argument " "1"" of type '" "unsigned long""'");
+    } 
+    arg1 = (unsigned long)(val1);
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ToggleSign" "', argument " "2"" of type '" "int""'");
+    } 
+    arg2 = (int)(val2);
+    result = (int)ToggleSign(arg1,arg2);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
+    
+    SWIG_croak_null();
+  }
+}
+
+
+XS(_wrap_ToggleBnot) {
+  {
+    unsigned long arg1 ;
+    int arg2 ;
+    unsigned long val1 ;
+    int ecode1 = 0 ;
+    int val2 ;
+    int ecode2 = 0 ;
+    int argvi = 0;
+    int result;
+    dXSARGS;
+    
+    if ((items < 2) || (items > 2)) {
+      SWIG_croak("Usage: ToggleBnot(unsigned long,int);");
+    }
+    ecode1 = SWIG_AsVal_unsigned_SS_long SWIG_PERL_CALL_ARGS_2(ST(0), &val1);
+    if (!SWIG_IsOK(ecode1)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode1), "in method '" "ToggleBnot" "', argument " "1"" of type '" "unsigned long""'");
+    } 
+    arg1 = (unsigned long)(val1);
+    ecode2 = SWIG_AsVal_int SWIG_PERL_CALL_ARGS_2(ST(1), &val2);
+    if (!SWIG_IsOK(ecode2)) {
+      SWIG_exception_fail(SWIG_ArgError(ecode2), "in method '" "ToggleBnot" "', argument " "2"" of type '" "int""'");
+    } 
+    arg2 = (int)(val2);
+    result = (int)ToggleBnot(arg1,arg2);
+    ST(argvi) = SWIG_From_int  SWIG_PERL_CALL_ARGS_1((int)(result)); argvi++ ;
+    
+    
+    XSRETURN(argvi);
+  fail:
+    
     
     SWIG_croak_null();
   }
@@ -15503,7 +15498,6 @@ static swig_command_info swig_commands[] = {
 {"IDA::SegByName", _wrap_SegByName},
 {"IDA::Del_dref", _wrap_Del_dref},
 {"IDA::SetSelector", _wrap_SetSelector},
-{"IDA::DbgByte", _wrap_DbgByte},
 {"IDA::PrevFunction", _wrap_PrevFunction},
 {"IDA::GetStrucComment", _wrap_GetStrucComment},
 {"IDA::SetSegmentAttr", _wrap_SetSegmentAttr},
@@ -15599,7 +15593,6 @@ static swig_command_info swig_commands[] = {
 {"IDA::GetCustomDataType", _wrap_GetCustomDataType},
 {"IDA::PrevHead", _wrap_PrevHead},
 {"IDA::CommentEx", _wrap_CommentEx},
-{"IDA::DbgDword", _wrap_DbgDword},
 {"IDA::SaveBase", _wrap_SaveBase},
 {"IDA::OpFloat", _wrap_OpFloat},
 {"IDA::MakeAlign", _wrap_MakeAlign},
@@ -15680,9 +15673,7 @@ static swig_command_info swig_commands[] = {
 {"IDA::DeleteArray", _wrap_DeleteArray},
 {"IDA::GetMnem", _wrap_GetMnem},
 {"IDA::FindCode", _wrap_FindCode},
-{"IDA::xtol", _wrap_xtol},
 {"IDA::EndTypeUpdating", _wrap_EndTypeUpdating},
-{"IDA::DbgWord", _wrap_DbgWord},
 {"IDA::GetStrucIdx", _wrap_GetStrucIdx},
 {"IDA::DelStruc", _wrap_DelStruc},
 {"IDA::GetBmaskCmt", _wrap_GetBmaskCmt},
@@ -15713,7 +15704,6 @@ static swig_command_info swig_commands[] = {
 {"IDA::DelHashElement", _wrap_DelHashElement},
 {"IDA::GetEnumName", _wrap_GetEnumName},
 {"IDA::GetDisasm", _wrap_GetDisasm},
-{"IDA::DbgQword", _wrap_DbgQword},
 {"IDA::RfirstB0", _wrap_RfirstB0},
 {"IDA::GetOpType", _wrap_GetOpType},
 {"IDA::GetFixupTgtType", _wrap_GetFixupTgtType},
@@ -15734,7 +15724,6 @@ static swig_command_info swig_commands[] = {
 {"IDA::GetMarkComment", _wrap_GetMarkComment},
 {"IDA::FindExplored", _wrap_FindExplored},
 {"IDA::MakeFrame", _wrap_MakeFrame},
-{"IDA::DbgRead", _wrap_DbgRead},
 {"IDA::OpBinary", _wrap_OpBinary},
 {"IDA::GetInputFile", _wrap_GetInputFile},
 {"IDA::LocByNameEx", _wrap_LocByNameEx},
@@ -15778,7 +15767,6 @@ static swig_command_info swig_commands[] = {
 {"IDA::GetReg", _wrap_GetReg},
 {"IDA::SetSegClass", _wrap_SetSegClass},
 {"IDA::SegName", _wrap_SegName},
-{"IDA::PatchDbgByte", _wrap_PatchDbgByte},
 {"IDA::GetNextIndex", _wrap_GetNextIndex},
 {"IDA::GetFchunkAttr", _wrap_GetFchunkAttr},
 {"IDA::OpHigh", _wrap_OpHigh},
@@ -15850,7 +15838,6 @@ static swig_command_info swig_commands[] = {
 {"IDA::SetEnumIdx", _wrap_SetEnumIdx},
 {"IDA::GetEntryOrdinal", _wrap_GetEntryOrdinal},
 {"IDA::GetEntryPointQty", _wrap_GetEntryPointQty},
-{"IDA::DbgWrite", _wrap_DbgWrite},
 {"IDA::IDA_version", _wrap_IDA_version},
 {"IDA::loader_name", _wrap_loader_name},
 {"IDA::load_ids", _wrap_load_ids},
@@ -15867,6 +15854,12 @@ static swig_command_info swig_commands[] = {
 {"IDA::IdpName", _wrap_IdpName},
 {"IDA::func_qty", _wrap_func_qty},
 {"IDA::func_n", _wrap_func_n},
+{"IDA::NextUnknown", _wrap_NextUnknown},
+{"IDA::PrevUnknown", _wrap_PrevUnknown},
+{"IDA::NextVisEA", _wrap_NextVisEA},
+{"IDA::PrevVisEA", _wrap_PrevVisEA},
+{"IDA::ToggleSign", _wrap_ToggleSign},
+{"IDA::ToggleBnot", _wrap_ToggleBnot},
 {0,0}
 };
 /* -----------------------------------------------------------------------------

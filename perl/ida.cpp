@@ -112,24 +112,6 @@ SetSelector(long arg0,long arg1)
 }
 
 unsigned long
-DbgByte(long arg0)
-{
- void *fp = RP_Funcs->f[50].fp;
- value_t res;
- value_t args[1];
- args[0].vtype = VT_LONG;
- args[0].num = arg0;
- __asm {
-   lea eax, res
-   push eax
-   lea eax, args
-   push eax
-   call [fp]
-}
- return res.num;
-}
-
-unsigned long
 PrevFunction(long arg0)
 {
  void *fp = RP_Funcs->f[204].fp;
@@ -1868,24 +1850,6 @@ CommentEx(long arg0,long arg1)
  return resstr;
 }
 
-unsigned long
-DbgDword(long arg0)
-{
- void *fp = RP_Funcs->f[52].fp;
- value_t res;
- value_t args[1];
- args[0].vtype = VT_LONG;
- args[0].num = arg0;
- __asm {
-   lea eax, res
-   push eax
-   lea eax, args
-   push eax
-   call [fp]
-}
- return res.num;
-}
-
 int
 SaveBase(char * arg0,long arg1)
 {
@@ -3387,45 +3351,10 @@ FindCode(long arg0,long arg1)
  return res.num;
 }
 
-unsigned long
-xtol(char * arg0)
-{
- void *fp = RP_Funcs->f[105].fp;
- value_t res;
- value_t args[1];
- args[0]._set_string(arg0);
- __asm {
-   lea eax, res
-   push eax
-   lea eax, args
-   push eax
-   call [fp]
-}
- return res.num;
-}
-
 int
 EndTypeUpdating(long arg0)
 {
  void *fp = RP_Funcs->f[487].fp;
- value_t res;
- value_t args[1];
- args[0].vtype = VT_LONG;
- args[0].num = arg0;
- __asm {
-   lea eax, res
-   push eax
-   lea eax, args
-   push eax
-   call [fp]
-}
- return res.num;
-}
-
-unsigned long
-DbgWord(long arg0)
-{
- void *fp = RP_Funcs->f[51].fp;
  value_t res;
  value_t args[1];
  args[0].vtype = VT_LONG;
@@ -4009,24 +3938,6 @@ GetDisasm(long arg0)
 }
 
 unsigned long
-DbgQword(long arg0)
-{
- void *fp = RP_Funcs->f[53].fp;
- value_t res;
- value_t args[1];
- args[0].vtype = VT_LONG;
- args[0].num = arg0;
- __asm {
-   lea eax, res
-   push eax
-   lea eax, args
-   push eax
-   call [fp]
-}
- return res.num;
-}
-
-unsigned long
 RfirstB0(long arg0)
 {
  void *fp = RP_Funcs->f[184].fp;
@@ -4408,32 +4319,6 @@ MakeFrame(long arg0,long arg1,long arg2,long arg3)
    call [fp]
 }
  return res.num;
-}
-
-char *
-DbgRead(long arg0,long arg1)
-{
- char *resstr;
- void *fp = RP_Funcs->f[54].fp;
- value_t res;
-	memset(&res, 0, sizeof(res));
- value_t args[2];
- args[0].vtype = VT_LONG;
- args[0].num = arg0;
- args[1].vtype = VT_LONG;
- args[1].num = arg1;
- __asm {
-   lea eax, res
-   push eax
-   lea eax, args
-   push eax
-   call [fp]
-}
- if ( res.c_str() == NULL )
-  return NULL;
- resstr = _strdup(res.c_str());
- VarFree(&res);
- return resstr;
 }
 
 unsigned long
@@ -5183,26 +5068,6 @@ SegName(long arg0)
  resstr = _strdup(res.c_str());
  VarFree(&res);
  return resstr;
-}
-
-int
-PatchDbgByte(long arg0,long arg1)
-{
- void *fp = RP_Funcs->f[57].fp;
- value_t res;
- value_t args[2];
- args[0].vtype = VT_LONG;
- args[0].num = arg0;
- args[1].vtype = VT_LONG;
- args[1].num = arg1;
- __asm {
-   lea eax, res
-   push eax
-   lea eax, args
-   push eax
-   call [fp]
-}
- return res.num;
 }
 
 unsigned long
@@ -6561,25 +6426,6 @@ GetEntryOrdinal(long arg0)
  value_t args[1];
  args[0].vtype = VT_LONG;
  args[0].num = arg0;
- __asm {
-   lea eax, res
-   push eax
-   lea eax, args
-   push eax
-   call [fp]
-}
- return res.num;
-}
-
-unsigned long
-DbgWrite(long arg0,char * arg1)
-{
- void *fp = RP_Funcs->f[55].fp;
- value_t res;
- value_t args[2];
- args[0].vtype = VT_LONG;
- args[0].num = arg0;
- args[1]._set_string(arg1);
  __asm {
    lea eax, res
    push eax

@@ -13,13 +13,13 @@
  * IDC function from IDCFuncs array and such make boost for some functions
  */
 int
- MakeByte(long ea)
+ MakeByte(unsigned long ea)
 {
   return doByte(ea,1);
 }
 
 int 
- MakeWord(long ea)
+ MakeWord(unsigned long ea)
 {
   return doWord(ea, 2);
 }
@@ -43,19 +43,19 @@ int
 }
 
 int
- MakeFloat(long ea)
+ MakeFloat(unsigned long ea)
 {
   return doFloat(ea, 4);
 }
 
 int
- MakeDouble(long ea)
+ MakeDouble(unsigned long ea)
 {
   return doDouble(ea, 8);
 }
 
 int
- MakePackReal(long ea)
+ MakePackReal(unsigned long ea)
 {
   return doPackReal(ea, 1);
 }
@@ -263,44 +263,44 @@ unsigned long
 }
 
 long 
- GetOriginalWord(long ea)
+ GetOriginalWord(unsigned long ea)
 {
   return (long)get_original_word(ea);
 }
 
 long 
- GetOriginalDword(long ea)
+ GetOriginalDword(unsigned long ea)
 {
   return (long)get_original_long(ea);
 }
 
 void 
- MakeUnknRange(long ea_from, long size, int expand)
+ MakeUnknRange(unsigned long ea_from, unsigned long size, int expand)
 {
   do_unknown_range(ea_from, size, (bool)expand);
 }
 
-int IsPublicName(long ea)
+int IsPublicName(unsigned long ea)
 {
   return is_public_name(ea);
 }
 
-void MakeNamePublic(long ea)
+void MakeNamePublic(unsigned long ea)
 {
   make_name_public(ea);
 }
 
-void MakeNameNonPublic(long ea)
+void MakeNameNonPublic(unsigned long ea)
 {
   make_name_non_public(ea);
 }
 
-void HideName(long ea)
+void HideName(unsigned long ea)
 {
   hide_name(ea);
 }
 
-void ShowName(long ea)
+void ShowName(unsigned long ea)
 {
   show_name(ea);
 }
@@ -317,10 +317,40 @@ int func_qty()
   return get_func_qty();
 }
 
-int func_n(int n)
+unsigned long func_n(int n)
 {
   func_t *res = getn_func(n);
   if ( res == NULL )
     return -1;
-  return (int)res->startEA;
+  return res->startEA;
+}
+
+unsigned long NextUnknown(unsigned long start, unsigned long max)
+{
+  return next_unknown(start, max);
+}
+
+unsigned long PrevUnknown(unsigned long start, unsigned long max)
+{
+  return prev_unknown(start, max);
+}
+
+unsigned long NextVisEA(unsigned long addr)
+{
+  return next_visea(addr);
+}
+
+unsigned long PrevVisEA(unsigned long addr)
+{
+  return prev_visea(addr);
+}
+
+int ToggleSign(unsigned long addr,int n)
+{
+  return toggle_sign(addr, n);
+}
+
+int ToggleBnot(unsigned long addr,int n)
+{
+  return toggle_bnot(addr, n);
 }

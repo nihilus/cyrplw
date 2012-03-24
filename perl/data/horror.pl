@@ -591,17 +591,23 @@ sub do_addition
   printf(OUT "extern int load_ids(char *);\n");
   printf(OUT "extern void save_idb(void);\n");
   printf(OUT "extern int is_debugged(void);\n");
-  printf(OUT "extern long GetOriginalWord(long);\n");
-  printf(OUT "extern long GetOriginalDword(long);\n");
-  printf(OUT "extern void MakeUnknRange(long, long, int);\n");
-  printf(OUT "extern int IsPublicName(long);\n");
-  printf(OUT "extern void MakeNamePublic(long);\n");
-  printf(OUT "extern void MakeNameNonPublic(long);\n");
-  printf(OUT "extern void HideName(long);\n");
-  printf(OUT "extern void ShowName(long);\n");
+  printf(OUT "extern long GetOriginalWord(unsigned long);\n");
+  printf(OUT "extern long GetOriginalDword(unsigned long);\n");
+  printf(OUT "extern void MakeUnknRange(unsigned long, unsigned long, int);\n");
+  printf(OUT "extern int IsPublicName(unsigned long);\n");
+  printf(OUT "extern void MakeNamePublic(unsigned long);\n");
+  printf(OUT "extern void MakeNameNonPublic(unsigned long);\n");
+  printf(OUT "extern void HideName(unsigned long);\n");
+  printf(OUT "extern void ShowName(unsigned long);\n");
   printf(OUT "extern char *IdpName(void);\n");
   printf(OUT "extern int func_qty(void);\n");
-  printf(OUT "extern int func_n(int);\n");
+  printf(OUT "extern unsigned long func_n(int);\n");
+  printf(OUT "extern unsigned long NextUnknown(unsigned long,unsigned long);\n");
+  printf(OUT "extern unsigned long PrevUnknown(unsigned long,unsigned long);\n");
+  printf(OUT "extern unsigned long NextVisEA(unsigned long);\n");
+  printf(OUT "extern unsigned long PrevVisEA(unsigned long);\n");
+  printf(OUT "extern int ToggleSign(unsigned long,int);\n");
+  printf(OUT "extern int ToggleBnot(unsigned long,int);\n");      
 }
 
 sub make_flist

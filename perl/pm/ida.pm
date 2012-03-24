@@ -1042,6 +1042,7 @@ NextFunction
 NextHead
 NextNotTail
 NextSeg
+NextUnknown
 OpAlt
 OpBinary
 OpChr
@@ -1069,6 +1070,7 @@ PrevFchunk
 PrevFunction
 PrevHead
 PrevNotTail
+PrevUnknown
 ProcessUiAction
 Qword
 RebaseProgram
@@ -1156,6 +1158,8 @@ SetTargetAssembler
 SetType
 ShowName
 Til2Idb
+ToggleBnot
+ToggleSign
 Wait
 Word
 XrefType
