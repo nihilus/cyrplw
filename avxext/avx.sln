@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "avx", "avx.vcproj", "{3E9B15F7-880B-43E7-B4BD-C3CAF5402E5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		64|Win32 = 64|Win32
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3E9B15F7-880B-43E7-B4BD-C3CAF5402E5B}.64|Win32.ActiveCfg = 64|Win32
+		{3E9B15F7-880B-43E7-B4BD-C3CAF5402E5B}.64|Win32.Build.0 = 64|Win32
+		{3E9B15F7-880B-43E7-B4BD-C3CAF5402E5B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3E9B15F7-880B-43E7-B4BD-C3CAF5402E5B}.Debug|Win32.Build.0 = Debug|Win32
+		{3E9B15F7-880B-43E7-B4BD-C3CAF5402E5B}.Release|Win32.ActiveCfg = Release|Win32
+		{3E9B15F7-880B-43E7-B4BD-C3CAF5402E5B}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
