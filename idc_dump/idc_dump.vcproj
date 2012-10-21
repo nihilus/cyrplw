@@ -2,8 +2,8 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="pic"
-	ProjectGUID="{5165FF12-D660-4037-9430-A78F05F11CC2}"
+	Name="idc_dump"
+	ProjectGUID="{ACF407F7-C900-4E79-ADDE-023ECFFA32BB}"
 	TargetFrameworkVersion="0"
 	>
 	<Platforms>
@@ -41,7 +41,7 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Release/wpic64.tlb"
+				TypeLibraryName=".\Release/idc_dump.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
@@ -49,11 +49,11 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				AdditionalIncludeDirectories="..\..\include"
-				PreprocessorDefinitions="NDEBUG;__NT__;__IDP__,__EA64__"
+				PreprocessorDefinitions="NDEBUG;__NT__;__IDP__;USE_STANDARD_FILE_FUNCTIONS"
 				StringPooling="true"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
-				PrecompiledHeaderFile=".\Release/wpic64.pch"
+				PrecompiledHeaderFile=".\Release/idc_dump.pch"
 				AssemblerListingLocation=".\Release/"
 				ObjectFile=".\Release/"
 				ProgramDataBaseFileName=".\Release/"
@@ -76,14 +76,14 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/export:PLUGIN"
 				AdditionalDependencies="odbc32.lib odbccp32.lib ida.lib"
-				OutputFile="../../../plugins/wpic64.p64"
+				OutputFile="../../../plugins/idc_dump.plw"
 				LinkIncremental="1"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..\..\lib\x86_win_vc_64"
-				ProgramDatabaseFile=".\Release/wpic64.pdb"
+				AdditionalLibraryDirectories="..\..\lib\x86_win_vc_32,C:\Program Files\Microsoft SDK\Lib"
+				ProgramDatabaseFile=".\Release/idc_dump.pdb"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary=".\Release/wpic64.lib"
+				ImportLibrary=".\Release/idc_dump.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -98,7 +98,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Release/wpic64.bsc"
+				OutputFile=".\Release/idc_dump.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -137,18 +137,18 @@
 				MkTypLibCompatible="true"
 				SuppressStartupBanner="true"
 				TargetEnvironment="1"
-				TypeLibraryName=".\Debug/wpic64.tlb"
+				TypeLibraryName=".\Debug/idc_dump.tlb"
 				HeaderFileName=""
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\..\include"
-				PreprocessorDefinitions="_DEBUG;__NT__;__IDP__;__EA64__"
+				PreprocessorDefinitions="_DEBUG;__NT__;__IDP__"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="1"
-				PrecompiledHeaderFile=".\Debug/wpic64.pch"
+				PrecompiledHeaderFile=".\Debug/idc_dump.pch"
 				AssemblerListingLocation=".\Debug/"
 				ObjectFile=".\Debug/"
 				ProgramDataBaseFileName=".\Debug/"
@@ -172,15 +172,15 @@
 				Name="VCLinkerTool"
 				AdditionalOptions="/export:PLUGIN"
 				AdditionalDependencies="ida.lib odbc32.lib odbccp32.lib"
-				OutputFile="../../../plugins/wpic64.p64"
+				OutputFile="../../../plugins/idc_dump.plw"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..\..\lib\vc.w64"
+				AdditionalLibraryDirectories="..\..\libvc.w32,C:\Program Files\Microsoft SDK\Lib"
 				GenerateDebugInformation="true"
-				ProgramDatabaseFile=".\Debug/wpic64.pdb"
+				ProgramDatabaseFile=".\Debug/idc_dump.pdb"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
-				ImportLibrary=".\Debug/wpic64.lib"
+				ImportLibrary=".\Debug/idc_dump.lib"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -195,7 +195,7 @@
 			<Tool
 				Name="VCBscMakeTool"
 				SuppressStartupBanner="true"
-				OutputFile=".\Debug/wpic64.bsc"
+				OutputFile=".\Debug/idc_dump.bsc"
 			/>
 			<Tool
 				Name="VCFxCopTool"
@@ -216,95 +216,7 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="refz.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="rp.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="wpic64.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="x86.cpp"
-				>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						AdditionalIncludeDirectories=""
-						PreprocessorDefinitions=""
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="x86data.c"
+				RelativePath="main.CPP"
 				>
 				<FileConfiguration
 					Name="Release|Win32"

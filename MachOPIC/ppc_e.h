@@ -63,7 +63,7 @@ class ppc_lemul
      return m_basereg;
    }
 
-   static char *reg_name(int r);
+   static const char *reg_name(int r);
   protected:
    smac_reffer *m_reffer;
 

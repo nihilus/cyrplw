@@ -1,6 +1,9 @@
 #include "mfc_cfg.h"
 #include <stdlib.h>
 #include <string.h>
+#include <ida.hpp>
+#include <idp.hpp>
+#include <loader.hpp>
 #include <kernwin.hpp>
 
 MFC_Cfg::MFC_Cfg(char *name)

@@ -8,7 +8,8 @@
 #include <xref.hpp>
 #include <search.hpp>
 #include <segment.hpp>
-#include <allins.hpp>
+// now included in intel.hpp
+// #include <allins.hpp>
 #include <intel.hpp>
 
 #include <list>

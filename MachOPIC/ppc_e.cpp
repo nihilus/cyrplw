@@ -1,7 +1,7 @@
 #include "ppc_e.h"
 #include <allins.hpp>
 
-char *ppc_lemul::reg_name(int r)
+const char *ppc_lemul::reg_name(int r)
 {
   if ( r >= ph.regsNum )
    return "hz";
