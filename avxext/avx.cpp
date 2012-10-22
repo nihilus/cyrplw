@@ -12,6 +12,9 @@ const struct BxDisasmOpcodeInfo_t Ia_Invalid = { "(invalid)", (avx_insn_type_t)0
 #include "dis_tables_avx.inc"
 #include "dis_tables_xop.inc"
 #include "und_tables.h"
+#if IDP_INTERFACE_VERSION <= 76
+#include <allins.hpp>
+#endif
 #include <intel.hpp>
 
 static BxDisasmOpcodeTable_t BxDisasmGroupSSE_ERR[4] = {
@@ -74,6 +77,35 @@ static const char *intel_vector_reg_name[2] = {
     "xmm", "ymm"
 };
 
+// pseudo-ops functions
+static int check_avx_pseudo_itype()
+{
+  switch(cmd.itype)
+  {
+    case AVX_vcmppd: return AVX_vcmpeqpd;
+    case AVX_vcmpps: return AVX_vcmpeqps;
+    case AVX_vcmpsd: return AVX_vcmpeqsd;
+    case AVX_vcmpss: return AVX_vcmpeqss;
+  }
+  return NN_null;
+}
+
+void check_avx_pseudo()
+{
+  int base = check_avx_pseudo_itype();
+  if ( NN_null == base )
+    return;
+  // check 4th operand
+  if ( (cmd.Op4.type != o_imm) ||
+       (cmd.Op4.dtyp != dt_byte) ||
+       ( ((int)cmd.Op4.value > 0x1f) || ((int)cmd.Op4.value < 0) )
+     )
+    return;
+  // o`k, we can make pseudo-op for this instruction
+  cmd.itype = base + cmd.Op4.value;
+  cmd.Op4.type = o_void;
+}
+
 void disassembler::set_syntax_intel()
 {
   intel_mode = 1;
@@ -90,6 +122,63 @@ void disassembler::set_syntax_intel()
 
   initialize_modrm_segregs();
 }
+
+static const RegNo s_sreg_mod00_rm16[8] = {
+  R_ds,
+  R_ds,
+  R_ss,
+  R_ss,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds  
+};
+static const RegNo s_reg_mod01or10_rm16[8] = {
+  R_ds,
+  R_ds,
+  R_ss,
+  R_ss,
+  R_ds,
+  R_ds,
+  R_ss,
+  R_ds
+};
+static const RegNo s_reg_mod00_base32[16] = {
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ss,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds
+};
+static const RegNo s_reg_mod01or10_base32[16] = {
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ss,
+  R_ss,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds,
+  R_ds
+};
 
 void disassembler::initialize_modrm_segregs()
 {
@@ -1116,6 +1205,8 @@ x86_insn disassembler::decode(bx_bool is_32, bx_bool is_64, bx_address base, bx_
 	  msg("%a: bad vex", ea_start);
 	  throw 10;
   }
+  // finally check for pseudo-ops
+  check_avx_pseudo();
   insn.ilen = (unsigned)(ea - (ea_t)instruction_begin);
 
   return insn;
@@ -1539,9 +1630,10 @@ static void process_rm(op_t &x, uchar postbyte)
 
 //--------------------------------------------------------------------------
 // Analyze an instruction and fill the 'cmd' structure
+disassembler g_disa;
+
 size_t ana(void)
 {
-  disassembler disa;
 #ifdef _DEBUG
   msg("avx_ana called, addr: %a\n", ea);
 #endif /* _DEBUG */
@@ -1549,9 +1641,9 @@ size_t ana(void)
   {
     x86_insn val = 
 #ifdef __EA64__
-    disa.decode64(NULL, ea, (const Bit8u *)ea);
+    g_disa.decode64(NULL, ea, (const Bit8u *)ea);
 #else
-    disa.decode32(NULL, ea, (const Bit8u *)ea);
+    g_disa.decode32(NULL, ea, (const Bit8u *)ea);
 #endif
 #ifdef _DEBUG
     msg("len returned: %d\n", val.ilen);

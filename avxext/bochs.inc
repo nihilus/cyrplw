@@ -519,6 +519,134 @@ enum avx_insn_type_t
  AVX_blsic,
  AVX_t1mskc,
  AVX_tzmsk,
+ AVX_vcmpeqpd,
+ AVX_vcmpltpd,
+ AVX_vcmplepd,
+ AVX_vcmpunordpd,
+ AVX_vcmpneqpd,
+ AVX_vcmpnltpd,
+ AVX_vcmpnlepd,
+ AVX_vcmpordpd,
+ AVX_vcmpeq_uqpd,
+ AVX_vcmpngepd,
+ AVX_vcmpngtpd,
+ AVX_vcmpfalsepd,
+ AVX_vcmpneq_oqpd,
+ AVX_vcmpgepd,
+ AVX_vcmpgtpd,
+ AVX_vcmptruepd,
+ AVX_vcmpeq_ospd,
+ AVX_vcmplt_oqpd,
+ AVX_vcmple_oqpd,
+ AVX_vcmpunord_spd,
+ AVX_vcmpneq_uspd,
+ AVX_vcmpnlt_uqpd,
+ AVX_vcmpnle_uqpd,
+ AVX_vcmpord_spd,
+ AVX_vcmpeq_uspd,
+ AVX_vcmpnge_uqpd,
+ AVX_vcmpngt_uqpd,
+ AVX_vcmpfalse_ospd,
+ AVX_vcmpneq_ospd,
+ AVX_vcmpge_oqpd,
+ AVX_vcmpgt_oqpd,
+ AVX_vcmptrue_uspd,
+ AVX_vcmpeqps,
+ AVX_vcmpltps,
+ AVX_vcmpleps,
+ AVX_vcmpunordps,
+ AVX_vcmpneqps,
+ AVX_vcmpnltps,
+ AVX_vcmpnleps,
+ AVX_vcmpordps,
+ AVX_vcmpeq_uqps,
+ AVX_vcmpngeps,
+ AVX_vcmpngtps,
+ AVX_vcmpfalseps,
+ AVX_vcmpneq_oqps,
+ AVX_vcmpgeps,
+ AVX_vcmpgtps,
+ AVX_vcmptrueps,
+ AVX_vcmpeq_osps,
+ AVX_vcmplt_oqps,
+ AVX_vcmple_oqps,
+ AVX_vcmpunord_sps,
+ AVX_vcmpneq_usps,
+ AVX_vcmpnlt_uqps,
+ AVX_vcmpnle_uqps,
+ AVX_vcmpord_sps,
+ AVX_vcmpeq_usps,
+ AVX_vcmpnge_uqps,
+ AVX_vcmpngt_uqps,
+ AVX_vcmpfalse_osps,
+ AVX_vcmpneq_osps,
+ AVX_vcmpge_oqps,
+ AVX_vcmpgt_oqps,
+ AVX_vcmptrue_usps,
+ AVX_vcmpeqsd,
+ AVX_vcmpltsd,
+ AVX_vcmplesd,
+ AVX_vcmpunordsd,
+ AVX_vcmpneqsd,
+ AVX_vcmpnltsd,
+ AVX_vcmpnlesd,
+ AVX_vcmpordsd,
+ AVX_vcmpeq_uqsd,
+ AVX_vcmpngesd,
+ AVX_vcmpngtsd,
+ AVX_vcmpfalsesd,
+ AVX_vcmpneq_oqsd,
+ AVX_vcmpgesd,
+ AVX_vcmpgtsd,
+ AVX_vcmptruesd,
+ AVX_vcmpeq_ossd,
+ AVX_vcmplt_oqsd,
+ AVX_vcmple_oqsd,
+ AVX_vcmpunord_ssd,
+ AVX_vcmpneq_ussd,
+ AVX_vcmpnlt_uqsd,
+ AVX_vcmpnle_uqsd,
+ AVX_vcmpord_ssd,
+ AVX_vcmpeq_ussd,
+ AVX_vcmpnge_uqsd,
+ AVX_vcmpngt_uqsd,
+ AVX_vcmpfalse_ossd,
+ AVX_vcmpneq_ossd,
+ AVX_vcmpge_oqsd,
+ AVX_vcmpgt_oqsd,
+ AVX_vcmptrue_ussd,
+ AVX_vcmpeqss,
+ AVX_vcmpltss,
+ AVX_vcmpless,
+ AVX_vcmpunordss,
+ AVX_vcmpneqss,
+ AVX_vcmpnltss,
+ AVX_vcmpnless,
+ AVX_vcmpordss,
+ AVX_vcmpeq_uqss,
+ AVX_vcmpngess,
+ AVX_vcmpngtss,
+ AVX_vcmpfalsess,
+ AVX_vcmpneq_oqss,
+ AVX_vcmpgess,
+ AVX_vcmpgtss,
+ AVX_vcmptruess,
+ AVX_vcmpeq_osss,
+ AVX_vcmplt_oqss,
+ AVX_vcmple_oqss,
+ AVX_vcmpunord_sss,
+ AVX_vcmpneq_usss,
+ AVX_vcmpnlt_uqss,
+ AVX_vcmpnle_uqss,
+ AVX_vcmpord_sss,
+ AVX_vcmpeq_usss,
+ AVX_vcmpnge_uqss,
+ AVX_vcmpngt_uqss,
+ AVX_vcmpfalse_osss,
+ AVX_vcmpneq_osss,
+ AVX_vcmpge_oqss,
+ AVX_vcmpgt_oqss,
+ AVX_vcmptrue_usss,
 };
 
 // merged AVX & XOP opcodes
@@ -1561,8 +1689,266 @@ const struct BxDisasmOpcodeInfo_t
 const struct BxDisasmOpcodeInfo_t
  Ia_tzmsk_By_Ey = { "tzmsk", AVX_tzmsk, Gy, By, Ey, XX, IA_TBM };
 
+// AVX pseudo-ops
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeqpd = { "vcmpeqpd", AVX_vcmpeqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpltpd = { "vcmpltpd", AVX_vcmpltpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmplepd = { "vcmplepd", AVX_vcmplepd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpunordpd = { "vcmpunordpd", AVX_vcmpunordpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneqpd = { "vcmpneqpd", AVX_vcmpneqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnltpd = { "vcmpnltpd", AVX_vcmpnltpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnlepd = { "vcmpnlepd", AVX_vcmpnlepd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpordpd = { "vcmpordpd", AVX_vcmpordpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_uqpd = { "vcmpeq_uqpd", AVX_vcmpeq_uqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngepd = { "vcmpngepd", AVX_vcmpngepd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngtpd = { "vcmpngtpd", AVX_vcmpngtpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpfalsepd = { "vcmpfalsepd", AVX_vcmpfalsepd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_oqpd = { "vcmpneq_oqpd", AVX_vcmpneq_oqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgepd = { "vcmpgepd", AVX_vcmpgepd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgtpd = { "vcmpgtpd", AVX_vcmpgtpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmptruepd = { "vcmptruepd", AVX_vcmptruepd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_ospd = { "vcmpeq_ospd", AVX_vcmpeq_ospd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmplt_oqpd = { "vcmplt_oqpd", AVX_vcmplt_oqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmple_oqpd = { "vcmple_oqpd", AVX_vcmple_oqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpunord_spd = { "vcmpunord_spd", AVX_vcmpunord_spd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_uspd = { "vcmpneq_uspd", AVX_vcmpneq_uspd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnlt_uqpd = { "vcmpnlt_uqpd", AVX_vcmpnlt_uqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnle_uqpd = { "vcmpnle_uqpd", AVX_vcmpnle_uqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpord_spd = { "vcmpord_spd", AVX_vcmpord_spd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_uspd = { "vcmpeq_uspd", AVX_vcmpeq_uspd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnge_uqpd = { "vcmpnge_uqpd", AVX_vcmpnge_uqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngt_uqpd = { "vcmpngt_uqpd", AVX_vcmpngt_uqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpfalse_ospd = { "vcmpfalse_ospd", AVX_vcmpfalse_ospd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_ospd = { "vcmpneq_ospd", AVX_vcmpneq_ospd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpge_oqpd = { "vcmpge_oqpd", AVX_vcmpge_oqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgt_oqpd = { "vcmpgt_oqpd", AVX_vcmpgt_oqpd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmptrue_uspd = { "vcmptrue_uspd", AVX_vcmptrue_uspd, Vpd, Hpd, Wpd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeqps = { "vcmpeqps", AVX_vcmpeqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpltps = { "vcmpltps", AVX_vcmpltps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpleps = { "vcmpleps", AVX_vcmpleps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpunordps = { "vcmpunordps", AVX_vcmpunordps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneqps = { "vcmpneqps", AVX_vcmpneqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnltps = { "vcmpnltps", AVX_vcmpnltps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnleps = { "vcmpnleps", AVX_vcmpnleps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpordps = { "vcmpordps", AVX_vcmpordps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_uqps = { "vcmpeq_uqps", AVX_vcmpeq_uqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngeps = { "vcmpngeps", AVX_vcmpngeps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngtps = { "vcmpngtps", AVX_vcmpngtps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpfalseps = { "vcmpfalseps", AVX_vcmpfalseps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_oqps = { "vcmpneq_oqps", AVX_vcmpneq_oqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgeps = { "vcmpgeps", AVX_vcmpgeps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgtps = { "vcmpgtps", AVX_vcmpgtps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmptrueps = { "vcmptrueps", AVX_vcmptrueps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_osps = { "vcmpeq_osps", AVX_vcmpeq_osps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmplt_oqps = { "vcmplt_oqps", AVX_vcmplt_oqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmple_oqps = { "vcmple_oqps", AVX_vcmple_oqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpunord_sps = { "vcmpunord_sps", AVX_vcmpunord_sps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_usps = { "vcmpneq_usps", AVX_vcmpneq_usps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnlt_uqps = { "vcmpnlt_uqps", AVX_vcmpnlt_uqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnle_uqps = { "vcmpnle_uqps", AVX_vcmpnle_uqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpord_sps = { "vcmpord_sps", AVX_vcmpord_sps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_usps = { "vcmpeq_usps", AVX_vcmpeq_usps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnge_uqps = { "vcmpnge_uqps", AVX_vcmpnge_uqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngt_uqps = { "vcmpngt_uqps", AVX_vcmpngt_uqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpfalse_osps = { "vcmpfalse_osps", AVX_vcmpfalse_osps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_osps = { "vcmpneq_osps", AVX_vcmpneq_osps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpge_oqps = { "vcmpge_oqps", AVX_vcmpge_oqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgt_oqps = { "vcmpgt_oqps", AVX_vcmpgt_oqps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmptrue_usps = { "vcmptrue_usps", AVX_vcmptrue_usps, Vps, Hps, Wps, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeqsd = { "vcmpeqsd", AVX_vcmpeqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpltsd = { "vcmpltsd", AVX_vcmpltsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmplesd = { "vcmplesd", AVX_vcmplesd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpunordsd = { "vcmpunordsd", AVX_vcmpunordsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneqsd = { "vcmpneqsd", AVX_vcmpneqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnltsd = { "vcmpnltsd", AVX_vcmpnltsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnlesd = { "vcmpnlesd", AVX_vcmpnlesd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpordsd = { "vcmpordsd", AVX_vcmpordsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_uqsd = { "vcmpeq_uqsd", AVX_vcmpeq_uqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngesd = { "vcmpngesd", AVX_vcmpngesd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngtsd = { "vcmpngtsd", AVX_vcmpngtsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpfalsesd = { "vcmpfalsesd", AVX_vcmpfalsesd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_oqsd = { "vcmpneq_oqsd", AVX_vcmpneq_oqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgesd = { "vcmpgesd", AVX_vcmpgesd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgtsd = { "vcmpgtsd", AVX_vcmpgtsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmptruesd = { "vcmptruesd", AVX_vcmptruesd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_ossd = { "vcmpeq_ossd", AVX_vcmpeq_ossd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmplt_oqsd = { "vcmplt_oqsd", AVX_vcmplt_oqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmple_oqsd = { "vcmple_oqsd", AVX_vcmple_oqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpunord_ssd = { "vcmpunord_ssd", AVX_vcmpunord_ssd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_ussd = { "vcmpneq_ussd", AVX_vcmpneq_ussd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnlt_uqsd = { "vcmpnlt_uqsd", AVX_vcmpnlt_uqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnle_uqsd = { "vcmpnle_uqsd", AVX_vcmpnle_uqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpord_ssd = { "vcmpord_ssd", AVX_vcmpord_ssd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_ussd = { "vcmpeq_ussd", AVX_vcmpeq_ussd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnge_uqsd = { "vcmpnge_uqsd", AVX_vcmpnge_uqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngt_uqsd = { "vcmpngt_uqsd", AVX_vcmpngt_uqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpfalse_ossd = { "vcmpfalse_ossd", AVX_vcmpfalse_ossd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_ossd = { "vcmpneq_ossd", AVX_vcmpneq_ossd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpge_oqsd = { "vcmpge_oqsd", AVX_vcmpge_oqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgt_oqsd = { "vcmpgt_oqsd", AVX_vcmpgt_oqsd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmptrue_ussd = { "vcmptrue_ussd", AVX_vcmptrue_ussd, Vsd, Hpd, Wsd, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeqss = { "vcmpeqss", AVX_vcmpeqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpltss = { "vcmpltss", AVX_vcmpltss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpless = { "vcmpless", AVX_vcmpless, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpunordss = { "vcmpunordss", AVX_vcmpunordss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneqss = { "vcmpneqss", AVX_vcmpneqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnltss = { "vcmpnltss", AVX_vcmpnltss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnless = { "vcmpnless", AVX_vcmpnless, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpordss = { "vcmpordss", AVX_vcmpordss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_uqss = { "vcmpeq_uqss", AVX_vcmpeq_uqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngess = { "vcmpngess", AVX_vcmpngess, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngtss = { "vcmpngtss", AVX_vcmpngtss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpfalsess = { "vcmpfalsess", AVX_vcmpfalsess, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_oqss = { "vcmpneq_oqss", AVX_vcmpneq_oqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgess = { "vcmpgess", AVX_vcmpgess, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgtss = { "vcmpgtss", AVX_vcmpgtss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmptruess = { "vcmptruess", AVX_vcmptruess, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_osss = { "vcmpeq_osss", AVX_vcmpeq_osss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmplt_oqss = { "vcmplt_oqss", AVX_vcmplt_oqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmple_oqss = { "vcmple_oqss", AVX_vcmple_oqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpunord_sss = { "vcmpunord_sss", AVX_vcmpunord_sss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_usss = { "vcmpneq_usss", AVX_vcmpneq_usss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnlt_uqss = { "vcmpnlt_uqss", AVX_vcmpnlt_uqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnle_uqss = { "vcmpnle_uqss", AVX_vcmpnle_uqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpord_sss = { "vcmpord_sss", AVX_vcmpord_sss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpeq_usss = { "vcmpeq_usss", AVX_vcmpeq_usss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpnge_uqss = { "vcmpnge_uqss", AVX_vcmpnge_uqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpngt_uqss = { "vcmpngt_uqss", AVX_vcmpngt_uqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpfalse_osss = { "vcmpfalse_osss", AVX_vcmpfalse_osss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpneq_osss = { "vcmpneq_osss", AVX_vcmpneq_osss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpge_oqss = { "vcmpge_oqss", AVX_vcmpge_oqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmpgt_oqss = { "vcmpgt_oqss", AVX_vcmpgt_oqss, Vss, Hps, Wss, Ib, IA_AVX};
+const struct BxDisasmOpcodeInfo_t
+ Ia_pseudo_vcmptrue_usss = { "vcmptrue_usss", AVX_vcmptrue_usss, Vss, Hps, Wss, Ib, IA_AVX};
 
-const struct BxDisasmOpcodeInfo_t *opcode_map[] = {
+
+static const struct BxDisasmOpcodeInfo_t *opcode_map[] = {
 /* AVX_vaddpd */ &Ia_vaddpd_Vpd_Hpd_Wpd,
 /* AVX_vaddps */ &Ia_vaddps_Vps_Hps_Wps,
 /* AVX_vaddsd */ &Ia_vaddsd_Vsd_Hpd_Wsd,
@@ -2082,4 +2468,132 @@ const struct BxDisasmOpcodeInfo_t *opcode_map[] = {
 /* AVX_blsic */ &Ia_blsic_By_Ey,
 /* AVX_t1mskc */ &Ia_t1mskc_By_Ey,
 /* AVX_tzmsk */ &Ia_tzmsk_By_Ey,
+/* AVX_vcmpeqpd */ &Ia_pseudo_vcmpeqpd,
+/* AVX_vcmpltpd */ &Ia_pseudo_vcmpltpd,
+/* AVX_vcmplepd */ &Ia_pseudo_vcmplepd,
+/* AVX_vcmpunordpd */ &Ia_pseudo_vcmpunordpd,
+/* AVX_vcmpneqpd */ &Ia_pseudo_vcmpneqpd,
+/* AVX_vcmpnltpd */ &Ia_pseudo_vcmpnltpd,
+/* AVX_vcmpnlepd */ &Ia_pseudo_vcmpnlepd,
+/* AVX_vcmpordpd */ &Ia_pseudo_vcmpordpd,
+/* AVX_vcmpeq_uqpd */ &Ia_pseudo_vcmpeq_uqpd,
+/* AVX_vcmpngepd */ &Ia_pseudo_vcmpngepd,
+/* AVX_vcmpngtpd */ &Ia_pseudo_vcmpngtpd,
+/* AVX_vcmpfalsepd */ &Ia_pseudo_vcmpfalsepd,
+/* AVX_vcmpneq_oqpd */ &Ia_pseudo_vcmpneq_oqpd,
+/* AVX_vcmpgepd */ &Ia_pseudo_vcmpgepd,
+/* AVX_vcmpgtpd */ &Ia_pseudo_vcmpgtpd,
+/* AVX_vcmptruepd */ &Ia_pseudo_vcmptruepd,
+/* AVX_vcmpeq_ospd */ &Ia_pseudo_vcmpeq_ospd,
+/* AVX_vcmplt_oqpd */ &Ia_pseudo_vcmplt_oqpd,
+/* AVX_vcmple_oqpd */ &Ia_pseudo_vcmple_oqpd,
+/* AVX_vcmpunord_spd */ &Ia_pseudo_vcmpunord_spd,
+/* AVX_vcmpneq_uspd */ &Ia_pseudo_vcmpneq_uspd,
+/* AVX_vcmpnlt_uqpd */ &Ia_pseudo_vcmpnlt_uqpd,
+/* AVX_vcmpnle_uqpd */ &Ia_pseudo_vcmpnle_uqpd,
+/* AVX_vcmpord_spd */ &Ia_pseudo_vcmpord_spd,
+/* AVX_vcmpeq_uspd */ &Ia_pseudo_vcmpeq_uspd,
+/* AVX_vcmpnge_uqpd */ &Ia_pseudo_vcmpnge_uqpd,
+/* AVX_vcmpngt_uqpd */ &Ia_pseudo_vcmpngt_uqpd,
+/* AVX_vcmpfalse_ospd */ &Ia_pseudo_vcmpfalse_ospd,
+/* AVX_vcmpneq_ospd */ &Ia_pseudo_vcmpneq_ospd,
+/* AVX_vcmpge_oqpd */ &Ia_pseudo_vcmpge_oqpd,
+/* AVX_vcmpgt_oqpd */ &Ia_pseudo_vcmpgt_oqpd,
+/* AVX_vcmptrue_uspd */ &Ia_pseudo_vcmptrue_uspd,
+/* AVX_vcmpeqps */ &Ia_pseudo_vcmpeqps,
+/* AVX_vcmpltps */ &Ia_pseudo_vcmpltps,
+/* AVX_vcmpleps */ &Ia_pseudo_vcmpleps,
+/* AVX_vcmpunordps */ &Ia_pseudo_vcmpunordps,
+/* AVX_vcmpneqps */ &Ia_pseudo_vcmpneqps,
+/* AVX_vcmpnltps */ &Ia_pseudo_vcmpnltps,
+/* AVX_vcmpnleps */ &Ia_pseudo_vcmpnleps,
+/* AVX_vcmpordps */ &Ia_pseudo_vcmpordps,
+/* AVX_vcmpeq_uqps */ &Ia_pseudo_vcmpeq_uqps,
+/* AVX_vcmpngeps */ &Ia_pseudo_vcmpngeps,
+/* AVX_vcmpngtps */ &Ia_pseudo_vcmpngtps,
+/* AVX_vcmpfalseps */ &Ia_pseudo_vcmpfalseps,
+/* AVX_vcmpneq_oqps */ &Ia_pseudo_vcmpneq_oqps,
+/* AVX_vcmpgeps */ &Ia_pseudo_vcmpgeps,
+/* AVX_vcmpgtps */ &Ia_pseudo_vcmpgtps,
+/* AVX_vcmptrueps */ &Ia_pseudo_vcmptrueps,
+/* AVX_vcmpeq_osps */ &Ia_pseudo_vcmpeq_osps,
+/* AVX_vcmplt_oqps */ &Ia_pseudo_vcmplt_oqps,
+/* AVX_vcmple_oqps */ &Ia_pseudo_vcmple_oqps,
+/* AVX_vcmpunord_sps */ &Ia_pseudo_vcmpunord_sps,
+/* AVX_vcmpneq_usps */ &Ia_pseudo_vcmpneq_usps,
+/* AVX_vcmpnlt_uqps */ &Ia_pseudo_vcmpnlt_uqps,
+/* AVX_vcmpnle_uqps */ &Ia_pseudo_vcmpnle_uqps,
+/* AVX_vcmpord_sps */ &Ia_pseudo_vcmpord_sps,
+/* AVX_vcmpeq_usps */ &Ia_pseudo_vcmpeq_usps,
+/* AVX_vcmpnge_uqps */ &Ia_pseudo_vcmpnge_uqps,
+/* AVX_vcmpngt_uqps */ &Ia_pseudo_vcmpngt_uqps,
+/* AVX_vcmpfalse_osps */ &Ia_pseudo_vcmpfalse_osps,
+/* AVX_vcmpneq_osps */ &Ia_pseudo_vcmpneq_osps,
+/* AVX_vcmpge_oqps */ &Ia_pseudo_vcmpge_oqps,
+/* AVX_vcmpgt_oqps */ &Ia_pseudo_vcmpgt_oqps,
+/* AVX_vcmptrue_usps */ &Ia_pseudo_vcmptrue_usps,
+/* AVX_vcmpeqsd */ &Ia_pseudo_vcmpeqsd,
+/* AVX_vcmpltsd */ &Ia_pseudo_vcmpltsd,
+/* AVX_vcmplesd */ &Ia_pseudo_vcmplesd,
+/* AVX_vcmpunordsd */ &Ia_pseudo_vcmpunordsd,
+/* AVX_vcmpneqsd */ &Ia_pseudo_vcmpneqsd,
+/* AVX_vcmpnltsd */ &Ia_pseudo_vcmpnltsd,
+/* AVX_vcmpnlesd */ &Ia_pseudo_vcmpnlesd,
+/* AVX_vcmpordsd */ &Ia_pseudo_vcmpordsd,
+/* AVX_vcmpeq_uqsd */ &Ia_pseudo_vcmpeq_uqsd,
+/* AVX_vcmpngesd */ &Ia_pseudo_vcmpngesd,
+/* AVX_vcmpngtsd */ &Ia_pseudo_vcmpngtsd,
+/* AVX_vcmpfalsesd */ &Ia_pseudo_vcmpfalsesd,
+/* AVX_vcmpneq_oqsd */ &Ia_pseudo_vcmpneq_oqsd,
+/* AVX_vcmpgesd */ &Ia_pseudo_vcmpgesd,
+/* AVX_vcmpgtsd */ &Ia_pseudo_vcmpgtsd,
+/* AVX_vcmptruesd */ &Ia_pseudo_vcmptruesd,
+/* AVX_vcmpeq_ossd */ &Ia_pseudo_vcmpeq_ossd,
+/* AVX_vcmplt_oqsd */ &Ia_pseudo_vcmplt_oqsd,
+/* AVX_vcmple_oqsd */ &Ia_pseudo_vcmple_oqsd,
+/* AVX_vcmpunord_ssd */ &Ia_pseudo_vcmpunord_ssd,
+/* AVX_vcmpneq_ussd */ &Ia_pseudo_vcmpneq_ussd,
+/* AVX_vcmpnlt_uqsd */ &Ia_pseudo_vcmpnlt_uqsd,
+/* AVX_vcmpnle_uqsd */ &Ia_pseudo_vcmpnle_uqsd,
+/* AVX_vcmpord_ssd */ &Ia_pseudo_vcmpord_ssd,
+/* AVX_vcmpeq_ussd */ &Ia_pseudo_vcmpeq_ussd,
+/* AVX_vcmpnge_uqsd */ &Ia_pseudo_vcmpnge_uqsd,
+/* AVX_vcmpngt_uqsd */ &Ia_pseudo_vcmpngt_uqsd,
+/* AVX_vcmpfalse_ossd */ &Ia_pseudo_vcmpfalse_ossd,
+/* AVX_vcmpneq_ossd */ &Ia_pseudo_vcmpneq_ossd,
+/* AVX_vcmpge_oqsd */ &Ia_pseudo_vcmpge_oqsd,
+/* AVX_vcmpgt_oqsd */ &Ia_pseudo_vcmpgt_oqsd,
+/* AVX_vcmptrue_ussd */ &Ia_pseudo_vcmptrue_ussd,
+/* AVX_vcmpeqss */ &Ia_pseudo_vcmpeqss,
+/* AVX_vcmpltss */ &Ia_pseudo_vcmpltss,
+/* AVX_vcmpless */ &Ia_pseudo_vcmpless,
+/* AVX_vcmpunordss */ &Ia_pseudo_vcmpunordss,
+/* AVX_vcmpneqss */ &Ia_pseudo_vcmpneqss,
+/* AVX_vcmpnltss */ &Ia_pseudo_vcmpnltss,
+/* AVX_vcmpnless */ &Ia_pseudo_vcmpnless,
+/* AVX_vcmpordss */ &Ia_pseudo_vcmpordss,
+/* AVX_vcmpeq_uqss */ &Ia_pseudo_vcmpeq_uqss,
+/* AVX_vcmpngess */ &Ia_pseudo_vcmpngess,
+/* AVX_vcmpngtss */ &Ia_pseudo_vcmpngtss,
+/* AVX_vcmpfalsess */ &Ia_pseudo_vcmpfalsess,
+/* AVX_vcmpneq_oqss */ &Ia_pseudo_vcmpneq_oqss,
+/* AVX_vcmpgess */ &Ia_pseudo_vcmpgess,
+/* AVX_vcmpgtss */ &Ia_pseudo_vcmpgtss,
+/* AVX_vcmptruess */ &Ia_pseudo_vcmptruess,
+/* AVX_vcmpeq_osss */ &Ia_pseudo_vcmpeq_osss,
+/* AVX_vcmplt_oqss */ &Ia_pseudo_vcmplt_oqss,
+/* AVX_vcmple_oqss */ &Ia_pseudo_vcmple_oqss,
+/* AVX_vcmpunord_sss */ &Ia_pseudo_vcmpunord_sss,
+/* AVX_vcmpneq_usss */ &Ia_pseudo_vcmpneq_usss,
+/* AVX_vcmpnlt_uqss */ &Ia_pseudo_vcmpnlt_uqss,
+/* AVX_vcmpnle_uqss */ &Ia_pseudo_vcmpnle_uqss,
+/* AVX_vcmpord_sss */ &Ia_pseudo_vcmpord_sss,
+/* AVX_vcmpeq_usss */ &Ia_pseudo_vcmpeq_usss,
+/* AVX_vcmpnge_uqss */ &Ia_pseudo_vcmpnge_uqss,
+/* AVX_vcmpngt_uqss */ &Ia_pseudo_vcmpngt_uqss,
+/* AVX_vcmpfalse_osss */ &Ia_pseudo_vcmpfalse_osss,
+/* AVX_vcmpneq_osss */ &Ia_pseudo_vcmpneq_osss,
+/* AVX_vcmpge_oqss */ &Ia_pseudo_vcmpge_oqss,
+/* AVX_vcmpgt_oqss */ &Ia_pseudo_vcmpgt_oqss,
+/* AVX_vcmptrue_usss */ &Ia_pseudo_vcmptrue_usss,
 };

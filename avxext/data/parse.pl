@@ -1,10 +1,11 @@
 #!perl -w
 # Lame script to parse avx/xop opcodes list from bochs
 # 21 Oct 2012 (C) RedPlait
+# 22 Oct 2012 - add pseudo-ops for vcmppd/vcmpps/vcmpsd/vcmpss (-p option)
 use strict;
 use warnings;
 use Getopt::Std;
-use vars qw/$opt_c $opt_v/;
+use vars qw/$opt_c $opt_p $opt_v/;
 
 sub usage()
 {
@@ -12,6 +13,7 @@ sub usage()
 Usage is $0 [options] file(s) with opcodes
 Options:
   -c -- use const modifier
+  -p -- add pseudo names for vcmpXX
   -v -- verbose mode
 EOF
     exit (8);
@@ -27,6 +29,170 @@ my %op_types;
 my %dup_names;
 # my enum names
 my @e_names;
+
+# pseudo-names
+my @vcmppd = qw(
+ VCMPEQPD
+ VCMPLTPD
+ VCMPLEPD
+ VCMPUNORDPD
+ VCMPNEQPD
+ VCMPNLTPD
+ VCMPNLEPD
+ VCMPORDPD
+ VCMPEQ_UQPD
+ VCMPNGEPD
+ VCMPNGTPD
+ VCMPFALSEPD
+ VCMPNEQ_OQPD
+ VCMPGEPD
+ VCMPGTPD
+ VCMPTRUEPD
+ VCMPEQ_OSPD
+ VCMPLT_OQPD
+ VCMPLE_OQPD
+ VCMPUNORD_SPD
+ VCMPNEQ_USPD
+ VCMPNLT_UQPD
+ VCMPNLE_UQPD
+ VCMPORD_SPD
+ VCMPEQ_USPD
+ VCMPNGE_UQPD
+ VCMPNGT_UQPD
+ VCMPFALSE_OSPD
+ VCMPNEQ_OSPD
+ VCMPGE_OQPD
+ VCMPGT_OQPD
+ VCMPTRUE_USPD
+);
+
+my @vcmpps = qw(
+ VCMPEQPS
+ VCMPLTPS
+ VCMPLEPS
+ VCMPUNORDPS
+ VCMPNEQPS
+ VCMPNLTPS
+ VCMPNLEPS
+ VCMPORDPS
+ VCMPEQ_UQPS
+ VCMPNGEPS
+ VCMPNGTPS
+ VCMPFALSEPS
+ VCMPNEQ_OQPS
+ VCMPGEPS
+ VCMPGTPS
+ VCMPTRUEPS
+ VCMPEQ_OSPS
+ VCMPLT_OQPS
+ VCMPLE_OQPS
+ VCMPUNORD_SPS
+ VCMPNEQ_USPS
+ VCMPNLT_UQPS
+ VCMPNLE_UQPS
+ VCMPORD_SPS
+ VCMPEQ_USPS
+ VCMPNGE_UQPS
+ VCMPNGT_UQPS
+ VCMPFALSE_OSPS
+ VCMPNEQ_OSPS
+ VCMPGE_OQPS
+ VCMPGT_OQPS
+ VCMPTRUE_USPS
+);
+
+my @vcmpsd = qw(
+ VCMPEQSD
+ VCMPLTSD
+ VCMPLESD
+ VCMPUNORDSD
+ VCMPNEQSD
+ VCMPNLTSD
+ VCMPNLESD
+ VCMPORDSD
+ VCMPEQ_UQSD
+ VCMPNGESD
+ VCMPNGTSD
+ VCMPFALSESD
+ VCMPNEQ_OQSD
+ VCMPGESD
+ VCMPGTSD
+ VCMPTRUESD
+ VCMPEQ_OSSD
+ VCMPLT_OQSD
+ VCMPLE_OQSD
+ VCMPUNORD_SSD
+ VCMPNEQ_USSD
+ VCMPNLT_UQSD
+ VCMPNLE_UQSD
+ VCMPORD_SSD
+ VCMPEQ_USSD
+ VCMPNGE_UQSD
+ VCMPNGT_UQSD
+ VCMPFALSE_OSSD
+ VCMPNEQ_OSSD
+ VCMPGE_OQSD
+ VCMPGT_OQSD
+ VCMPTRUE_USSD
+);
+
+my @vcmpss = qw(
+ VCMPEQSS
+ VCMPLTSS
+ VCMPLESS
+ VCMPUNORDSS
+ VCMPNEQSS
+ VCMPNLTSS
+ VCMPNLESS
+ VCMPORDSS
+ VCMPEQ_UQSS
+ VCMPNGESS
+ VCMPNGTSS
+ VCMPFALSESS
+ VCMPNEQ_OQSS
+ VCMPGESS
+ VCMPGTSS
+ VCMPTRUESS
+ VCMPEQ_OSSS
+ VCMPLT_OQSS
+ VCMPLE_OQSS
+ VCMPUNORD_SSS
+ VCMPNEQ_USSS
+ VCMPNLT_UQSS
+ VCMPNLE_UQSS
+ VCMPORD_SSS
+ VCMPEQ_USSS
+ VCMPNGE_UQSS
+ VCMPNGT_UQSS
+ VCMPFALSE_OSSS
+ VCMPNEQ_OSSS
+ VCMPGE_OQSS
+ VCMPGT_OQSS
+ VCMPTRUE_USSS
+);
+
+my @pseudo_ops = (
+ # vcmppd
+ [
+   \@vcmppd,
+   [ 'Vpd', 'Hpd', 'Wpd', 'Ib', 'IA_AVX' ]
+ ],
+ # vcmpps
+ [
+   \@vcmpps,
+   [ 'Vps', 'Hps', 'Wps', 'Ib', 'IA_AVX' ]
+ ],
+ # vcmpsd
+ [
+   \@vcmpsd,
+   [ 'Vsd', 'Hpd', 'Wsd', 'Ib', 'IA_AVX' ]
+ ],
+ # vcmpss
+ [
+   \@vcmpss,
+   [ 'Vss', 'Hps', 'Wss', 'Ib', 'IA_AVX' ]
+ ]
+);
 
 sub dump_optypes
 {
@@ -74,6 +240,19 @@ sub make_ida_enum
     }
     $n++;
   }
+  if ( defined $opt_p )
+  {
+    foreach $iter ( @pseudo_ops )
+    {
+      my $niters = $iter->[0];
+      foreach $name ( @$niters )
+      {
+        $e_name = 'AVX_' . lc($name);
+        push @e_names, $e_name;
+        printf(" %s,\n", $e_name);
+      }
+    }
+  }
   # footer
   printf("};\n");
 }
@@ -94,6 +273,25 @@ sub make_ops
     );
     $n++;
   }
+  # pseudo-ops
+  if ( defined $opt_p )
+  {
+    printf("\n// AVX pseudo-ops\n");
+    foreach $iter ( @pseudo_ops )
+    {
+      my $niters = $iter->[0];
+      foreach my $name ( @$niters )
+      {
+        $e_name = 'AVX_' . lc($name);
+        $op = $iter->[1];
+        printf("%sstruct BxDisasmOpcodeInfo_t\n ", defined($opt_c) ? "const " : "");
+        printf("Ia_pseudo_%s = { \"%s\", %s, %s, %s, %s, %s, %s};\n", 
+          lc($name), lc($name), $e_name, $op->[0], $op->[1], $op->[2], $op->[3],$op->[4]
+        );
+        $n++;
+      }
+    }
+  }
   # footer
   printf("\n");
 }
@@ -109,6 +307,19 @@ sub make_map
     $e_name = $e_names[$n];
     printf("/* %s */ &%s,\n", $e_name, $iter->[0]);
     $n++;
+  }
+  if ( defined $opt_p )
+  {
+    foreach $iter ( @pseudo_ops )
+    {
+      my $niters = $iter->[0];
+      foreach my $name ( @$niters )
+      {
+        $e_name = $e_names[$n];
+        printf("/* %s */ &Ia_pseudo_%s,\n", $e_name, lc($name));
+        $n++;
+      }
+    }
   }
   # footer
   printf("};\n");
@@ -147,7 +358,7 @@ sub parse
 }
 
 # main
-my $status = getopts("cv");
+my $status = getopts("cpv");
 usage() if ( !$status );
 parse($_) foreach @ARGV;
 if ( defined $opt_v )
