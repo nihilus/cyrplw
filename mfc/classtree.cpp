@@ -601,9 +601,22 @@ is_indirect_link(ea_t ptr)
 ea_t
 check_for_cruntimeclass2(ea_t ptr)
 {
+#ifdef __EA64__
+  if ( get_byte(ptr)   == 0x48 && /* 48 8D 05 - lea rax [rip + XX] */
+       get_byte(ptr+1) == 0x8d &&
+       get_byte(ptr+2) == 0x5  &&
+       get_byte(ptr+7) == 0xC3    /* retn */
+     )
+  {
+    long off = get_long(ptr+3);
+    return ptr + 6 + off;
+  }
+#else
   if ( get_byte(ptr) == 0xa1 /* mov eax, ds: */ &&
-       get_byte(ptr+5) == 0xc3 /* retn */ )
+       get_byte(ptr+5) == 0xc3 /* retn */ 
+     )
    return get_long(ptr+1);
+#endif /* __EA64__ */
   return 0;
 }
 
