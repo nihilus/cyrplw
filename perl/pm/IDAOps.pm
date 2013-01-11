@@ -748,7 +748,406 @@ use constant NN_retnq                => 738;
 use constant NN_retfw                => 739;
 use constant NN_retfd                => 740;
 use constant NN_retfq                => 741;
-use constant NN_last                 => 742;
+use constant NN_rdrand               => 742;
+use constant NN_adcx                 => 743;
+use constant NN_adox                 => 744;
+use constant NN_andn                 => 745;
+use constant NN_bextr                => 746;
+use constant NN_blsi                 => 747;
+use constant NN_blsmsk               => 748;
+use constant NN_blsr                 => 749;
+use constant NN_bzhi                 => 750;
+use constant NN_clac                 => 751;
+use constant NN_mulx                 => 752;
+use constant NN_pdep                 => 753;
+use constant NN_pext                 => 754;
+use constant NN_rorx                 => 755;
+use constant NN_sarx                 => 756;
+use constant NN_shlx                 => 757;
+use constant NN_shrx                 => 758;
+use constant NN_stac                 => 759;
+use constant NN_tzcnt                => 760;
+use constant NN_xsaveopt             => 761;
+use constant NN_invpcid              => 762;
+use constant NN_rdseed               => 763;
+use constant NN_rdfsbase             => 764;
+use constant NN_rdgsbase             => 765;
+use constant NN_wrfsbase             => 766;
+use constant NN_wrgsbase             => 767;
+use constant NN_vaddpd               => 768;
+use constant NN_vaddps               => 769;
+use constant NN_vaddsd               => 770;
+use constant NN_vaddss               => 771;
+use constant NN_vaddsubpd            => 772;
+use constant NN_vaddsubps            => 773;
+use constant NN_vaesdec              => 774;
+use constant NN_vaesdeclast          => 775;
+use constant NN_vaesenc              => 776;
+use constant NN_vaesenclast          => 777;
+use constant NN_vaesimc              => 778;
+use constant NN_vaeskeygenassist     => 779;
+use constant NN_vandnpd              => 780;
+use constant NN_vandnps              => 781;
+use constant NN_vandpd               => 782;
+use constant NN_vandps               => 783;
+use constant NN_vblendpd             => 784;
+use constant NN_vblendps             => 785;
+use constant NN_vblendvpd            => 786;
+use constant NN_vblendvps            => 787;
+use constant NN_vbroadcastf128       => 788;
+use constant NN_vbroadcasti128       => 789;
+use constant NN_vbroadcastsd         => 790;
+use constant NN_vbroadcastss         => 791;
+use constant NN_vcmppd               => 792;
+use constant NN_vcmpps               => 793;
+use constant NN_vcmpsd               => 794;
+use constant NN_vcmpss               => 795;
+use constant NN_vcomisd              => 796;
+use constant NN_vcomiss              => 797;
+use constant NN_vcvtdq2pd            => 798;
+use constant NN_vcvtdq2ps            => 799;
+use constant NN_vcvtpd2dq            => 800;
+use constant NN_vcvtpd2ps            => 801;
+use constant NN_vcvtph2ps            => 802;
+use constant NN_vcvtps2dq            => 803;
+use constant NN_vcvtps2pd            => 804;
+use constant NN_vcvtps2ph            => 805;
+use constant NN_vcvtsd2si            => 806;
+use constant NN_vcvtsd2ss            => 807;
+use constant NN_vcvtsi2sd            => 808;
+use constant NN_vcvtsi2ss            => 809;
+use constant NN_vcvtss2sd            => 810;
+use constant NN_vcvtss2si            => 811;
+use constant NN_vcvttpd2dq           => 812;
+use constant NN_vcvttps2dq           => 813;
+use constant NN_vcvttsd2si           => 814;
+use constant NN_vcvttss2si           => 815;
+use constant NN_vdivpd               => 816;
+use constant NN_vdivps               => 817;
+use constant NN_vdivsd               => 818;
+use constant NN_vdivss               => 819;
+use constant NN_vdppd                => 820;
+use constant NN_vdpps                => 821;
+use constant NN_vextractf128         => 822;
+use constant NN_vextracti128         => 823;
+use constant NN_vextractps           => 824;
+use constant NN_vfmadd132pd          => 825;
+use constant NN_vfmadd132ps          => 826;
+use constant NN_vfmadd132sd          => 827;
+use constant NN_vfmadd132ss          => 828;
+use constant NN_vfmadd213pd          => 829;
+use constant NN_vfmadd213ps          => 830;
+use constant NN_vfmadd213sd          => 831;
+use constant NN_vfmadd213ss          => 832;
+use constant NN_vfmadd231pd          => 833;
+use constant NN_vfmadd231ps          => 834;
+use constant NN_vfmadd231sd          => 835;
+use constant NN_vfmadd231ss          => 836;
+use constant NN_vfmaddsub132pd       => 837;
+use constant NN_vfmaddsub132ps       => 838;
+use constant NN_vfmaddsub213pd       => 839;
+use constant NN_vfmaddsub213ps       => 840;
+use constant NN_vfmaddsub231pd       => 841;
+use constant NN_vfmaddsub231ps       => 842;
+use constant NN_vfmsub132pd          => 843;
+use constant NN_vfmsub132ps          => 844;
+use constant NN_vfmsub132sd          => 845;
+use constant NN_vfmsub132ss          => 846;
+use constant NN_vfmsub213pd          => 847;
+use constant NN_vfmsub213ps          => 848;
+use constant NN_vfmsub213sd          => 849;
+use constant NN_vfmsub213ss          => 850;
+use constant NN_vfmsub231pd          => 851;
+use constant NN_vfmsub231ps          => 852;
+use constant NN_vfmsub231sd          => 853;
+use constant NN_vfmsub231ss          => 854;
+use constant NN_vfmsubadd132pd       => 855;
+use constant NN_vfmsubadd132ps       => 856;
+use constant NN_vfmsubadd213pd       => 857;
+use constant NN_vfmsubadd213ps       => 858;
+use constant NN_vfmsubadd231pd       => 859;
+use constant NN_vfmsubadd231ps       => 860;
+use constant NN_vfnmadd132pd         => 861;
+use constant NN_vfnmadd132ps         => 862;
+use constant NN_vfnmadd132sd         => 863;
+use constant NN_vfnmadd132ss         => 864;
+use constant NN_vfnmadd213pd         => 865;
+use constant NN_vfnmadd213ps         => 866;
+use constant NN_vfnmadd213sd         => 867;
+use constant NN_vfnmadd213ss         => 868;
+use constant NN_vfnmadd231pd         => 869;
+use constant NN_vfnmadd231ps         => 870;
+use constant NN_vfnmadd231sd         => 871;
+use constant NN_vfnmadd231ss         => 872;
+use constant NN_vfnmsub132pd         => 873;
+use constant NN_vfnmsub132ps         => 874;
+use constant NN_vfnmsub132sd         => 875;
+use constant NN_vfnmsub132ss         => 876;
+use constant NN_vfnmsub213pd         => 877;
+use constant NN_vfnmsub213ps         => 878;
+use constant NN_vfnmsub213sd         => 879;
+use constant NN_vfnmsub213ss         => 880;
+use constant NN_vfnmsub231pd         => 881;
+use constant NN_vfnmsub231ps         => 882;
+use constant NN_vfnmsub231sd         => 883;
+use constant NN_vfnmsub231ss         => 884;
+use constant NN_vgatherdps           => 885;
+use constant NN_vgatherdpd           => 886;
+use constant NN_vgatherqps           => 887;
+use constant NN_vgatherqpd           => 888;
+use constant NN_vhaddpd              => 889;
+use constant NN_vhaddps              => 890;
+use constant NN_vhsubpd              => 891;
+use constant NN_vhsubps              => 892;
+use constant NN_vinsertf128          => 893;
+use constant NN_vinserti128          => 894;
+use constant NN_vinsertps            => 895;
+use constant NN_vlddqu               => 896;
+use constant NN_vldmxcsr             => 897;
+use constant NN_vmaskmovdqu          => 898;
+use constant NN_vmaskmovpd           => 899;
+use constant NN_vmaskmovps           => 900;
+use constant NN_vmaxpd               => 901;
+use constant NN_vmaxps               => 902;
+use constant NN_vmaxsd               => 903;
+use constant NN_vmaxss               => 904;
+use constant NN_vminpd               => 905;
+use constant NN_vminps               => 906;
+use constant NN_vminsd               => 907;
+use constant NN_vminss               => 908;
+use constant NN_vmovapd              => 909;
+use constant NN_vmovaps              => 910;
+use constant NN_vmovd                => 911;
+use constant NN_vmovddup             => 912;
+use constant NN_vmovdqa              => 913;
+use constant NN_vmovdqu              => 914;
+use constant NN_vmovhlps             => 915;
+use constant NN_vmovhpd              => 916;
+use constant NN_vmovhps              => 917;
+use constant NN_vmovlhps             => 918;
+use constant NN_vmovlpd              => 919;
+use constant NN_vmovlps              => 920;
+use constant NN_vmovmskpd            => 921;
+use constant NN_vmovmskps            => 922;
+use constant NN_vmovntdq             => 923;
+use constant NN_vmovntdqa            => 924;
+use constant NN_vmovntpd             => 925;
+use constant NN_vmovntps             => 926;
+use constant NN_vmovntsd             => 927;
+use constant NN_vmovntss             => 928;
+use constant NN_vmovq                => 929;
+use constant NN_vmovsd               => 930;
+use constant NN_vmovshdup            => 931;
+use constant NN_vmovsldup            => 932;
+use constant NN_vmovss               => 933;
+use constant NN_vmovupd              => 934;
+use constant NN_vmovups              => 935;
+use constant NN_vmpsadbw             => 936;
+use constant NN_vmulpd               => 937;
+use constant NN_vmulps               => 938;
+use constant NN_vmulsd               => 939;
+use constant NN_vmulss               => 940;
+use constant NN_vorpd                => 941;
+use constant NN_vorps                => 942;
+use constant NN_vpabsb               => 943;
+use constant NN_vpabsd               => 944;
+use constant NN_vpabsw               => 945;
+use constant NN_vpackssdw            => 946;
+use constant NN_vpacksswb            => 947;
+use constant NN_vpackusdw            => 948;
+use constant NN_vpackuswb            => 949;
+use constant NN_vpaddb               => 950;
+use constant NN_vpaddd               => 951;
+use constant NN_vpaddq               => 952;
+use constant NN_vpaddsb              => 953;
+use constant NN_vpaddsw              => 954;
+use constant NN_vpaddusb             => 955;
+use constant NN_vpaddusw             => 956;
+use constant NN_vpaddw               => 957;
+use constant NN_vpalignr             => 958;
+use constant NN_vpand                => 959;
+use constant NN_vpandn               => 960;
+use constant NN_vpavgb               => 961;
+use constant NN_vpavgw               => 962;
+use constant NN_vpblendd             => 963;
+use constant NN_vpblendvb            => 964;
+use constant NN_vpblendw             => 965;
+use constant NN_vpbroadcastb         => 966;
+use constant NN_vpbroadcastd         => 967;
+use constant NN_vpbroadcastq         => 968;
+use constant NN_vpbroadcastw         => 969;
+use constant NN_vpclmulqdq           => 970;
+use constant NN_vpcmpeqb             => 971;
+use constant NN_vpcmpeqd             => 972;
+use constant NN_vpcmpeqq             => 973;
+use constant NN_vpcmpeqw             => 974;
+use constant NN_vpcmpestri           => 975;
+use constant NN_vpcmpestrm           => 976;
+use constant NN_vpcmpgtb             => 977;
+use constant NN_vpcmpgtd             => 978;
+use constant NN_vpcmpgtq             => 979;
+use constant NN_vpcmpgtw             => 980;
+use constant NN_vpcmpistri           => 981;
+use constant NN_vpcmpistrm           => 982;
+use constant NN_vperm2f128           => 983;
+use constant NN_vperm2i128           => 984;
+use constant NN_vpermd               => 985;
+use constant NN_vpermilpd            => 986;
+use constant NN_vpermilps            => 987;
+use constant NN_vpermpd              => 988;
+use constant NN_vpermps              => 989;
+use constant NN_vpermq               => 990;
+use constant NN_vpextrb              => 991;
+use constant NN_vpextrd              => 992;
+use constant NN_vpextrq              => 993;
+use constant NN_vpextrw              => 994;
+use constant NN_vpgatherdd           => 995;
+use constant NN_vpgatherdq           => 996;
+use constant NN_vpgatherqd           => 997;
+use constant NN_vpgatherqq           => 998;
+use constant NN_vphaddd              => 999;
+use constant NN_vphaddsw             => 1000;
+use constant NN_vphaddw              => 1001;
+use constant NN_vphminposuw          => 1002;
+use constant NN_vphsubd              => 1003;
+use constant NN_vphsubsw             => 1004;
+use constant NN_vphsubw              => 1005;
+use constant NN_vpinsrb              => 1006;
+use constant NN_vpinsrd              => 1007;
+use constant NN_vpinsrq              => 1008;
+use constant NN_vpinsrw              => 1009;
+use constant NN_vpmaddubsw           => 1010;
+use constant NN_vpmaddwd             => 1011;
+use constant NN_vpmaskmovd           => 1012;
+use constant NN_vpmaskmovq           => 1013;
+use constant NN_vpmaxsb              => 1014;
+use constant NN_vpmaxsd              => 1015;
+use constant NN_vpmaxsw              => 1016;
+use constant NN_vpmaxub              => 1017;
+use constant NN_vpmaxud              => 1018;
+use constant NN_vpmaxuw              => 1019;
+use constant NN_vpminsb              => 1020;
+use constant NN_vpminsd              => 1021;
+use constant NN_vpminsw              => 1022;
+use constant NN_vpminub              => 1023;
+use constant NN_vpminud              => 1024;
+use constant NN_vpminuw              => 1025;
+use constant NN_vpmovmskb            => 1026;
+use constant NN_vpmovsxbd            => 1027;
+use constant NN_vpmovsxbq            => 1028;
+use constant NN_vpmovsxbw            => 1029;
+use constant NN_vpmovsxdq            => 1030;
+use constant NN_vpmovsxwd            => 1031;
+use constant NN_vpmovsxwq            => 1032;
+use constant NN_vpmovzxbd            => 1033;
+use constant NN_vpmovzxbq            => 1034;
+use constant NN_vpmovzxbw            => 1035;
+use constant NN_vpmovzxdq            => 1036;
+use constant NN_vpmovzxwd            => 1037;
+use constant NN_vpmovzxwq            => 1038;
+use constant NN_vpmuldq              => 1039;
+use constant NN_vpmulhrsw            => 1040;
+use constant NN_vpmulhuw             => 1041;
+use constant NN_vpmulhw              => 1042;
+use constant NN_vpmulld              => 1043;
+use constant NN_vpmullw              => 1044;
+use constant NN_vpmuludq             => 1045;
+use constant NN_vpor                 => 1046;
+use constant NN_vpsadbw              => 1047;
+use constant NN_vpshufb              => 1048;
+use constant NN_vpshufd              => 1049;
+use constant NN_vpshufhw             => 1050;
+use constant NN_vpshuflw             => 1051;
+use constant NN_vpsignb              => 1052;
+use constant NN_vpsignd              => 1053;
+use constant NN_vpsignw              => 1054;
+use constant NN_vpslld               => 1055;
+use constant NN_vpslldq              => 1056;
+use constant NN_vpsllq               => 1057;
+use constant NN_vpsllvd              => 1058;
+use constant NN_vpsllvq              => 1059;
+use constant NN_vpsllw               => 1060;
+use constant NN_vpsrad               => 1061;
+use constant NN_vpsravd              => 1062;
+use constant NN_vpsraw               => 1063;
+use constant NN_vpsrld               => 1064;
+use constant NN_vpsrldq              => 1065;
+use constant NN_vpsrlq               => 1066;
+use constant NN_vpsrlvd              => 1067;
+use constant NN_vpsrlvq              => 1068;
+use constant NN_vpsrlw               => 1069;
+use constant NN_vpsubb               => 1070;
+use constant NN_vpsubd               => 1071;
+use constant NN_vpsubq               => 1072;
+use constant NN_vpsubsb              => 1073;
+use constant NN_vpsubsw              => 1074;
+use constant NN_vpsubusb             => 1075;
+use constant NN_vpsubusw             => 1076;
+use constant NN_vpsubw               => 1077;
+use constant NN_vptest               => 1078;
+use constant NN_vpunpckhbw           => 1079;
+use constant NN_vpunpckhdq           => 1080;
+use constant NN_vpunpckhqdq          => 1081;
+use constant NN_vpunpckhwd           => 1082;
+use constant NN_vpunpcklbw           => 1083;
+use constant NN_vpunpckldq           => 1084;
+use constant NN_vpunpcklqdq          => 1085;
+use constant NN_vpunpcklwd           => 1086;
+use constant NN_vpxor                => 1087;
+use constant NN_vrcpps               => 1088;
+use constant NN_vrcpss               => 1089;
+use constant NN_vroundpd             => 1090;
+use constant NN_vroundps             => 1091;
+use constant NN_vroundsd             => 1092;
+use constant NN_vroundss             => 1093;
+use constant NN_vrsqrtps             => 1094;
+use constant NN_vrsqrtss             => 1095;
+use constant NN_vshufpd              => 1096;
+use constant NN_vshufps              => 1097;
+use constant NN_vsqrtpd              => 1098;
+use constant NN_vsqrtps              => 1099;
+use constant NN_vsqrtsd              => 1100;
+use constant NN_vsqrtss              => 1101;
+use constant NN_vstmxcsr             => 1102;
+use constant NN_vsubpd               => 1103;
+use constant NN_vsubps               => 1104;
+use constant NN_vsubsd               => 1105;
+use constant NN_vsubss               => 1106;
+use constant NN_vtestpd              => 1107;
+use constant NN_vtestps              => 1108;
+use constant NN_vucomisd             => 1109;
+use constant NN_vucomiss             => 1110;
+use constant NN_vunpckhpd            => 1111;
+use constant NN_vunpckhps            => 1112;
+use constant NN_vunpcklpd            => 1113;
+use constant NN_vunpcklps            => 1114;
+use constant NN_vxorpd               => 1115;
+use constant NN_vxorps               => 1116;
+use constant NN_vzeroall             => 1117;
+use constant NN_vzeroupper           => 1118;
+use constant NN_xabort               => 1119;
+use constant NN_xbegin               => 1120;
+use constant NN_xend                 => 1121;
+use constant NN_xtest                => 1122;
+use constant NN_vmgetinfo            => 1123;
+use constant NN_vmsetinfo            => 1124;
+use constant NN_vmdxdsbl             => 1125;
+use constant NN_vmdxenbl             => 1126;
+use constant NN_vmcpuid              => 1127;
+use constant NN_vmhlt                => 1128;
+use constant NN_vmsplaf              => 1129;
+use constant NN_vmpushfd             => 1130;
+use constant NN_vmpopfd              => 1131;
+use constant NN_vmcli                => 1132;
+use constant NN_vmsti                => 1133;
+use constant NN_vmiretd              => 1134;
+use constant NN_vmsgdt               => 1135;
+use constant NN_vmsidt               => 1136;
+use constant NN_vmsldt               => 1137;
+use constant NN_vmstr                => 1138;
+use constant NN_vmsdte               => 1139;
+use constant NN_vpcext               => 1140;
+use constant NN_last                 => 1141;
 use constant I5_null                 => 0;
 use constant I5_aci                  => 1;
 use constant I5_adc                  => 2;
@@ -2015,7 +2414,20 @@ use constant mc_unpk                 => 186;
 use constant mc_wddata               => 187;
 use constant mc_wdebug               => 188;
 use constant mc_atrap                => 189;
-use constant mc_last                 => 190;
+use constant mc_bitrev               => 190;
+use constant mc_byterev              => 191;
+use constant mc_ff1                  => 192;
+use constant mc_intouch              => 193;
+use constant mc_mov3q                => 194;
+use constant mc_mvs                  => 195;
+use constant mc_mvz                  => 196;
+use constant mc_sats                 => 197;
+use constant mc_movclr               => 198;
+use constant mc_maaac                => 199;
+use constant mc_masac                => 200;
+use constant mc_msaac                => 201;
+use constant mc_mssac                => 202;
+use constant mc_last                 => 203;
 use constant mc8_null                => 0;
 use constant mc8_aba                 => 1;
 use constant mc8_ab                  => 2;
@@ -3940,6 +4352,7 @@ use constant MIPS_lqc2               => 426;
 use constant MIPS_sqc2               => 427;
 use constant MIPS_madd_r5900         => 428;
 use constant MIPS_maddu_r5900        => 429;
+use constant MIPS_R5900_last         => 429;
 use constant MIPS_mult3              => 430;
 use constant MIPS_multu3             => 431;
 use constant MIPS_R5900_last         => 431;
@@ -4187,7 +4600,92 @@ use constant PSP_vwbn                => 666;
 use constant PSP_vzero               => 667;
 use constant PSP_mfvme               => 668;
 use constant PSP_mtvme               => 669;
-use constant MIPS_last               => 670;
+use constant MIPS_ac0iu              => 670;
+use constant MIPS_bs1f               => 671;
+use constant MIPS_bfins              => 672;
+use constant MIPS_addmiu             => 673;
+use constant MIPS_sadd               => 674;
+use constant MIPS_ssub               => 675;
+use constant MIPS_btst               => 676;
+use constant MIPS_bclr               => 677;
+use constant MIPS_bset               => 678;
+use constant MIPS_bins               => 679;
+use constant MIPS_bext               => 680;
+use constant MIPS_dive               => 681;
+use constant MIPS_diveu              => 682;
+use constant MIPS_min                => 683;
+use constant MIPS_max                => 684;
+use constant MIPS_madd3              => 685;
+use constant MIPS_maddu3             => 686;
+use constant MIPS_msub3              => 687;
+use constant MIPS_msubu3             => 688;
+use constant MIPS_dvpe               => 689;
+use constant MIPS_evpe               => 690;
+use constant MIPS_dmt                => 691;
+use constant MIPS_emt                => 692;
+use constant MIPS_fork               => 693;
+use constant MIPS_yield              => 694;
+use constant MIPS_mftr               => 695;
+use constant MIPS_mftc0              => 696;
+use constant MIPS_mftlo              => 697;
+use constant MIPS_mfthi              => 698;
+use constant MIPS_mftacx             => 699;
+use constant MIPS_mftdsp             => 700;
+use constant MIPS_mfthc1             => 701;
+use constant MIPS_mftc1              => 702;
+use constant MIPS_cftc1              => 703;
+use constant MIPS_mfthc2             => 704;
+use constant MIPS_mftc2              => 705;
+use constant MIPS_cftc2              => 706;
+use constant MIPS_mftgpr             => 707;
+use constant MIPS_mttr               => 708;
+use constant MIPS_mttc0              => 709;
+use constant MIPS_mttlo              => 710;
+use constant MIPS_mtthi              => 711;
+use constant MIPS_mttacx             => 712;
+use constant MIPS_mttdsp             => 713;
+use constant MIPS_mtthc1             => 714;
+use constant MIPS_mttc1              => 715;
+use constant MIPS_cttc1              => 716;
+use constant MIPS_mtthc2             => 717;
+use constant MIPS_mttc2              => 718;
+use constant MIPS_cttc2              => 719;
+use constant MIPS_mttgpr             => 720;
+use constant MIPS_faddr              => 721;
+use constant MIPS_bc1any2f           => 722;
+use constant MIPS_bc1any2t           => 723;
+use constant MIPS_bc1any4f           => 724;
+use constant MIPS_bc1any4t           => 725;
+use constant MIPS_fcabs_f            => 726;
+use constant MIPS_fcabs_un           => 727;
+use constant MIPS_fcabs_eq           => 728;
+use constant MIPS_fcabs_ueq          => 729;
+use constant MIPS_fcabs_olt          => 730;
+use constant MIPS_fcabs_ult          => 731;
+use constant MIPS_fcabs_ole          => 732;
+use constant MIPS_fcabs_ule          => 733;
+use constant MIPS_fcabs_sf           => 734;
+use constant MIPS_fcabs_ngle         => 735;
+use constant MIPS_fcabs_seq          => 736;
+use constant MIPS_fcabs_ngl          => 737;
+use constant MIPS_fcabs_lt           => 738;
+use constant MIPS_fcabs_nge          => 739;
+use constant MIPS_fcabs_le           => 740;
+use constant MIPS_fcabs_ngt          => 741;
+use constant MIPS_fcvt_pw_ps         => 742;
+use constant MIPS_fcvt_ps_pw         => 743;
+use constant MIPS_fmulr              => 744;
+use constant MIPS_frecip1            => 745;
+use constant MIPS_frecip2            => 746;
+use constant MIPS_frsqrt1            => 747;
+use constant MIPS_frsqrt2            => 748;
+use constant MIPS_lwxs               => 749;
+use constant MIPS_maddp              => 750;
+use constant MIPS_mflhxu             => 751;
+use constant MIPS_mtlhx              => 752;
+use constant MIPS_multp              => 753;
+use constant MIPS_pperm              => 754;
+use constant MIPS_last               => 755;
 use constant H8_null                 => 0;
 use constant H8_add                  => 1;
 use constant H8_adds                 => 2;
@@ -5103,7 +5601,9 @@ use constant ST10_CoSHL              => 99;
 use constant ST10_CoSHR              => 100;
 use constant ST10_CoSTORE            => 101;
 use constant ST10_CoSUB              => 102;
-use constant C166_last               => 103;
+use constant C166_enwdt              => 103;
+use constant C166_sbrk               => 104;
+use constant C166_last               => 105;
 use constant ST20_null               => 0;
 use constant ST20_adc                => 1;
 use constant ST20_add                => 2;
@@ -10877,7 +11377,58 @@ use constant PPC_xxmrghd             => 1212;
 use constant PPC_xxmrgld             => 1213;
 use constant PPC_xxswapd             => 1214;
 use constant PPC_dcbz128             => 1215;
-use constant PPC_last                => 1216;
+use constant PPC_mtmsree             => 1216;
+use constant PPC_vcfpsxws            => 1217;
+use constant PPC_vcfpuxws            => 1218;
+use constant PPC_vcsxwfp             => 1219;
+use constant PPC_vcuxwfp             => 1220;
+use constant PPC_vmaddcfp            => 1221;
+use constant PPC_vmsum3fp            => 1222;
+use constant PPC_vmsum4fp            => 1223;
+use constant PPC_vmulfp              => 1224;
+use constant PPC_vpermwi             => 1225;
+use constant PPC_vpkd3d              => 1226;
+use constant PPC_vrlimi              => 1227;
+use constant PPC_vupkd3d             => 1228;
+use constant PPC_ps_cmpu0            => 1229;
+use constant PPC_psq_lx              => 1230;
+use constant PPC_psq_stx             => 1231;
+use constant PPC_ps_sum0             => 1232;
+use constant PPC_ps_sum1             => 1233;
+use constant PPC_ps_muls0            => 1234;
+use constant PPC_ps_muls1            => 1235;
+use constant PPC_ps_madds0           => 1236;
+use constant PPC_ps_madds1           => 1237;
+use constant PPC_ps_div              => 1238;
+use constant PPC_ps_sub              => 1239;
+use constant PPC_ps_add              => 1240;
+use constant PPC_ps_sel              => 1241;
+use constant PPC_ps_res              => 1242;
+use constant PPC_ps_mul              => 1243;
+use constant PPC_ps_rsqrte           => 1244;
+use constant PPC_ps_msub             => 1245;
+use constant PPC_ps_madd             => 1246;
+use constant PPC_ps_nmsub            => 1247;
+use constant PPC_ps_nmadd            => 1248;
+use constant PPC_ps_cmpo0            => 1249;
+use constant PPC_psq_lux             => 1250;
+use constant PPC_psq_stux            => 1251;
+use constant PPC_ps_neg              => 1252;
+use constant PPC_ps_cmpu1            => 1253;
+use constant PPC_ps_mr               => 1254;
+use constant PPC_ps_cmpo1            => 1255;
+use constant PPC_ps_nabs             => 1256;
+use constant PPC_ps_abs              => 1257;
+use constant PPC_ps_merge00          => 1258;
+use constant PPC_ps_merge01          => 1259;
+use constant PPC_ps_merge10          => 1260;
+use constant PPC_ps_merge11          => 1261;
+use constant PPC_dcbz_l              => 1262;
+use constant PPC_psq_l               => 1263;
+use constant PPC_psq_lu              => 1264;
+use constant PPC_psq_st              => 1265;
+use constant PPC_psq_stu             => 1266;
+use constant PPC_last                => 1267;
 use constant NEC850_NULL             => 0;
 use constant NEC850_BREAKPOINT       => 1;
 use constant NEC850_XORI             => 2;
@@ -11407,6 +11958,95 @@ use constant TRICORE_xor_t           => 379;
 use constant TRICORE_xor16           => 380;
 use constant TRICORE_xor32           => 381;
 use constant TRICORE_last            => 382;
+use constant ARC_null                => 0;
+use constant ARC_ld                  => 1;
+use constant ARC_lr                  => 2;
+use constant ARC_st                  => 3;
+use constant ARC_sr                  => 4;
+use constant ARC_store_instructions  => 4;
+use constant ARC_flag                => 5;
+use constant ARC_asr                 => 6;
+use constant ARC_lsr                 => 7;
+use constant ARC_sexb                => 8;
+use constant ARC_sexw                => 9;
+use constant ARC_extb                => 10;
+use constant ARC_extw                => 11;
+use constant ARC_ror                 => 12;
+use constant ARC_rrc                 => 13;
+use constant ARC_b                   => 14;
+use constant ARC_bl                  => 15;
+use constant ARC_lp                  => 16;
+use constant ARC_j                   => 17;
+use constant ARC_jl                  => 18;
+use constant ARC_add                 => 19;
+use constant ARC_adc                 => 20;
+use constant ARC_sub                 => 21;
+use constant ARC_sbc                 => 22;
+use constant ARC_and                 => 23;
+use constant ARC_or                  => 24;
+use constant ARC_bic                 => 25;
+use constant ARC_xor                 => 26;
+use constant ARC_mov                 => 27;
+use constant ARC_nop                 => 28;
+use constant ARC_lsl                 => 29;
+use constant ARC_rlc                 => 30;
+use constant ARC_brk                 => 31;
+use constant ARC_sleep               => 32;
+use constant ARC_swi                 => 33;
+use constant ARC_asl                 => 34;
+use constant ARC_mul64               => 35;
+use constant ARC_mulu64              => 36;
+use constant ARC_max                 => 37;
+use constant ARC_min                 => 38;
+use constant ARC_swap                => 39;
+use constant ARC_norm                => 40;
+use constant ARC_bbit0               => 41;
+use constant ARC_bbit1               => 42;
+use constant ARC_br                  => 43;
+use constant ARC_pop                 => 44;
+use constant ARC_push                => 45;
+use constant ARC_abs                 => 46;
+use constant ARC_add1                => 47;
+use constant ARC_add2                => 48;
+use constant ARC_add3                => 49;
+use constant ARC_bclr                => 50;
+use constant ARC_bmsk                => 51;
+use constant ARC_bset                => 52;
+use constant ARC_btst                => 53;
+use constant ARC_bxor                => 54;
+use constant ARC_cmp                 => 55;
+use constant ARC_ex                  => 56;
+use constant ARC_mpy                 => 57;
+use constant ARC_mpyh                => 58;
+use constant ARC_mpyhu               => 59;
+use constant ARC_mpyu                => 60;
+use constant ARC_neg                 => 61;
+use constant ARC_not                 => 62;
+use constant ARC_rcmp                => 63;
+use constant ARC_rsub                => 64;
+use constant ARC_rtie                => 65;
+use constant ARC_sub1                => 66;
+use constant ARC_sub2                => 67;
+use constant ARC_sub3                => 68;
+use constant ARC_sync                => 69;
+use constant ARC_trap                => 70;
+use constant ARC_tst                 => 71;
+use constant ARC_unimp               => 72;
+use constant ARC_abss                => 73;
+use constant ARC_abssw               => 74;
+use constant ARC_adds                => 75;
+use constant ARC_addsdw              => 76;
+use constant ARC_asls                => 77;
+use constant ARC_asrs                => 78;
+use constant ARC_divaw               => 79;
+use constant ARC_negs                => 80;
+use constant ARC_negsw               => 81;
+use constant ARC_normw               => 82;
+use constant ARC_rnd16               => 83;
+use constant ARC_sat16               => 84;
+use constant ARC_subs                => 85;
+use constant ARC_subsdw              => 86;
+use constant ARC_last                => 87;
 ###
 #
 # E X P O R T E D   N A M E S
@@ -12155,6 +12795,405 @@ NN_retnq
 NN_retfw
 NN_retfd
 NN_retfq
+NN_rdrand
+NN_adcx
+NN_adox
+NN_andn
+NN_bextr
+NN_blsi
+NN_blsmsk
+NN_blsr
+NN_bzhi
+NN_clac
+NN_mulx
+NN_pdep
+NN_pext
+NN_rorx
+NN_sarx
+NN_shlx
+NN_shrx
+NN_stac
+NN_tzcnt
+NN_xsaveopt
+NN_invpcid
+NN_rdseed
+NN_rdfsbase
+NN_rdgsbase
+NN_wrfsbase
+NN_wrgsbase
+NN_vaddpd
+NN_vaddps
+NN_vaddsd
+NN_vaddss
+NN_vaddsubpd
+NN_vaddsubps
+NN_vaesdec
+NN_vaesdeclast
+NN_vaesenc
+NN_vaesenclast
+NN_vaesimc
+NN_vaeskeygenassist
+NN_vandnpd
+NN_vandnps
+NN_vandpd
+NN_vandps
+NN_vblendpd
+NN_vblendps
+NN_vblendvpd
+NN_vblendvps
+NN_vbroadcastf128
+NN_vbroadcasti128
+NN_vbroadcastsd
+NN_vbroadcastss
+NN_vcmppd
+NN_vcmpps
+NN_vcmpsd
+NN_vcmpss
+NN_vcomisd
+NN_vcomiss
+NN_vcvtdq2pd
+NN_vcvtdq2ps
+NN_vcvtpd2dq
+NN_vcvtpd2ps
+NN_vcvtph2ps
+NN_vcvtps2dq
+NN_vcvtps2pd
+NN_vcvtps2ph
+NN_vcvtsd2si
+NN_vcvtsd2ss
+NN_vcvtsi2sd
+NN_vcvtsi2ss
+NN_vcvtss2sd
+NN_vcvtss2si
+NN_vcvttpd2dq
+NN_vcvttps2dq
+NN_vcvttsd2si
+NN_vcvttss2si
+NN_vdivpd
+NN_vdivps
+NN_vdivsd
+NN_vdivss
+NN_vdppd
+NN_vdpps
+NN_vextractf128
+NN_vextracti128
+NN_vextractps
+NN_vfmadd132pd
+NN_vfmadd132ps
+NN_vfmadd132sd
+NN_vfmadd132ss
+NN_vfmadd213pd
+NN_vfmadd213ps
+NN_vfmadd213sd
+NN_vfmadd213ss
+NN_vfmadd231pd
+NN_vfmadd231ps
+NN_vfmadd231sd
+NN_vfmadd231ss
+NN_vfmaddsub132pd
+NN_vfmaddsub132ps
+NN_vfmaddsub213pd
+NN_vfmaddsub213ps
+NN_vfmaddsub231pd
+NN_vfmaddsub231ps
+NN_vfmsub132pd
+NN_vfmsub132ps
+NN_vfmsub132sd
+NN_vfmsub132ss
+NN_vfmsub213pd
+NN_vfmsub213ps
+NN_vfmsub213sd
+NN_vfmsub213ss
+NN_vfmsub231pd
+NN_vfmsub231ps
+NN_vfmsub231sd
+NN_vfmsub231ss
+NN_vfmsubadd132pd
+NN_vfmsubadd132ps
+NN_vfmsubadd213pd
+NN_vfmsubadd213ps
+NN_vfmsubadd231pd
+NN_vfmsubadd231ps
+NN_vfnmadd132pd
+NN_vfnmadd132ps
+NN_vfnmadd132sd
+NN_vfnmadd132ss
+NN_vfnmadd213pd
+NN_vfnmadd213ps
+NN_vfnmadd213sd
+NN_vfnmadd213ss
+NN_vfnmadd231pd
+NN_vfnmadd231ps
+NN_vfnmadd231sd
+NN_vfnmadd231ss
+NN_vfnmsub132pd
+NN_vfnmsub132ps
+NN_vfnmsub132sd
+NN_vfnmsub132ss
+NN_vfnmsub213pd
+NN_vfnmsub213ps
+NN_vfnmsub213sd
+NN_vfnmsub213ss
+NN_vfnmsub231pd
+NN_vfnmsub231ps
+NN_vfnmsub231sd
+NN_vfnmsub231ss
+NN_vgatherdps
+NN_vgatherdpd
+NN_vgatherqps
+NN_vgatherqpd
+NN_vhaddpd
+NN_vhaddps
+NN_vhsubpd
+NN_vhsubps
+NN_vinsertf128
+NN_vinserti128
+NN_vinsertps
+NN_vlddqu
+NN_vldmxcsr
+NN_vmaskmovdqu
+NN_vmaskmovpd
+NN_vmaskmovps
+NN_vmaxpd
+NN_vmaxps
+NN_vmaxsd
+NN_vmaxss
+NN_vminpd
+NN_vminps
+NN_vminsd
+NN_vminss
+NN_vmovapd
+NN_vmovaps
+NN_vmovd
+NN_vmovddup
+NN_vmovdqa
+NN_vmovdqu
+NN_vmovhlps
+NN_vmovhpd
+NN_vmovhps
+NN_vmovlhps
+NN_vmovlpd
+NN_vmovlps
+NN_vmovmskpd
+NN_vmovmskps
+NN_vmovntdq
+NN_vmovntdqa
+NN_vmovntpd
+NN_vmovntps
+NN_vmovntsd
+NN_vmovntss
+NN_vmovq
+NN_vmovsd
+NN_vmovshdup
+NN_vmovsldup
+NN_vmovss
+NN_vmovupd
+NN_vmovups
+NN_vmpsadbw
+NN_vmulpd
+NN_vmulps
+NN_vmulsd
+NN_vmulss
+NN_vorpd
+NN_vorps
+NN_vpabsb
+NN_vpabsd
+NN_vpabsw
+NN_vpackssdw
+NN_vpacksswb
+NN_vpackusdw
+NN_vpackuswb
+NN_vpaddb
+NN_vpaddd
+NN_vpaddq
+NN_vpaddsb
+NN_vpaddsw
+NN_vpaddusb
+NN_vpaddusw
+NN_vpaddw
+NN_vpalignr
+NN_vpand
+NN_vpandn
+NN_vpavgb
+NN_vpavgw
+NN_vpblendd
+NN_vpblendvb
+NN_vpblendw
+NN_vpbroadcastb
+NN_vpbroadcastd
+NN_vpbroadcastq
+NN_vpbroadcastw
+NN_vpclmulqdq
+NN_vpcmpeqb
+NN_vpcmpeqd
+NN_vpcmpeqq
+NN_vpcmpeqw
+NN_vpcmpestri
+NN_vpcmpestrm
+NN_vpcmpgtb
+NN_vpcmpgtd
+NN_vpcmpgtq
+NN_vpcmpgtw
+NN_vpcmpistri
+NN_vpcmpistrm
+NN_vperm2f128
+NN_vperm2i128
+NN_vpermd
+NN_vpermilpd
+NN_vpermilps
+NN_vpermpd
+NN_vpermps
+NN_vpermq
+NN_vpextrb
+NN_vpextrd
+NN_vpextrq
+NN_vpextrw
+NN_vpgatherdd
+NN_vpgatherdq
+NN_vpgatherqd
+NN_vpgatherqq
+NN_vphaddd
+NN_vphaddsw
+NN_vphaddw
+NN_vphminposuw
+NN_vphsubd
+NN_vphsubsw
+NN_vphsubw
+NN_vpinsrb
+NN_vpinsrd
+NN_vpinsrq
+NN_vpinsrw
+NN_vpmaddubsw
+NN_vpmaddwd
+NN_vpmaskmovd
+NN_vpmaskmovq
+NN_vpmaxsb
+NN_vpmaxsd
+NN_vpmaxsw
+NN_vpmaxub
+NN_vpmaxud
+NN_vpmaxuw
+NN_vpminsb
+NN_vpminsd
+NN_vpminsw
+NN_vpminub
+NN_vpminud
+NN_vpminuw
+NN_vpmovmskb
+NN_vpmovsxbd
+NN_vpmovsxbq
+NN_vpmovsxbw
+NN_vpmovsxdq
+NN_vpmovsxwd
+NN_vpmovsxwq
+NN_vpmovzxbd
+NN_vpmovzxbq
+NN_vpmovzxbw
+NN_vpmovzxdq
+NN_vpmovzxwd
+NN_vpmovzxwq
+NN_vpmuldq
+NN_vpmulhrsw
+NN_vpmulhuw
+NN_vpmulhw
+NN_vpmulld
+NN_vpmullw
+NN_vpmuludq
+NN_vpor
+NN_vpsadbw
+NN_vpshufb
+NN_vpshufd
+NN_vpshufhw
+NN_vpshuflw
+NN_vpsignb
+NN_vpsignd
+NN_vpsignw
+NN_vpslld
+NN_vpslldq
+NN_vpsllq
+NN_vpsllvd
+NN_vpsllvq
+NN_vpsllw
+NN_vpsrad
+NN_vpsravd
+NN_vpsraw
+NN_vpsrld
+NN_vpsrldq
+NN_vpsrlq
+NN_vpsrlvd
+NN_vpsrlvq
+NN_vpsrlw
+NN_vpsubb
+NN_vpsubd
+NN_vpsubq
+NN_vpsubsb
+NN_vpsubsw
+NN_vpsubusb
+NN_vpsubusw
+NN_vpsubw
+NN_vptest
+NN_vpunpckhbw
+NN_vpunpckhdq
+NN_vpunpckhqdq
+NN_vpunpckhwd
+NN_vpunpcklbw
+NN_vpunpckldq
+NN_vpunpcklqdq
+NN_vpunpcklwd
+NN_vpxor
+NN_vrcpps
+NN_vrcpss
+NN_vroundpd
+NN_vroundps
+NN_vroundsd
+NN_vroundss
+NN_vrsqrtps
+NN_vrsqrtss
+NN_vshufpd
+NN_vshufps
+NN_vsqrtpd
+NN_vsqrtps
+NN_vsqrtsd
+NN_vsqrtss
+NN_vstmxcsr
+NN_vsubpd
+NN_vsubps
+NN_vsubsd
+NN_vsubss
+NN_vtestpd
+NN_vtestps
+NN_vucomisd
+NN_vucomiss
+NN_vunpckhpd
+NN_vunpckhps
+NN_vunpcklpd
+NN_vunpcklps
+NN_vxorpd
+NN_vxorps
+NN_vzeroall
+NN_vzeroupper
+NN_xabort
+NN_xbegin
+NN_xend
+NN_xtest
+NN_vmgetinfo
+NN_vmsetinfo
+NN_vmdxdsbl
+NN_vmdxenbl
+NN_vmcpuid
+NN_vmhlt
+NN_vmsplaf
+NN_vmpushfd
+NN_vmpopfd
+NN_vmcli
+NN_vmsti
+NN_vmiretd
+NN_vmsgdt
+NN_vmsidt
+NN_vmsldt
+NN_vmstr
+NN_vmsdte
+NN_vpcext
 NN_last
 I5_null
 I5_aci
@@ -13422,6 +14461,19 @@ mc_unpk
 mc_wddata
 mc_wdebug
 mc_atrap
+mc_bitrev
+mc_byterev
+mc_ff1
+mc_intouch
+mc_mov3q
+mc_mvs
+mc_mvz
+mc_sats
+mc_movclr
+mc_maaac
+mc_masac
+mc_msaac
+mc_mssac
 mc_last
 mc8_null
 mc8_aba
@@ -15347,9 +16399,9 @@ MIPS_lqc2
 MIPS_sqc2
 MIPS_madd_r5900
 MIPS_maddu_r5900
+MIPS_R5900_last
 MIPS_mult3
 MIPS_multu3
-MIPS_R5900_last
 MIPS_bteqz
 MIPS_btnez
 MIPS_cmp
@@ -15594,6 +16646,91 @@ PSP_vwbn
 PSP_vzero
 PSP_mfvme
 PSP_mtvme
+MIPS_ac0iu
+MIPS_bs1f
+MIPS_bfins
+MIPS_addmiu
+MIPS_sadd
+MIPS_ssub
+MIPS_btst
+MIPS_bclr
+MIPS_bset
+MIPS_bins
+MIPS_bext
+MIPS_dive
+MIPS_diveu
+MIPS_min
+MIPS_max
+MIPS_madd3
+MIPS_maddu3
+MIPS_msub3
+MIPS_msubu3
+MIPS_dvpe
+MIPS_evpe
+MIPS_dmt
+MIPS_emt
+MIPS_fork
+MIPS_yield
+MIPS_mftr
+MIPS_mftc0
+MIPS_mftlo
+MIPS_mfthi
+MIPS_mftacx
+MIPS_mftdsp
+MIPS_mfthc1
+MIPS_mftc1
+MIPS_cftc1
+MIPS_mfthc2
+MIPS_mftc2
+MIPS_cftc2
+MIPS_mftgpr
+MIPS_mttr
+MIPS_mttc0
+MIPS_mttlo
+MIPS_mtthi
+MIPS_mttacx
+MIPS_mttdsp
+MIPS_mtthc1
+MIPS_mttc1
+MIPS_cttc1
+MIPS_mtthc2
+MIPS_mttc2
+MIPS_cttc2
+MIPS_mttgpr
+MIPS_faddr
+MIPS_bc1any2f
+MIPS_bc1any2t
+MIPS_bc1any4f
+MIPS_bc1any4t
+MIPS_fcabs_f
+MIPS_fcabs_un
+MIPS_fcabs_eq
+MIPS_fcabs_ueq
+MIPS_fcabs_olt
+MIPS_fcabs_ult
+MIPS_fcabs_ole
+MIPS_fcabs_ule
+MIPS_fcabs_sf
+MIPS_fcabs_ngle
+MIPS_fcabs_seq
+MIPS_fcabs_ngl
+MIPS_fcabs_lt
+MIPS_fcabs_nge
+MIPS_fcabs_le
+MIPS_fcabs_ngt
+MIPS_fcvt_pw_ps
+MIPS_fcvt_ps_pw
+MIPS_fmulr
+MIPS_frecip1
+MIPS_frecip2
+MIPS_frsqrt1
+MIPS_frsqrt2
+MIPS_lwxs
+MIPS_maddp
+MIPS_mflhxu
+MIPS_mtlhx
+MIPS_multp
+MIPS_pperm
 MIPS_last
 H8_null
 H8_add
@@ -16510,6 +17647,8 @@ ST10_CoSHL
 ST10_CoSHR
 ST10_CoSTORE
 ST10_CoSUB
+C166_enwdt
+C166_sbrk
 C166_last
 ST20_null
 ST20_adc
@@ -22284,6 +23423,57 @@ PPC_xxmrghd
 PPC_xxmrgld
 PPC_xxswapd
 PPC_dcbz128
+PPC_mtmsree
+PPC_vcfpsxws
+PPC_vcfpuxws
+PPC_vcsxwfp
+PPC_vcuxwfp
+PPC_vmaddcfp
+PPC_vmsum3fp
+PPC_vmsum4fp
+PPC_vmulfp
+PPC_vpermwi
+PPC_vpkd3d
+PPC_vrlimi
+PPC_vupkd3d
+PPC_ps_cmpu0
+PPC_psq_lx
+PPC_psq_stx
+PPC_ps_sum0
+PPC_ps_sum1
+PPC_ps_muls0
+PPC_ps_muls1
+PPC_ps_madds0
+PPC_ps_madds1
+PPC_ps_div
+PPC_ps_sub
+PPC_ps_add
+PPC_ps_sel
+PPC_ps_res
+PPC_ps_mul
+PPC_ps_rsqrte
+PPC_ps_msub
+PPC_ps_madd
+PPC_ps_nmsub
+PPC_ps_nmadd
+PPC_ps_cmpo0
+PPC_psq_lux
+PPC_psq_stux
+PPC_ps_neg
+PPC_ps_cmpu1
+PPC_ps_mr
+PPC_ps_cmpo1
+PPC_ps_nabs
+PPC_ps_abs
+PPC_ps_merge00
+PPC_ps_merge01
+PPC_ps_merge10
+PPC_ps_merge11
+PPC_dcbz_l
+PPC_psq_l
+PPC_psq_lu
+PPC_psq_st
+PPC_psq_stu
 PPC_last
 NEC850_NULL
 NEC850_BREAKPOINT
@@ -22814,6 +24004,95 @@ TRICORE_xor_t
 TRICORE_xor16
 TRICORE_xor32
 TRICORE_last
+ARC_null
+ARC_ld
+ARC_lr
+ARC_st
+ARC_sr
+ARC_store_instructions
+ARC_flag
+ARC_asr
+ARC_lsr
+ARC_sexb
+ARC_sexw
+ARC_extb
+ARC_extw
+ARC_ror
+ARC_rrc
+ARC_b
+ARC_bl
+ARC_lp
+ARC_j
+ARC_jl
+ARC_add
+ARC_adc
+ARC_sub
+ARC_sbc
+ARC_and
+ARC_or
+ARC_bic
+ARC_xor
+ARC_mov
+ARC_nop
+ARC_lsl
+ARC_rlc
+ARC_brk
+ARC_sleep
+ARC_swi
+ARC_asl
+ARC_mul64
+ARC_mulu64
+ARC_max
+ARC_min
+ARC_swap
+ARC_norm
+ARC_bbit0
+ARC_bbit1
+ARC_br
+ARC_pop
+ARC_push
+ARC_abs
+ARC_add1
+ARC_add2
+ARC_add3
+ARC_bclr
+ARC_bmsk
+ARC_bset
+ARC_btst
+ARC_bxor
+ARC_cmp
+ARC_ex
+ARC_mpy
+ARC_mpyh
+ARC_mpyhu
+ARC_mpyu
+ARC_neg
+ARC_not
+ARC_rcmp
+ARC_rsub
+ARC_rtie
+ARC_sub1
+ARC_sub2
+ARC_sub3
+ARC_sync
+ARC_trap
+ARC_tst
+ARC_unimp
+ARC_abss
+ARC_abssw
+ARC_adds
+ARC_addsdw
+ARC_asls
+ARC_asrs
+ARC_divaw
+ARC_negs
+ARC_negsw
+ARC_normw
+ARC_rnd16
+ARC_sat16
+ARC_subs
+ARC_subsdw
+ARC_last
 );
 
 1;
