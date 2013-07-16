@@ -390,8 +390,58 @@ use constant COLOR_FG_MAX   => 0x28;         # Max color number
 ###
 sub isLoaded
 {
-  my $flag = GetFlags(shift);
-  return $flag & FF_IVL; 
+  my $flags = GetFlags(shift);
+  return ($flags & FF_IVL) != 0;
+}
+
+sub isCode
+{
+  my $flags = GetFlags(shift);
+  return ($flags & MS_CLS) == FF_CODE;
+}
+
+sub isData
+{
+  my $flags = GetFlags(shift);
+  return ($flags & MS_CLS) == FF_DATA;
+}
+
+sub isUnknown
+{
+  my $flags = GetFlags(shift);
+  return ($flags & MS_CLS) == FF_UNK;
+}
+
+sub isByte
+{
+  my $flags = GetFlags(shift);
+  return (($flags & MS_CLS) == FF_DATA) &&
+         (($flags & DT_TYPE) == FF_BYTE)
+  ;
+}
+
+sub isWord
+{
+  my $flags = GetFlags(shift);
+  return (($flags & MS_CLS) == FF_DATA) &&
+         (($flags & DT_TYPE) == FF_WORD)
+  ;
+}
+
+sub isDwrd
+{
+  my $flags = GetFlags(shift);
+  return (($flags & MS_CLS) == FF_DATA) &&
+         (($flags & DT_TYPE) == FF_DWRD)
+  ;
+}
+
+sub isQwrd
+{
+  my $flags = GetFlags(shift);
+  return (($flags & MS_CLS) == FF_DATA) &&
+         (($flags & DT_TYPE) == FF_QWRD)
+  ;
 }
 
 sub AutoMark
@@ -991,6 +1041,13 @@ IdpName
 IsBitfield
 is_debugged
 isLoaded
+isCode
+isData
+isUnknown
+isByte
+isWord
+isDwrd
+isQwrd
 IsPublicName
 IsUnion
 ItemEnd
@@ -1029,6 +1086,7 @@ MakeStr
 MakeStruct
 MakeTbyte
 MakeUnkn
+MakeUnknown
 MakeUnknRange
 MakeVar
 MakeWord
