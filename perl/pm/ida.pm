@@ -32,25 +32,25 @@ use constant o_last     => 14; #  first unused type
 #
 # op_t.dtyp
 #
-use constant dt_byte     = 0; #  8 bit
-use constant dt_word     = 1; #  16 bit
-use constant dt_dword    = 2; #  32 bit
-use constant dt_float    = 3; #  4 byte
-use constant dt_double   = 4; #  8 byte
-use constant dt_tbyte    = 5; #  variable size (ph.tbyte_size)
-use constant dt_packreal = 6; #  packed real format for mc68040
-use constant dt_qword    = 7; #  64 bit
-use constant dt_byte16   = 8; #  128 bit
-use constant dt_code     = 9; #  ptr to code (not used?)
-use constant dt_void     = 10; #  none
-use constant dt_fword    = 11; #  48 bit
-use constant dt_bitfild  = 12; #  bit field (mc680x0)
-use constant dt_string   = 13; #  pointer to asciiz string
-use constant dt_unicode  = 14; #  pointer to unicode string
-use constant dt_3byte    = 15; #  3-byte data
-use constant dt_ldbl     = 16; #  long double (which may be different from tbyte)
-use constant dt_byte32   = 17; # 256 bit
-use constant dt_byte64   = 18; # 512 bit
+use constant dt_byte     => 0; #  8 bit
+use constant dt_word     => 1; #  16 bit
+use constant dt_dword    => 2; #  32 bit
+use constant dt_float    => 3; #  4 byte
+use constant dt_double   => 4; #  8 byte
+use constant dt_tbyte    => 5; #  variable size (ph.tbyte_size)
+use constant dt_packreal => 6; #  packed real format for mc68040
+use constant dt_qword    => 7; #  64 bit
+use constant dt_byte16   => 8; #  128 bit
+use constant dt_code     => 9; #  ptr to code (not used?)
+use constant dt_void     => 10; #  none
+use constant dt_fword    => 11; #  48 bit
+use constant dt_bitfild  => 12; #  bit field (mc680x0)
+use constant dt_string   => 13; #  pointer to asciiz string
+use constant dt_unicode  => 14; #  pointer to unicode string
+use constant dt_3byte    => 15; #  3-byte data
+use constant dt_ldbl     => 16; #  long double (which may be different from tbyte)
+use constant dt_byte32   => 17; # 256 bit
+use constant dt_byte64   => 18; # 512 bit
 
 use constant BADADDR => 0xFFFFFFFF;
 use constant MAXADDR => 0xFF000000;
