@@ -35,6 +35,8 @@ XS(myxs_ua_ana)
     HV_STORE("size", 4, size);
     HV_STORE("auxpref", 7, auxpref);
     HV_STORE("flags", 5, flags);
+    HV_STORE("segpref", 7, segpref);
+    HV_STORE("insnpref", 8, insnpref);
     sv_setsv(ST(0), (SV*) newRV((SV*) hv));
 #undef HV_STORE
   }
@@ -90,6 +92,7 @@ XS(myxs_get_op)
         {
           hv_store(hv, "sib_base",  8, newSVuv((UV)sib_base(cmd.Operands[n])), 0);
           hv_store(hv, "sib_index", 9, newSVuv((UV)sib_index(cmd.Operands[n])), 0);
+          hv_store(hv, "sib_scale", 9, newSVuv((UV)((cmd.Operands[n].sib >> 6) & 3)), 0);
         }
         if ( cmd.Operands[n].type == o_displ )
           HV_STORE("addr", 4, addr)
@@ -97,5 +100,65 @@ XS(myxs_get_op)
     }
     sv_setsv(ST(0), (SV*) newRV((SV*) hv));
   }
+  XSRETURN(1);
+}
+
+extern "C"
+XS(myxs_ad16)
+{
+  dXSARGS;
+  ST(0) = sv_newmortal();
+  if ( ad16() )
+    sv_setsv(ST(0), &PL_sv_yes);
+  else
+    sv_setsv(ST(0), &PL_sv_no);
+  XSRETURN(1);
+}
+
+extern "C"
+XS(myxs_ad32)
+{
+  dXSARGS;
+  ST(0) = sv_newmortal();
+  if ( ad32() )
+    sv_setsv(ST(0), &PL_sv_yes);
+  else
+    sv_setsv(ST(0), &PL_sv_no);
+  XSRETURN(1);
+}
+
+extern "C"
+XS(myxs_ad64)
+{
+  dXSARGS;
+  ST(0) = sv_newmortal();
+  if ( ad64() )
+    sv_setsv(ST(0), &PL_sv_yes);
+  else
+    sv_setsv(ST(0), &PL_sv_no);
+  XSRETURN(1);
+}
+
+extern "C"
+XS(myxs_op16)
+{
+  dXSARGS;
+  ST(0) = sv_newmortal();
+  if ( op16() )
+    sv_setsv(ST(0), &PL_sv_yes);
+  else
+    sv_setsv(ST(0), &PL_sv_no);
+  XSRETURN(1);
+}
+
+extern "C"
+XS(myxs_op32)
+{
+  dXSARGS;
+  ST(0) = sv_newmortal();
+  if ( op32() )
+    sv_setsv(ST(0), &PL_sv_yes);
+  else
+    sv_setsv(ST(0), &PL_sv_no);
   XSRETURN(1);
 }

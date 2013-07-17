@@ -1508,6 +1508,11 @@ SWIGEXPORT void SWIG_init (CV *cv, CPerlObj *);
 
 extern XS(myxs_ua_ana);
 extern XS(myxs_get_op);
+extern XS(myxs_ad16);
+extern XS(myxs_ad32);
+extern XS(myxs_ad64);
+extern XS(myxs_op16);
+extern XS(myxs_op32);
 extern void DelExtLnA(long ,long );
 extern unsigned long GetEnumFlag(long );
 extern void DelExtLnB(long ,long );
@@ -15847,6 +15852,11 @@ static swig_command_info swig_commands[] = {
 {"IDA::ToggleBnot", _wrap_ToggleBnot},
 {"IDA::ua_ana", myxs_ua_ana},
 {"IDA::get_op", myxs_get_op},
+{"IDA::ad16", myxs_ad16},
+{"IDA::ad32", myxs_ad32},
+{"IDA::ad64", myxs_ad64},
+{"IDA::op16", myxs_op16},
+{"IDA::op32", myxs_op32},
 {0,0}
 };
 /* -----------------------------------------------------------------------------

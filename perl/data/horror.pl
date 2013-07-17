@@ -68,6 +68,11 @@ EOF
 @xs_implemented = qw(
  ua_ana
  get_op
+ ad16
+ ad32
+ ad64
+ op16
+ op32
 );
 
 # list of functions wich I will implemented by myself (to emit marshalling to IDC functions)

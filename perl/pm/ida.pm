@@ -1316,6 +1316,11 @@ dt_byte64
 ua_ana
 get_mnem
 get_op
+ad16
+ad32
+ad64
+op16
+op32
 );
 
 1;
