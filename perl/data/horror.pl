@@ -64,6 +64,12 @@ EOF
  'void'    => 1
 );
 
+# list of functions which I implemented on XS
+@xs_implemented = qw(
+ ua_ana
+ get_op
+);
+
 # list of functions wich I will implemented by myself (to emit marshalling to IDC functions)
 @implemented = qw(
  MakeByte
@@ -580,8 +586,14 @@ sub produce_SWIG_header
   printf OUT <<'EoH';
 %module IDA
 %{
-
 EoH
+
+my $iter;
+foreach $iter ( @xs_implemented )
+{
+  printf(OUT "extern XS(myxs_%s);\n", $iter);
+}
+
 }
 
 sub do_addition
@@ -602,6 +614,7 @@ sub do_addition
   printf(OUT "extern char *IdpName(void);\n");
   printf(OUT "extern int func_qty(void);\n");
   printf(OUT "extern unsigned long func_n(int);\n");
+  printf(OUT "extern const char *get_mnem(void);\n");
   printf(OUT "extern unsigned long NextUnknown(unsigned long,unsigned long);\n");
   printf(OUT "extern unsigned long PrevUnknown(unsigned long,unsigned long);\n");
   printf(OUT "extern unsigned long NextVisEA(unsigned long);\n");
