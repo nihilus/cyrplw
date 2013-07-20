@@ -7,6 +7,7 @@
 #include <struct.hpp>
 #include <loader.hpp>
 #include <name.hpp>
+#include <ua.hpp>
 #include "ida.h"
 
 /* I implemented this functions by myself to skip one marshaller level for calling
@@ -323,6 +324,11 @@ unsigned long func_n(int n)
   if ( res == NULL )
     return -1;
   return res->startEA;
+}
+
+const char *get_mnem()
+{
+  return cmd.get_canon_mnem();
 }
 
 unsigned long NextUnknown(unsigned long start, unsigned long max)
