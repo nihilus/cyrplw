@@ -19,6 +19,9 @@
 # Move debugger interface to different files
 #   3 Aug 2011 (C) RedPlait
 
+# Some lame try to idag64 bind - change all unsigned long to uint64_t with -x option
+#   11 Aug 2013 (C) RedPlait
+
 # Storage format for each function:
 #  hash, where key is name and value is ref to hash
 #   where keys is 'r' for result, 'i' for index in IDC funcs table
@@ -27,7 +30,7 @@
 #
 
 use Getopt::Std;
-use vars qw/$opt_i $opt_m $opt_p $opt_t/;
+use vars qw/$opt_i $opt_m $opt_p $opt_t $opt_x/;
 
 # globals
 $IDC_IDC = '../../../../idc/idc.idc';
@@ -49,6 +52,7 @@ sub usage
  -m file	Name of extracted IDC functions descriptions (default $MY_FILE)
  -p		Print internal functions representing and exit
  -t [xs|pm|i|c|h] Type of output (Perl XS/Perl PM/SWIG interface/C files)
+ -x             for 64bit version
  -?		Shows this help screen
 EOF
   exit 8;
@@ -340,7 +344,7 @@ sub form_result
   return '' if ( !defined($rtype) or $rtype eq '' );
   if ( $rtype eq 'long' )
   {
-    return 'unsigned long';
+    return defined($opt_x) ? 'uint64_t' : 'unsigned long';
   }
   if ( $rtype eq 'int' )
   {
@@ -422,7 +426,7 @@ sub form_arg
   }
   if ( $type == 2 )
   {
-    return 'long';
+    return defined($opt_x) ? 'uint64_t' : 'long';
   }
   if ( $type == 7 )
   {
@@ -535,7 +539,11 @@ sub form_one_XS
   # result
   if ( $res ne 'void' )
   {
-    if ( $res eq 'long' or $res eq 'int' or $res eq 'unsigned long' )
+    if ( $res eq 'long' or 
+         $res eq 'int' or 
+         $res eq 'unsigned long' or
+         $res eq 'uint64_t'
+       )
     {
       printf("\tRETVAL = res.num;\n");
     } elsif ( $res eq 'char *' )
@@ -593,6 +601,11 @@ sub produce_SWIG_header
 %{
 EoH
 
+if ( defined($opt_x) )
+{
+  printf(OUT "\ntypedef unsigned __int64 uint64_t;\n");
+}
+
 my $iter;
 foreach $iter ( @xs_implemented )
 {
@@ -608,24 +621,43 @@ sub do_addition
   printf(OUT "extern int load_ids(char *);\n");
   printf(OUT "extern void save_idb(void);\n");
   printf(OUT "extern int is_debugged(void);\n");
-  printf(OUT "extern long GetOriginalWord(unsigned long);\n");
-  printf(OUT "extern long GetOriginalDword(unsigned long);\n");
-  printf(OUT "extern void MakeUnknRange(unsigned long, unsigned long, int);\n");
-  printf(OUT "extern int IsPublicName(unsigned long);\n");
-  printf(OUT "extern void MakeNamePublic(unsigned long);\n");
-  printf(OUT "extern void MakeNameNonPublic(unsigned long);\n");
-  printf(OUT "extern void HideName(unsigned long);\n");
-  printf(OUT "extern void ShowName(unsigned long);\n");
+  if ( defined($opt_x) )
+  {
+    printf(OUT "extern long GetOriginalWord(uint64_t);\n");
+    printf(OUT "extern long GetOriginalDword(uint64_t);\n");
+    printf(OUT "extern void MakeUnknRange(uint64_t, uint64_t, int);\n");
+    printf(OUT "extern int IsPublicName(uint64_t);\n");
+    printf(OUT "extern void MakeNamePublic(uint64_t);\n");
+    printf(OUT "extern void MakeNameNonPublic(uint64_t);\n");
+    printf(OUT "extern void HideName(uint64_t);\n");
+    printf(OUT "extern void ShowName(uint64_t);\n");
+    printf(OUT "extern uint64_t NextUnknown(uint64_t,uint64_t);\n");
+    printf(OUT "extern uint64_t PrevUnknown(uint64_t,uint64_t);\n");
+    printf(OUT "extern uint64_t NextVisEA(uint64_t);\n");
+    printf(OUT "extern uint64_t PrevVisEA(uint64_t);\n");
+    printf(OUT "extern int ToggleSign(uint64_t,int);\n");
+    printf(OUT "extern int ToggleBnot(uint64_t,int);\n");
+    printf(OUT "extern uint64_t func_n(int);\n");
+  } else {
+    printf(OUT "extern long GetOriginalWord(unsigned long);\n");
+    printf(OUT "extern long GetOriginalDword(unsigned long);\n");
+    printf(OUT "extern void MakeUnknRange(unsigned long, unsigned long, int);\n");
+    printf(OUT "extern int IsPublicName(unsigned long);\n");
+    printf(OUT "extern void MakeNamePublic(unsigned long);\n");
+    printf(OUT "extern void MakeNameNonPublic(unsigned long);\n");
+    printf(OUT "extern void HideName(unsigned long);\n");
+    printf(OUT "extern void ShowName(unsigned long);\n");
+    printf(OUT "extern unsigned long NextUnknown(unsigned long,unsigned long);\n");
+    printf(OUT "extern unsigned long PrevUnknown(unsigned long,unsigned long);\n");
+    printf(OUT "extern unsigned long NextVisEA(unsigned long);\n");
+    printf(OUT "extern unsigned long PrevVisEA(unsigned long);\n");
+    printf(OUT "extern int ToggleSign(unsigned long,int);\n");
+    printf(OUT "extern int ToggleBnot(unsigned long,int);\n");
+    printf(OUT "extern unsigned long func_n(int);\n");
+  }
   printf(OUT "extern char *IdpName(void);\n");
   printf(OUT "extern int func_qty(void);\n");
-  printf(OUT "extern unsigned long func_n(int);\n");
   printf(OUT "extern const char *get_mnem(void);\n");
-  printf(OUT "extern unsigned long NextUnknown(unsigned long,unsigned long);\n");
-  printf(OUT "extern unsigned long PrevUnknown(unsigned long,unsigned long);\n");
-  printf(OUT "extern unsigned long NextVisEA(unsigned long);\n");
-  printf(OUT "extern unsigned long PrevVisEA(unsigned long);\n");
-  printf(OUT "extern int ToggleSign(unsigned long,int);\n");
-  printf(OUT "extern int ToggleBnot(unsigned long,int);\n");      
 }
 
 sub make_flist
@@ -723,7 +755,14 @@ print OUT <<'EoH';
 
 #include <ida.hpp>
 #include <expr.hpp>
+EoH
 
+if ( defined($opt_x) )
+{
+  printf(OUT "\ntypedef uint64 uint64_t;\n");
+}
+
+print OUT <<'EoH2';
 #if __cplusplus
  extern "C"
  {
@@ -731,7 +770,7 @@ print OUT <<'EoH';
 
 extern funcset_t *RP_Funcs;
 
-EoH
+EoH2
 }
 
 sub H_footer
@@ -864,7 +903,11 @@ sub make_C_function
   # form result
   if ( $res ne 'void' )
   {
-    if ( $res eq 'long' or $res eq 'int' or $res eq 'unsigned long' )
+    if ( $res eq 'long' or 
+         $res eq 'int' or 
+         $res eq 'unsigned long' or
+         $res eq 'uint64_t'
+       )
     {
       printf(OUT " return res.num;\n");
     } else {
@@ -933,7 +976,7 @@ sub print_fhash
  ###  ##  ###
 my %fhash;
 
-my $status = getopts('pi:m:t:');
+my $status = getopts('pi:m:t:x');
 usage() if !$status;
 
 $IDC_IDC = $opt_i if ( defined $opt_i );
