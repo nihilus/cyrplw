@@ -579,6 +579,8 @@ int PDB_pool::parse_found_string(char *str)
   {
     if ( str[1] == '1' )
       version = 110;
+    else if ( str[1] == '2' )
+      version = 120;
     else
       version = 100;
   }
