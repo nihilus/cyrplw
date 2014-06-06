@@ -1628,7 +1628,8 @@ use constant I51_sra                 => 61;
 use constant I51_sll                 => 62;
 use constant I51_sub                 => 63;
 use constant I51_cmp                 => 64;
-use constant I51_last                => 65;
+use constant I51_emov                => 65;
+use constant I51_last                => 66;
 use constant TMS_null                => 0;
 use constant TMS_abs                 => 1;
 use constant TMS_adcb                => 2;
@@ -2427,7 +2428,9 @@ use constant mc_maaac                => 199;
 use constant mc_masac                => 200;
 use constant mc_msaac                => 201;
 use constant mc_mssac                => 202;
-use constant mc_last                 => 203;
+use constant mc_remsl                => 203;
+use constant mc_remul                => 204;
+use constant mc_last                 => 205;
 use constant mc8_null                => 0;
 use constant mc8_aba                 => 1;
 use constant mc8_ab                  => 2;
@@ -2574,7 +2577,9 @@ use constant mc8_tim                 => 142;
 use constant mc8_bgnd                => 143;
 use constant mc8_call                => 144;
 use constant mc8_rtc                 => 145;
-use constant mc8_last                => 146;
+use constant mc8_skip1               => 146;
+use constant mc8_skip2               => 147;
+use constant mc8_last                => 148;
 use constant j_nop                   => 0;
 use constant j_aconst_null           => 1;
 use constant j_iconst_m1             => 2;
@@ -3214,7 +3219,382 @@ use constant ARM_vtrn                => 425;
 use constant ARM_vtst                => 426;
 use constant ARM_vuzp                => 427;
 use constant ARM_vzip                => 428;
-use constant ARM_last                => 429;
+use constant ARM_eret                => 429;
+use constant ARM_hvc                 => 430;
+use constant ARM_lda                 => 431;
+use constant ARM_stl                 => 432;
+use constant ARM_ldaex               => 433;
+use constant ARM_stlex               => 434;
+use constant ARM_vsel                => 435;
+use constant ARM_vmaxnm              => 436;
+use constant ARM_vminnm              => 437;
+use constant ARM_vcvta               => 438;
+use constant ARM_vcvtn               => 439;
+use constant ARM_vcvtp               => 440;
+use constant ARM_vcvtm               => 441;
+use constant ARM_vrintx              => 442;
+use constant ARM_vrintr              => 443;
+use constant ARM_vrintz              => 444;
+use constant ARM_vrinta              => 445;
+use constant ARM_vrintn              => 446;
+use constant ARM_vrintp              => 447;
+use constant ARM_vrintm              => 448;
+use constant ARM_aesd                => 449;
+use constant ARM_aese                => 450;
+use constant ARM_aesimc              => 451;
+use constant ARM_aesmc               => 452;
+use constant ARM_sha1c               => 453;
+use constant ARM_sha1m               => 454;
+use constant ARM_sha1p               => 455;
+use constant ARM_sha1h               => 456;
+use constant ARM_sha1su0             => 457;
+use constant ARM_sha1su1             => 458;
+use constant ARM_sha256h             => 459;
+use constant ARM_sha256h2            => 460;
+use constant ARM_sha256su0           => 461;
+use constant ARM_sha256su1           => 462;
+use constant ARM_dcps1               => 463;
+use constant ARM_dcps2               => 464;
+use constant ARM_dcps3               => 465;
+use constant ARM_hlt                 => 466;
+use constant ARM_sevl                => 467;
+use constant ARM_tbz                 => 468;
+use constant ARM_tbnz                => 469;
+use constant ARM_br                  => 470;
+use constant ARM_blr                 => 471;
+use constant ARM_ldur                => 472;
+use constant ARM_stur                => 473;
+use constant ARM_ldp                 => 474;
+use constant ARM_stp                 => 475;
+use constant ARM_ldnp                => 476;
+use constant ARM_stnp                => 477;
+use constant ARM_ldtr                => 478;
+use constant ARM_sttr                => 479;
+use constant ARM_ldxr                => 480;
+use constant ARM_stxr                => 481;
+use constant ARM_ldxp                => 482;
+use constant ARM_stxp                => 483;
+use constant ARM_ldar                => 484;
+use constant ARM_stlr                => 485;
+use constant ARM_ldaxr               => 486;
+use constant ARM_stlxr               => 487;
+use constant ARM_ldaxp               => 488;
+use constant ARM_stlxp               => 489;
+use constant ARM_prfm                => 490;
+use constant ARM_prfum               => 491;
+use constant ARM_movi                => 492;
+use constant ARM_mvni                => 493;
+use constant ARM_movz                => 494;
+use constant ARM_movn                => 495;
+use constant ARM_movk                => 496;
+use constant ARM_adrp                => 497;
+use constant ARM_bfm                 => 498;
+use constant ARM_sbfm                => 499;
+use constant ARM_ubfm                => 500;
+use constant ARM_bfxil               => 501;
+use constant ARM_sbfiz               => 502;
+use constant ARM_ubfiz               => 503;
+use constant ARM_extr                => 504;
+use constant ARM_sxtw                => 505;
+use constant ARM_uxtw                => 506;
+use constant ARM_eon                 => 507;
+use constant ARM_not                 => 508;
+use constant ARM_cls                 => 509;
+use constant ARM_rev32               => 510;
+use constant ARM_csel                => 511;
+use constant ARM_csinc               => 512;
+use constant ARM_csinv               => 513;
+use constant ARM_csneg               => 514;
+use constant ARM_cset                => 515;
+use constant ARM_csetm               => 516;
+use constant ARM_cinc                => 517;
+use constant ARM_cinv                => 518;
+use constant ARM_cneg                => 519;
+use constant ARM_ngc                 => 520;
+use constant ARM_ccmn                => 521;
+use constant ARM_ccmp                => 522;
+use constant ARM_madd                => 523;
+use constant ARM_msub                => 524;
+use constant ARM_mneg                => 525;
+use constant ARM_smaddl              => 526;
+use constant ARM_smsubl              => 527;
+use constant ARM_smnegl              => 528;
+use constant ARM_smulh               => 529;
+use constant ARM_umaddl              => 530;
+use constant ARM_umsubl              => 531;
+use constant ARM_umnegl              => 532;
+use constant ARM_umulh               => 533;
+use constant ARM_drps                => 534;
+use constant ARM_sys                 => 535;
+use constant ARM_sysl                => 536;
+use constant ARM_ic                  => 537;
+use constant ARM_dc                  => 538;
+use constant ARM_at                  => 539;
+use constant ARM_tlbi                => 540;
+use constant ARM_hint                => 541;
+use constant ARM_brk                 => 542;
+use constant ARM_uaba                => 543;
+use constant ARM_saba                => 544;
+use constant ARM_uabal               => 545;
+use constant ARM_uabal2              => 546;
+use constant ARM_sabal               => 547;
+use constant ARM_sabal2              => 548;
+use constant ARM_uabd                => 549;
+use constant ARM_sabd                => 550;
+use constant ARM_fabd                => 551;
+use constant ARM_uabdl               => 552;
+use constant ARM_uabdl2              => 553;
+use constant ARM_sabdl               => 554;
+use constant ARM_sabdl2              => 555;
+use constant ARM_abs                 => 556;
+use constant ARM_fabs                => 557;
+use constant ARM_facge               => 558;
+use constant ARM_facgt               => 559;
+use constant ARM_facle               => 560;
+use constant ARM_faclt               => 561;
+use constant ARM_fadd                => 562;
+use constant ARM_addhn               => 563;
+use constant ARM_addhn2              => 564;
+use constant ARM_uaddl               => 565;
+use constant ARM_uaddl2              => 566;
+use constant ARM_saddl               => 567;
+use constant ARM_saddl2              => 568;
+use constant ARM_uaddw               => 569;
+use constant ARM_uaddw2              => 570;
+use constant ARM_saddw               => 571;
+use constant ARM_saddw2              => 572;
+use constant ARM_bif                 => 573;
+use constant ARM_bit                 => 574;
+use constant ARM_bsl                 => 575;
+use constant ARM_cmeq                => 576;
+use constant ARM_fcmeq               => 577;
+use constant ARM_cmhs                => 578;
+use constant ARM_cmge                => 579;
+use constant ARM_fcmge               => 580;
+use constant ARM_cmhi                => 581;
+use constant ARM_cmgt                => 582;
+use constant ARM_fcmgt               => 583;
+use constant ARM_cmls                => 584;
+use constant ARM_cmle                => 585;
+use constant ARM_fcmle               => 586;
+use constant ARM_cmlo                => 587;
+use constant ARM_cmlt                => 588;
+use constant ARM_fcmlt               => 589;
+use constant ARM_fcmp                => 590;
+use constant ARM_fcmpe               => 591;
+use constant ARM_fccmp               => 592;
+use constant ARM_fccmpe              => 593;
+use constant ARM_fcsel               => 594;
+use constant ARM_cnt                 => 595;
+use constant ARM_fcvt                => 596;
+use constant ARM_fcvtzs              => 597;
+use constant ARM_fcvtas              => 598;
+use constant ARM_fcvtns              => 599;
+use constant ARM_fcvtps              => 600;
+use constant ARM_fcvtms              => 601;
+use constant ARM_fcvtzu              => 602;
+use constant ARM_fcvtau              => 603;
+use constant ARM_fcvtnu              => 604;
+use constant ARM_fcvtpu              => 605;
+use constant ARM_fcvtmu              => 606;
+use constant ARM_ucvtf               => 607;
+use constant ARM_scvtf               => 608;
+use constant ARM_fcvtn               => 609;
+use constant ARM_fcvtn2              => 610;
+use constant ARM_fcvtl               => 611;
+use constant ARM_fcvtl2              => 612;
+use constant ARM_fcvtxn              => 613;
+use constant ARM_fcvtxn2             => 614;
+use constant ARM_frinta              => 615;
+use constant ARM_frinti              => 616;
+use constant ARM_frintm              => 617;
+use constant ARM_frintn              => 618;
+use constant ARM_frintp              => 619;
+use constant ARM_frintx              => 620;
+use constant ARM_frintz              => 621;
+use constant ARM_fmadd               => 622;
+use constant ARM_fmsub               => 623;
+use constant ARM_fnmadd              => 624;
+use constant ARM_fnmsub              => 625;
+use constant ARM_fdiv                => 626;
+use constant ARM_dup                 => 627;
+use constant ARM_ins                 => 628;
+use constant ARM_ext                 => 629;
+use constant ARM_uhadd               => 630;
+use constant ARM_shadd               => 631;
+use constant ARM_uhsub               => 632;
+use constant ARM_shsub               => 633;
+use constant ARM_ld1                 => 634;
+use constant ARM_ld2                 => 635;
+use constant ARM_ld3                 => 636;
+use constant ARM_ld4                 => 637;
+use constant ARM_ld1r                => 638;
+use constant ARM_ld2r                => 639;
+use constant ARM_ld3r                => 640;
+use constant ARM_ld4r                => 641;
+use constant ARM_umax                => 642;
+use constant ARM_smax                => 643;
+use constant ARM_fmax                => 644;
+use constant ARM_fmaxnm              => 645;
+use constant ARM_umin                => 646;
+use constant ARM_smin                => 647;
+use constant ARM_fmin                => 648;
+use constant ARM_fminnm              => 649;
+use constant ARM_fmla                => 650;
+use constant ARM_umlal2              => 651;
+use constant ARM_smlal2              => 652;
+use constant ARM_fmls                => 653;
+use constant ARM_umlsl               => 654;
+use constant ARM_umlsl2              => 655;
+use constant ARM_smlsl               => 656;
+use constant ARM_smlsl2              => 657;
+use constant ARM_umov                => 658;
+use constant ARM_smov                => 659;
+use constant ARM_fmov                => 660;
+use constant ARM_uxtl                => 661;
+use constant ARM_uxtl2               => 662;
+use constant ARM_sxtl                => 663;
+use constant ARM_sxtl2               => 664;
+use constant ARM_xtn                 => 665;
+use constant ARM_xtn2                => 666;
+use constant ARM_fmul                => 667;
+use constant ARM_pmul                => 668;
+use constant ARM_fmulx               => 669;
+use constant ARM_fnmul               => 670;
+use constant ARM_umull2              => 671;
+use constant ARM_smull2              => 672;
+use constant ARM_pmull               => 673;
+use constant ARM_pmull2              => 674;
+use constant ARM_fneg                => 675;
+use constant ARM_uadalp              => 676;
+use constant ARM_sadalp              => 677;
+use constant ARM_addp                => 678;
+use constant ARM_faddp               => 679;
+use constant ARM_uaddlp              => 680;
+use constant ARM_saddlp              => 681;
+use constant ARM_umaxp               => 682;
+use constant ARM_smaxp               => 683;
+use constant ARM_fmaxp               => 684;
+use constant ARM_fmaxnmp             => 685;
+use constant ARM_uminp               => 686;
+use constant ARM_sminp               => 687;
+use constant ARM_fminp               => 688;
+use constant ARM_fminnmp             => 689;
+use constant ARM_sqabs               => 690;
+use constant ARM_uqadd               => 691;
+use constant ARM_sqadd               => 692;
+use constant ARM_suqadd              => 693;
+use constant ARM_usqadd              => 694;
+use constant ARM_sqdmlal             => 695;
+use constant ARM_sqdmlal2            => 696;
+use constant ARM_sqdmlsl             => 697;
+use constant ARM_sqdmlsl2            => 698;
+use constant ARM_sqdmulh             => 699;
+use constant ARM_sqdmull             => 700;
+use constant ARM_sqdmull2            => 701;
+use constant ARM_uqxtn               => 702;
+use constant ARM_uqxtn2              => 703;
+use constant ARM_sqxtn               => 704;
+use constant ARM_sqxtn2              => 705;
+use constant ARM_sqxtun              => 706;
+use constant ARM_sqxtun2             => 707;
+use constant ARM_sqneg               => 708;
+use constant ARM_sqrdmulh            => 709;
+use constant ARM_uqrshl              => 710;
+use constant ARM_sqrshl              => 711;
+use constant ARM_uqrshrn             => 712;
+use constant ARM_uqrshrn2            => 713;
+use constant ARM_sqrshrn             => 714;
+use constant ARM_sqrshrn2            => 715;
+use constant ARM_sqrshrun            => 716;
+use constant ARM_sqrshrun2           => 717;
+use constant ARM_uqshl               => 718;
+use constant ARM_sqshl               => 719;
+use constant ARM_sqshlu              => 720;
+use constant ARM_uqshrn              => 721;
+use constant ARM_uqshrn2             => 722;
+use constant ARM_sqshrn              => 723;
+use constant ARM_sqshrn2             => 724;
+use constant ARM_sqshrun             => 725;
+use constant ARM_sqshrun2            => 726;
+use constant ARM_uqsub               => 727;
+use constant ARM_sqsub               => 728;
+use constant ARM_raddhn              => 729;
+use constant ARM_raddhn2             => 730;
+use constant ARM_urecpe              => 731;
+use constant ARM_frecpe              => 732;
+use constant ARM_frecps              => 733;
+use constant ARM_frecpx              => 734;
+use constant ARM_rev64               => 735;
+use constant ARM_urhadd              => 736;
+use constant ARM_srhadd              => 737;
+use constant ARM_urshl               => 738;
+use constant ARM_srshl               => 739;
+use constant ARM_urshr               => 740;
+use constant ARM_srshr               => 741;
+use constant ARM_rshrn               => 742;
+use constant ARM_rshrn2              => 743;
+use constant ARM_ursqrte             => 744;
+use constant ARM_frsqrte             => 745;
+use constant ARM_frsqrts             => 746;
+use constant ARM_ursra               => 747;
+use constant ARM_srsra               => 748;
+use constant ARM_rsubhn              => 749;
+use constant ARM_rsubhn2             => 750;
+use constant ARM_ushl                => 751;
+use constant ARM_sshl                => 752;
+use constant ARM_ushll               => 753;
+use constant ARM_ushll2              => 754;
+use constant ARM_sshll               => 755;
+use constant ARM_sshll2              => 756;
+use constant ARM_ushr                => 757;
+use constant ARM_sshr                => 758;
+use constant ARM_shrn                => 759;
+use constant ARM_shrn2               => 760;
+use constant ARM_shl                 => 761;
+use constant ARM_shll                => 762;
+use constant ARM_shll2               => 763;
+use constant ARM_sli                 => 764;
+use constant ARM_fsqrt               => 765;
+use constant ARM_usra                => 766;
+use constant ARM_ssra                => 767;
+use constant ARM_sri                 => 768;
+use constant ARM_st1                 => 769;
+use constant ARM_st2                 => 770;
+use constant ARM_st3                 => 771;
+use constant ARM_st4                 => 772;
+use constant ARM_fsub                => 773;
+use constant ARM_subhn               => 774;
+use constant ARM_subhn2              => 775;
+use constant ARM_usubl               => 776;
+use constant ARM_usubl2              => 777;
+use constant ARM_ssubl               => 778;
+use constant ARM_ssubl2              => 779;
+use constant ARM_usubw               => 780;
+use constant ARM_usubw2              => 781;
+use constant ARM_ssubw               => 782;
+use constant ARM_ssubw2              => 783;
+use constant ARM_tbl                 => 784;
+use constant ARM_tbx                 => 785;
+use constant ARM_trn1                => 786;
+use constant ARM_trn2                => 787;
+use constant ARM_cmtst               => 788;
+use constant ARM_uzp1                => 789;
+use constant ARM_uzp2                => 790;
+use constant ARM_zip1                => 791;
+use constant ARM_zip2                => 792;
+use constant ARM_addv                => 793;
+use constant ARM_uaddlv              => 794;
+use constant ARM_saddlv              => 795;
+use constant ARM_umaxv               => 796;
+use constant ARM_smaxv               => 797;
+use constant ARM_fmaxv               => 798;
+use constant ARM_fmaxnmv             => 799;
+use constant ARM_uminv               => 800;
+use constant ARM_sminv               => 801;
+use constant ARM_fminv               => 802;
+use constant ARM_fminnmv             => 803;
+use constant ARM_last                => 804;
 use constant TMS6_null               => 0;
 use constant TMS6_abs                => 1;
 use constant TMS6_add                => 2;
@@ -4355,7 +4735,6 @@ use constant MIPS_maddu_r5900        => 429;
 use constant MIPS_R5900_last         => 429;
 use constant MIPS_mult3              => 430;
 use constant MIPS_multu3             => 431;
-use constant MIPS_R5900_last         => 431;
 use constant MIPS_bteqz              => 439;
 use constant MIPS_btnez              => 432;
 use constant MIPS_cmp                => 433;
@@ -4773,7 +5152,33 @@ use constant H8_tas                  => 83;
 use constant H8_trapa                => 84;
 use constant H8_xor                  => 85;
 use constant H8_xorc                 => 86;
-use constant H8_last                 => 87;
+use constant H8_rtel                 => 87;
+use constant H8_rtsl                 => 88;
+use constant H8_movmd                => 89;
+use constant H8_movsd                => 90;
+use constant H8_bras                 => 91;
+use constant H8_movab                => 92;
+use constant H8_movaw                => 93;
+use constant H8_moval                => 94;
+use constant H8_bsetne               => 95;
+use constant H8_bseteq               => 96;
+use constant H8_bclrne               => 97;
+use constant H8_bclreq               => 98;
+use constant H8_bstz                 => 99;
+use constant H8_bistz                => 100;
+use constant H8_bfld                 => 101;
+use constant H8_bfst                 => 102;
+use constant H8_muls                 => 103;
+use constant H8_divs                 => 104;
+use constant H8_mulu                 => 105;
+use constant H8_divu                 => 106;
+use constant H8_mulsu                => 107;
+use constant H8_muluu                => 108;
+use constant H8_brabc                => 109;
+use constant H8_brabs                => 110;
+use constant H8_bsrbc                => 111;
+use constant H8_bsrbs                => 112;
+use constant H8_last                 => 113;
 use constant PIC_null                => 0;
 use constant PIC_addwf               => 1;
 use constant PIC_andwf               => 2;
@@ -11428,7 +11833,50 @@ use constant PPC_psq_l               => 1263;
 use constant PPC_psq_lu              => 1264;
 use constant PPC_psq_st              => 1265;
 use constant PPC_psq_stu             => 1266;
-use constant PPC_last                => 1267;
+use constant PPC_evfsmadd            => 1267;
+use constant PPC_evfsmsub            => 1268;
+use constant PPC_evfssqrt            => 1269;
+use constant PPC_evfsnmadd           => 1270;
+use constant PPC_evfsnmsub           => 1271;
+use constant PPC_evfsmax             => 1272;
+use constant PPC_evfsmin             => 1273;
+use constant PPC_evfsaddsub          => 1274;
+use constant PPC_evfssubadd          => 1275;
+use constant PPC_evfssum             => 1276;
+use constant PPC_evfsdiff            => 1277;
+use constant PPC_evfssumdiff         => 1278;
+use constant PPC_evfsdiffsum         => 1279;
+use constant PPC_evfsaddx            => 1280;
+use constant PPC_evfssubx            => 1281;
+use constant PPC_evfsaddsubx         => 1282;
+use constant PPC_evfssubaddx         => 1283;
+use constant PPC_evfsmulx            => 1284;
+use constant PPC_evfsmule            => 1285;
+use constant PPC_evfsmulo            => 1286;
+use constant PPC_evfscfh             => 1287;
+use constant PPC_evfscth             => 1288;
+use constant PPC_efsmax              => 1289;
+use constant PPC_efsmin              => 1290;
+use constant PPC_efsmadd             => 1291;
+use constant PPC_efsmsub             => 1292;
+use constant PPC_efssqrt             => 1293;
+use constant PPC_efsnmadd            => 1294;
+use constant PPC_efsnmsub            => 1295;
+use constant PPC_efscfh              => 1296;
+use constant PPC_efscth              => 1297;
+use constant PPC_lmvgprw             => 1298;
+use constant PPC_stmvgprw            => 1299;
+use constant PPC_lmvsprw             => 1300;
+use constant PPC_stmvsprw            => 1301;
+use constant PPC_lmvsrrw             => 1302;
+use constant PPC_stmvsrrw            => 1303;
+use constant PPC_lmvcsrrw            => 1304;
+use constant PPC_stmvcsrrw           => 1305;
+use constant PPC_lmvdsrrw            => 1306;
+use constant PPC_stmvdsrrw           => 1307;
+use constant PPC_lmvmcsrrw           => 1308;
+use constant PPC_stmvmcsrrw          => 1309;
+use constant PPC_last                => 1310;
 use constant NEC850_NULL             => 0;
 use constant NEC850_BREAKPOINT       => 1;
 use constant NEC850_XORI             => 2;
@@ -11957,7 +12405,21 @@ use constant TRICORE_xor_ne          => 378;
 use constant TRICORE_xor_t           => 379;
 use constant TRICORE_xor16           => 380;
 use constant TRICORE_xor32           => 381;
-use constant TRICORE_last            => 382;
+use constant TRICORE_cachei_i        => 382;
+use constant TRICORE_cachei_w        => 383;
+use constant TRICORE_cachei_wi       => 384;
+use constant TRICORE_div             => 385;
+use constant TRICORE_div_u           => 386;
+use constant TRICORE_fcall           => 387;
+use constant TRICORE_fcalla          => 388;
+use constant TRICORE_fcalli          => 389;
+use constant TRICORE_fret16          => 390;
+use constant TRICORE_fret32          => 391;
+use constant TRICORE_ftoiz           => 392;
+use constant TRICORE_ftoq31z         => 393;
+use constant TRICORE_ftouz           => 394;
+use constant TRICORE_restore         => 395;
+use constant TRICORE_last            => 396;
 use constant ARC_null                => 0;
 use constant ARC_ld                  => 1;
 use constant ARC_lr                  => 2;
@@ -12046,7 +12508,187 @@ use constant ARC_rnd16               => 83;
 use constant ARC_sat16               => 84;
 use constant ARC_subs                => 85;
 use constant ARC_subsdw              => 86;
-use constant ARC_last                => 87;
+use constant ARC_muldw               => 87;
+use constant ARC_muludw              => 88;
+use constant ARC_mulrdw              => 89;
+use constant ARC_macdw               => 90;
+use constant ARC_macudw              => 91;
+use constant ARC_macrdw              => 92;
+use constant ARC_msubdw              => 93;
+use constant ARC_mululw              => 94;
+use constant ARC_mullw               => 95;
+use constant ARC_mulflw              => 96;
+use constant ARC_maclw               => 97;
+use constant ARC_macflw              => 98;
+use constant ARC_machulw             => 99;
+use constant ARC_machlw              => 100;
+use constant ARC_machflw             => 101;
+use constant ARC_mulhlw              => 102;
+use constant ARC_mulhflw             => 103;
+use constant ARC_last                => 104;
+use constant TMS28_null              => 0;
+use constant TMS28_aborti            => 1;
+use constant TMS28_abs               => 2;
+use constant TMS28_abstc             => 3;
+use constant TMS28_add               => 4;
+use constant TMS28_addb              => 5;
+use constant TMS28_addcl             => 6;
+use constant TMS28_addcu             => 7;
+use constant TMS28_addl              => 8;
+use constant TMS28_addu              => 9;
+use constant TMS28_addul             => 10;
+use constant TMS28_adrk              => 11;
+use constant TMS28_and               => 12;
+use constant TMS28_andb              => 13;
+use constant TMS28_asp               => 14;
+use constant TMS28_asr               => 15;
+use constant TMS28_asr64             => 16;
+use constant TMS28_asrl              => 17;
+use constant TMS28_b                 => 18;
+use constant TMS28_banz              => 19;
+use constant TMS28_bar               => 20;
+use constant TMS28_bf                => 21;
+use constant TMS28_c27map            => 22;
+use constant TMS28_c27obj            => 23;
+use constant TMS28_c28addr           => 24;
+use constant TMS28_c28map            => 25;
+use constant TMS28_c28obj            => 26;
+use constant TMS28_clrc              => 27;
+use constant TMS28_cmp               => 28;
+use constant TMS28_cmp64             => 29;
+use constant TMS28_cmpb              => 30;
+use constant TMS28_cmpl              => 31;
+use constant TMS28_cmpr              => 32;
+use constant TMS28_csb               => 33;
+use constant TMS28_dec               => 34;
+use constant TMS28_dint              => 35;
+use constant TMS28_dmac              => 36;
+use constant TMS28_dmov              => 37;
+use constant TMS28_eallow            => 38;
+use constant TMS28_edis              => 39;
+use constant TMS28_eint              => 40;
+use constant TMS28_estop0            => 41;
+use constant TMS28_estop1            => 42;
+use constant TMS28_ffc               => 43;
+use constant TMS28_flip              => 44;
+use constant TMS28_iack              => 45;
+use constant TMS28_idle              => 46;
+use constant TMS28_imacl             => 47;
+use constant TMS28_impyal            => 48;
+use constant TMS28_impyl             => 49;
+use constant TMS28_impysl            => 50;
+use constant TMS28_impyxul           => 51;
+use constant TMS28_in                => 52;
+use constant TMS28_inc               => 53;
+use constant TMS28_intr              => 54;
+use constant TMS28_iret              => 55;
+use constant TMS28_lb                => 56;
+use constant TMS28_lc                => 57;
+use constant TMS28_lcr               => 58;
+use constant TMS28_loopnz            => 59;
+use constant TMS28_loopz             => 60;
+use constant TMS28_lpaddr            => 61;
+use constant TMS28_lret              => 62;
+use constant TMS28_lrete             => 63;
+use constant TMS28_lretr             => 64;
+use constant TMS28_lsl               => 65;
+use constant TMS28_lsl64             => 66;
+use constant TMS28_lsll              => 67;
+use constant TMS28_lsr               => 68;
+use constant TMS28_lsr64             => 69;
+use constant TMS28_lsrl              => 70;
+use constant TMS28_mac               => 71;
+use constant TMS28_max               => 72;
+use constant TMS28_maxcul            => 73;
+use constant TMS28_maxl              => 74;
+use constant TMS28_min               => 75;
+use constant TMS28_mincul            => 76;
+use constant TMS28_minl              => 77;
+use constant TMS28_mov               => 78;
+use constant TMS28_mova              => 79;
+use constant TMS28_movad             => 80;
+use constant TMS28_movb              => 81;
+use constant TMS28_movdl             => 82;
+use constant TMS28_movh              => 83;
+use constant TMS28_movl              => 84;
+use constant TMS28_movp              => 85;
+use constant TMS28_movs              => 86;
+use constant TMS28_movu              => 87;
+use constant TMS28_movw              => 88;
+use constant TMS28_movx              => 89;
+use constant TMS28_movz              => 90;
+use constant TMS28_mpy               => 91;
+use constant TMS28_mpya              => 92;
+use constant TMS28_mpyb              => 93;
+use constant TMS28_mpys              => 94;
+use constant TMS28_mpyu              => 95;
+use constant TMS28_mpyxu             => 96;
+use constant TMS28_nasp              => 97;
+use constant TMS28_neg               => 98;
+use constant TMS28_neg64             => 99;
+use constant TMS28_negtc             => 100;
+use constant TMS28_nop               => 101;
+use constant TMS28_norm              => 102;
+use constant TMS28_not               => 103;
+use constant TMS28_or                => 104;
+use constant TMS28_orb               => 105;
+use constant TMS28_out               => 106;
+use constant TMS28_pop               => 107;
+use constant TMS28_pread             => 108;
+use constant TMS28_push              => 109;
+use constant TMS28_pwrite            => 110;
+use constant TMS28_qmacl             => 111;
+use constant TMS28_qmpyal            => 112;
+use constant TMS28_qmpyl             => 113;
+use constant TMS28_qmpysl            => 114;
+use constant TMS28_qmpyul            => 115;
+use constant TMS28_qmpyxul           => 116;
+use constant TMS28_rol               => 117;
+use constant TMS28_ror               => 118;
+use constant TMS28_rpt               => 119;
+use constant TMS28_sat               => 120;
+use constant TMS28_sat64             => 121;
+use constant TMS28_sb                => 122;
+use constant TMS28_sbbu              => 123;
+use constant TMS28_sbf               => 124;
+use constant TMS28_sbrk              => 125;
+use constant TMS28_setc              => 126;
+use constant TMS28_sfr               => 127;
+use constant TMS28_spm               => 128;
+use constant TMS28_sqra              => 129;
+use constant TMS28_sqrs              => 130;
+use constant TMS28_sub               => 131;
+use constant TMS28_subb              => 132;
+use constant TMS28_subbl             => 133;
+use constant TMS28_subcu             => 134;
+use constant TMS28_subcul            => 135;
+use constant TMS28_subl              => 136;
+use constant TMS28_subr              => 137;
+use constant TMS28_subrl             => 138;
+use constant TMS28_subu              => 139;
+use constant TMS28_subul             => 140;
+use constant TMS28_sxtb              => 141;
+use constant TMS28_tbit              => 142;
+use constant TMS28_tclr              => 143;
+use constant TMS28_test              => 144;
+use constant TMS28_trap              => 145;
+use constant TMS28_tset              => 146;
+use constant TMS28_uout              => 147;
+use constant TMS28_xb                => 148;
+use constant TMS28_xbanz             => 149;
+use constant TMS28_xcall             => 150;
+use constant TMS28_xmac              => 151;
+use constant TMS28_xmacd             => 152;
+use constant TMS28_xor               => 153;
+use constant TMS28_xorb              => 154;
+use constant TMS28_xpread            => 155;
+use constant TMS28_xpwrite           => 156;
+use constant TMS28_xret              => 157;
+use constant TMS28_xretc             => 158;
+use constant TMS28_zalr              => 159;
+use constant TMS28_zap               => 160;
+use constant TMS28_zapa              => 161;
+use constant TMS28_last              => 162;
 ###
 #
 # E X P O R T E D   N A M E S
@@ -13675,6 +14317,7 @@ I51_sra
 I51_sll
 I51_sub
 I51_cmp
+I51_emov
 I51_last
 TMS_null
 TMS_abs
@@ -14474,6 +15117,8 @@ mc_maaac
 mc_masac
 mc_msaac
 mc_mssac
+mc_remsl
+mc_remul
 mc_last
 mc8_null
 mc8_aba
@@ -14621,6 +15266,8 @@ mc8_tim
 mc8_bgnd
 mc8_call
 mc8_rtc
+mc8_skip1
+mc8_skip2
 mc8_last
 j_nop
 j_aconst_null
@@ -15261,6 +15908,381 @@ ARM_vtrn
 ARM_vtst
 ARM_vuzp
 ARM_vzip
+ARM_eret
+ARM_hvc
+ARM_lda
+ARM_stl
+ARM_ldaex
+ARM_stlex
+ARM_vsel
+ARM_vmaxnm
+ARM_vminnm
+ARM_vcvta
+ARM_vcvtn
+ARM_vcvtp
+ARM_vcvtm
+ARM_vrintx
+ARM_vrintr
+ARM_vrintz
+ARM_vrinta
+ARM_vrintn
+ARM_vrintp
+ARM_vrintm
+ARM_aesd
+ARM_aese
+ARM_aesimc
+ARM_aesmc
+ARM_sha1c
+ARM_sha1m
+ARM_sha1p
+ARM_sha1h
+ARM_sha1su0
+ARM_sha1su1
+ARM_sha256h
+ARM_sha256h2
+ARM_sha256su0
+ARM_sha256su1
+ARM_dcps1
+ARM_dcps2
+ARM_dcps3
+ARM_hlt
+ARM_sevl
+ARM_tbz
+ARM_tbnz
+ARM_br
+ARM_blr
+ARM_ldur
+ARM_stur
+ARM_ldp
+ARM_stp
+ARM_ldnp
+ARM_stnp
+ARM_ldtr
+ARM_sttr
+ARM_ldxr
+ARM_stxr
+ARM_ldxp
+ARM_stxp
+ARM_ldar
+ARM_stlr
+ARM_ldaxr
+ARM_stlxr
+ARM_ldaxp
+ARM_stlxp
+ARM_prfm
+ARM_prfum
+ARM_movi
+ARM_mvni
+ARM_movz
+ARM_movn
+ARM_movk
+ARM_adrp
+ARM_bfm
+ARM_sbfm
+ARM_ubfm
+ARM_bfxil
+ARM_sbfiz
+ARM_ubfiz
+ARM_extr
+ARM_sxtw
+ARM_uxtw
+ARM_eon
+ARM_not
+ARM_cls
+ARM_rev32
+ARM_csel
+ARM_csinc
+ARM_csinv
+ARM_csneg
+ARM_cset
+ARM_csetm
+ARM_cinc
+ARM_cinv
+ARM_cneg
+ARM_ngc
+ARM_ccmn
+ARM_ccmp
+ARM_madd
+ARM_msub
+ARM_mneg
+ARM_smaddl
+ARM_smsubl
+ARM_smnegl
+ARM_smulh
+ARM_umaddl
+ARM_umsubl
+ARM_umnegl
+ARM_umulh
+ARM_drps
+ARM_sys
+ARM_sysl
+ARM_ic
+ARM_dc
+ARM_at
+ARM_tlbi
+ARM_hint
+ARM_brk
+ARM_uaba
+ARM_saba
+ARM_uabal
+ARM_uabal2
+ARM_sabal
+ARM_sabal2
+ARM_uabd
+ARM_sabd
+ARM_fabd
+ARM_uabdl
+ARM_uabdl2
+ARM_sabdl
+ARM_sabdl2
+ARM_abs
+ARM_fabs
+ARM_facge
+ARM_facgt
+ARM_facle
+ARM_faclt
+ARM_fadd
+ARM_addhn
+ARM_addhn2
+ARM_uaddl
+ARM_uaddl2
+ARM_saddl
+ARM_saddl2
+ARM_uaddw
+ARM_uaddw2
+ARM_saddw
+ARM_saddw2
+ARM_bif
+ARM_bit
+ARM_bsl
+ARM_cmeq
+ARM_fcmeq
+ARM_cmhs
+ARM_cmge
+ARM_fcmge
+ARM_cmhi
+ARM_cmgt
+ARM_fcmgt
+ARM_cmls
+ARM_cmle
+ARM_fcmle
+ARM_cmlo
+ARM_cmlt
+ARM_fcmlt
+ARM_fcmp
+ARM_fcmpe
+ARM_fccmp
+ARM_fccmpe
+ARM_fcsel
+ARM_cnt
+ARM_fcvt
+ARM_fcvtzs
+ARM_fcvtas
+ARM_fcvtns
+ARM_fcvtps
+ARM_fcvtms
+ARM_fcvtzu
+ARM_fcvtau
+ARM_fcvtnu
+ARM_fcvtpu
+ARM_fcvtmu
+ARM_ucvtf
+ARM_scvtf
+ARM_fcvtn
+ARM_fcvtn2
+ARM_fcvtl
+ARM_fcvtl2
+ARM_fcvtxn
+ARM_fcvtxn2
+ARM_frinta
+ARM_frinti
+ARM_frintm
+ARM_frintn
+ARM_frintp
+ARM_frintx
+ARM_frintz
+ARM_fmadd
+ARM_fmsub
+ARM_fnmadd
+ARM_fnmsub
+ARM_fdiv
+ARM_dup
+ARM_ins
+ARM_ext
+ARM_uhadd
+ARM_shadd
+ARM_uhsub
+ARM_shsub
+ARM_ld1
+ARM_ld2
+ARM_ld3
+ARM_ld4
+ARM_ld1r
+ARM_ld2r
+ARM_ld3r
+ARM_ld4r
+ARM_umax
+ARM_smax
+ARM_fmax
+ARM_fmaxnm
+ARM_umin
+ARM_smin
+ARM_fmin
+ARM_fminnm
+ARM_fmla
+ARM_umlal2
+ARM_smlal2
+ARM_fmls
+ARM_umlsl
+ARM_umlsl2
+ARM_smlsl
+ARM_smlsl2
+ARM_umov
+ARM_smov
+ARM_fmov
+ARM_uxtl
+ARM_uxtl2
+ARM_sxtl
+ARM_sxtl2
+ARM_xtn
+ARM_xtn2
+ARM_fmul
+ARM_pmul
+ARM_fmulx
+ARM_fnmul
+ARM_umull2
+ARM_smull2
+ARM_pmull
+ARM_pmull2
+ARM_fneg
+ARM_uadalp
+ARM_sadalp
+ARM_addp
+ARM_faddp
+ARM_uaddlp
+ARM_saddlp
+ARM_umaxp
+ARM_smaxp
+ARM_fmaxp
+ARM_fmaxnmp
+ARM_uminp
+ARM_sminp
+ARM_fminp
+ARM_fminnmp
+ARM_sqabs
+ARM_uqadd
+ARM_sqadd
+ARM_suqadd
+ARM_usqadd
+ARM_sqdmlal
+ARM_sqdmlal2
+ARM_sqdmlsl
+ARM_sqdmlsl2
+ARM_sqdmulh
+ARM_sqdmull
+ARM_sqdmull2
+ARM_uqxtn
+ARM_uqxtn2
+ARM_sqxtn
+ARM_sqxtn2
+ARM_sqxtun
+ARM_sqxtun2
+ARM_sqneg
+ARM_sqrdmulh
+ARM_uqrshl
+ARM_sqrshl
+ARM_uqrshrn
+ARM_uqrshrn2
+ARM_sqrshrn
+ARM_sqrshrn2
+ARM_sqrshrun
+ARM_sqrshrun2
+ARM_uqshl
+ARM_sqshl
+ARM_sqshlu
+ARM_uqshrn
+ARM_uqshrn2
+ARM_sqshrn
+ARM_sqshrn2
+ARM_sqshrun
+ARM_sqshrun2
+ARM_uqsub
+ARM_sqsub
+ARM_raddhn
+ARM_raddhn2
+ARM_urecpe
+ARM_frecpe
+ARM_frecps
+ARM_frecpx
+ARM_rev64
+ARM_urhadd
+ARM_srhadd
+ARM_urshl
+ARM_srshl
+ARM_urshr
+ARM_srshr
+ARM_rshrn
+ARM_rshrn2
+ARM_ursqrte
+ARM_frsqrte
+ARM_frsqrts
+ARM_ursra
+ARM_srsra
+ARM_rsubhn
+ARM_rsubhn2
+ARM_ushl
+ARM_sshl
+ARM_ushll
+ARM_ushll2
+ARM_sshll
+ARM_sshll2
+ARM_ushr
+ARM_sshr
+ARM_shrn
+ARM_shrn2
+ARM_shl
+ARM_shll
+ARM_shll2
+ARM_sli
+ARM_fsqrt
+ARM_usra
+ARM_ssra
+ARM_sri
+ARM_st1
+ARM_st2
+ARM_st3
+ARM_st4
+ARM_fsub
+ARM_subhn
+ARM_subhn2
+ARM_usubl
+ARM_usubl2
+ARM_ssubl
+ARM_ssubl2
+ARM_usubw
+ARM_usubw2
+ARM_ssubw
+ARM_ssubw2
+ARM_tbl
+ARM_tbx
+ARM_trn1
+ARM_trn2
+ARM_cmtst
+ARM_uzp1
+ARM_uzp2
+ARM_zip1
+ARM_zip2
+ARM_addv
+ARM_uaddlv
+ARM_saddlv
+ARM_umaxv
+ARM_smaxv
+ARM_fmaxv
+ARM_fmaxnmv
+ARM_uminv
+ARM_sminv
+ARM_fminv
+ARM_fminnmv
 ARM_last
 TMS6_null
 TMS6_abs
@@ -16819,6 +17841,32 @@ H8_tas
 H8_trapa
 H8_xor
 H8_xorc
+H8_rtel
+H8_rtsl
+H8_movmd
+H8_movsd
+H8_bras
+H8_movab
+H8_movaw
+H8_moval
+H8_bsetne
+H8_bseteq
+H8_bclrne
+H8_bclreq
+H8_bstz
+H8_bistz
+H8_bfld
+H8_bfst
+H8_muls
+H8_divs
+H8_mulu
+H8_divu
+H8_mulsu
+H8_muluu
+H8_brabc
+H8_brabs
+H8_bsrbc
+H8_bsrbs
 H8_last
 PIC_null
 PIC_addwf
@@ -23474,6 +24522,49 @@ PPC_psq_l
 PPC_psq_lu
 PPC_psq_st
 PPC_psq_stu
+PPC_evfsmadd
+PPC_evfsmsub
+PPC_evfssqrt
+PPC_evfsnmadd
+PPC_evfsnmsub
+PPC_evfsmax
+PPC_evfsmin
+PPC_evfsaddsub
+PPC_evfssubadd
+PPC_evfssum
+PPC_evfsdiff
+PPC_evfssumdiff
+PPC_evfsdiffsum
+PPC_evfsaddx
+PPC_evfssubx
+PPC_evfsaddsubx
+PPC_evfssubaddx
+PPC_evfsmulx
+PPC_evfsmule
+PPC_evfsmulo
+PPC_evfscfh
+PPC_evfscth
+PPC_efsmax
+PPC_efsmin
+PPC_efsmadd
+PPC_efsmsub
+PPC_efssqrt
+PPC_efsnmadd
+PPC_efsnmsub
+PPC_efscfh
+PPC_efscth
+PPC_lmvgprw
+PPC_stmvgprw
+PPC_lmvsprw
+PPC_stmvsprw
+PPC_lmvsrrw
+PPC_stmvsrrw
+PPC_lmvcsrrw
+PPC_stmvcsrrw
+PPC_lmvdsrrw
+PPC_stmvdsrrw
+PPC_lmvmcsrrw
+PPC_stmvmcsrrw
 PPC_last
 NEC850_NULL
 NEC850_BREAKPOINT
@@ -24003,6 +25094,20 @@ TRICORE_xor_ne
 TRICORE_xor_t
 TRICORE_xor16
 TRICORE_xor32
+TRICORE_cachei_i
+TRICORE_cachei_w
+TRICORE_cachei_wi
+TRICORE_div
+TRICORE_div_u
+TRICORE_fcall
+TRICORE_fcalla
+TRICORE_fcalli
+TRICORE_fret16
+TRICORE_fret32
+TRICORE_ftoiz
+TRICORE_ftoq31z
+TRICORE_ftouz
+TRICORE_restore
 TRICORE_last
 ARC_null
 ARC_ld
@@ -24092,7 +25197,187 @@ ARC_rnd16
 ARC_sat16
 ARC_subs
 ARC_subsdw
+ARC_muldw
+ARC_muludw
+ARC_mulrdw
+ARC_macdw
+ARC_macudw
+ARC_macrdw
+ARC_msubdw
+ARC_mululw
+ARC_mullw
+ARC_mulflw
+ARC_maclw
+ARC_macflw
+ARC_machulw
+ARC_machlw
+ARC_machflw
+ARC_mulhlw
+ARC_mulhflw
 ARC_last
+TMS28_null
+TMS28_aborti
+TMS28_abs
+TMS28_abstc
+TMS28_add
+TMS28_addb
+TMS28_addcl
+TMS28_addcu
+TMS28_addl
+TMS28_addu
+TMS28_addul
+TMS28_adrk
+TMS28_and
+TMS28_andb
+TMS28_asp
+TMS28_asr
+TMS28_asr64
+TMS28_asrl
+TMS28_b
+TMS28_banz
+TMS28_bar
+TMS28_bf
+TMS28_c27map
+TMS28_c27obj
+TMS28_c28addr
+TMS28_c28map
+TMS28_c28obj
+TMS28_clrc
+TMS28_cmp
+TMS28_cmp64
+TMS28_cmpb
+TMS28_cmpl
+TMS28_cmpr
+TMS28_csb
+TMS28_dec
+TMS28_dint
+TMS28_dmac
+TMS28_dmov
+TMS28_eallow
+TMS28_edis
+TMS28_eint
+TMS28_estop0
+TMS28_estop1
+TMS28_ffc
+TMS28_flip
+TMS28_iack
+TMS28_idle
+TMS28_imacl
+TMS28_impyal
+TMS28_impyl
+TMS28_impysl
+TMS28_impyxul
+TMS28_in
+TMS28_inc
+TMS28_intr
+TMS28_iret
+TMS28_lb
+TMS28_lc
+TMS28_lcr
+TMS28_loopnz
+TMS28_loopz
+TMS28_lpaddr
+TMS28_lret
+TMS28_lrete
+TMS28_lretr
+TMS28_lsl
+TMS28_lsl64
+TMS28_lsll
+TMS28_lsr
+TMS28_lsr64
+TMS28_lsrl
+TMS28_mac
+TMS28_max
+TMS28_maxcul
+TMS28_maxl
+TMS28_min
+TMS28_mincul
+TMS28_minl
+TMS28_mov
+TMS28_mova
+TMS28_movad
+TMS28_movb
+TMS28_movdl
+TMS28_movh
+TMS28_movl
+TMS28_movp
+TMS28_movs
+TMS28_movu
+TMS28_movw
+TMS28_movx
+TMS28_movz
+TMS28_mpy
+TMS28_mpya
+TMS28_mpyb
+TMS28_mpys
+TMS28_mpyu
+TMS28_mpyxu
+TMS28_nasp
+TMS28_neg
+TMS28_neg64
+TMS28_negtc
+TMS28_nop
+TMS28_norm
+TMS28_not
+TMS28_or
+TMS28_orb
+TMS28_out
+TMS28_pop
+TMS28_pread
+TMS28_push
+TMS28_pwrite
+TMS28_qmacl
+TMS28_qmpyal
+TMS28_qmpyl
+TMS28_qmpysl
+TMS28_qmpyul
+TMS28_qmpyxul
+TMS28_rol
+TMS28_ror
+TMS28_rpt
+TMS28_sat
+TMS28_sat64
+TMS28_sb
+TMS28_sbbu
+TMS28_sbf
+TMS28_sbrk
+TMS28_setc
+TMS28_sfr
+TMS28_spm
+TMS28_sqra
+TMS28_sqrs
+TMS28_sub
+TMS28_subb
+TMS28_subbl
+TMS28_subcu
+TMS28_subcul
+TMS28_subl
+TMS28_subr
+TMS28_subrl
+TMS28_subu
+TMS28_subul
+TMS28_sxtb
+TMS28_tbit
+TMS28_tclr
+TMS28_test
+TMS28_trap
+TMS28_tset
+TMS28_uout
+TMS28_xb
+TMS28_xbanz
+TMS28_xcall
+TMS28_xmac
+TMS28_xmacd
+TMS28_xor
+TMS28_xorb
+TMS28_xpread
+TMS28_xpwrite
+TMS28_xret
+TMS28_xretc
+TMS28_zalr
+TMS28_zap
+TMS28_zapa
+TMS28_last
 );
 
 1;
